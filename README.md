@@ -10,8 +10,8 @@
 supervisor配置文件模版：
 [program:laravel-queue-worker]
 process_name=%(program_name)s_%(process_num)02d
-directory=/data/www/mengchen_new_sz   ;低版本不支持此指令
-command=/usr/bin/php /data/www/mengchen_new_sz/artisan queue:work --delay=3 --sleep=1 --tries=3 --timeout=60
+directory={code_ducument_root}   ;低版本不支持此指令
+command=/usr/bin/php {code_ducument_root}/artisan queue:work --delay=3 --sleep=1 --tries=3 --timeout=60
 autostart=true
 autorestart=true
 startretries=3
@@ -59,7 +59,7 @@ npm run build   #编译js代码
 ### cron计划任务
 ```
 crontab -e
-* * * * * php /data/www/{code_ducument_root}/artisan schedule:run >> /dev/null 2>&1  
+* * * * * php {code_ducument_root}/artisan schedule:run >> /dev/null 2>&1  
 
 #注意：.env里面正确配置好日志输出文件"CRON_TASK_LOG"
 ```  
