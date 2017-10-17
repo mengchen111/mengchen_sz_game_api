@@ -104,16 +104,16 @@ cd $codeDir
 
 首先，将待签名字符串按照参数名进行排序(首先比较所有参数名的第一个字母，按abcd顺序排列，若遇到相同首字母，则看第二个字母，以此类推)。  
 
-例如：对于如下的参数进行签名
+例如：对于如下的参数进行签名  
 ```parameters={"api_key=hello-world","uid=10000"};```   
 生成待签名的字符串:   
 ```api_key=hello-world&uid=10000```  
 
 然后，将待签名字符串尾部添加私钥参数生成最终待签名字符串。
-例如：
-```api_key=hello-world&uid=10000&secret_key=secretKey```
-注意，"&secret_key=secretKey"为签名必传参数。
-最后，是利用32位MD5算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)，MD5计算结果中字母全部大写。  
+例如:  
+```api_key=hello-world&uid=10000&secret_key=secretKey```  
+注意，"&secret_key=secretKey"为签名必传参数。  
+最后，利用32位MD5算法，对最终待签名字符串进行签名运算，然后将计算结果中的字母转为大写，从而得到签名结果字符串(该字符串赋值于参数sign)  
 
 参考如下代码：
 ```
