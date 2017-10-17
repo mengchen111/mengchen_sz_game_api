@@ -7,7 +7,7 @@ use App\Models\RecordInfos;
 use App\Models\RecordRelative;
 use Illuminate\Http\Request;
 
-class TestController extends Controller
+class RecordController extends Controller
 {
     public function show()
     {

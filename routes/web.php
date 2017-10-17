@@ -45,4 +45,4 @@ Route::group([
 });
 
 //游戏接口
-Route::get('/testgame', 'TestController@show');
+Route::get('/records', 'RecordController@show');  //战绩查询

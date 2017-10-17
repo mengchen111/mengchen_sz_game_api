@@ -15,4 +15,7 @@ return [
 
     //计划任务日志
     'cron_task_log' => env('CRON_TASK_LOG', '/tmp/artisan.log'),
+
+    'app_key' => env('APP_KEY'),
+    'app_secret' => env('APP_SECRET'),
 ];

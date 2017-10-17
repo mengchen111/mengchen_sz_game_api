@@ -92,17 +92,41 @@ cd $codeDir
 ./vendor/bin/phpunit
 ```
 
-## 后端接口列表
-### 管理员接口
-> **前缀/admin/api/**
+## 接口列表
 
 | URI   | Method  | Description |     
 | ----  | :-----: | ----------: |
-| password | PUT | 更新密码 |
-| home | GET | 首页信息 |
-| system/log | GET | 系统操作日志记录 |  
+| records | GET | 战绩查询 |
 
-### 公共接口
-| URI   | Method  | Description |     
-| ----  | :-----: | ----------: |
-| /api/info | GET | 获取用户个人信息 |
+## 接口调用规范
+### 参数签名计算方法
+用户提交的参数除sign外，都要参与签名。  
+
+首先，将待签名字符串按照参数名进行排序(首先比较所有参数名的第一个字母，按abcd顺序排列，若遇到相同首字母，则看第二个字母，以此类推)。  
+
+例如：对于如下的参数进行签名
+```parameters={"api_key=hello-world","uid=10000"};```   
+生成待签名的字符串:   
+```api_key=hello-world&uid=10000```  
+
+然后，将待签名字符串尾部添加私钥参数生成最终待签名字符串。
+例如：
+```api_key=hello-world&uid=10000&secret_key=secretKey```
+注意，"&secret_key=secretKey"为签名必传参数。
+最后，是利用32位MD5算法，对最终待签名字符串进行签名运算，从而得到签名结果字符串(该字符串赋值于参数sign)，MD5计算结果中字母全部大写。  
+
+参考如下代码：
+```
+protected function getSign(Array $parm = null)
+{
+    $parm['api_key'] = $this->apiKey;
+    ksort($parm);
+    $sign = "";
+    foreach ($parm as $key => $value) {
+        $sign .= "{$key}={$value}&";
+    }
+    $sign .= "secret_key={$this->secretKey}";
+    return strtoupper(md5($sign));
+}
+```
+
