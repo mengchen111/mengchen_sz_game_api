@@ -117,12 +117,12 @@ cd $codeDir
 
 参考如下代码：
 ```
-protected function getSign(Array $parm = null)
+protected function getSign(Array $param = null)
 {
-    $parm['api_key'] = $this->apiKey;
-    ksort($parm);
+    $param['api_key'] = $this->apiKey;
+    ksort($param);
     $sign = "";
-    foreach ($parm as $key => $value) {
+    foreach ($param as $key => $value) {
         $sign .= "{$key}={$value}&";
     }
     $sign .= "secret_key={$this->secretKey}";
