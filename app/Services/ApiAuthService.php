@@ -43,7 +43,7 @@ class ApiAuthService
         foreach ($params as $key => $value) {
             $sign .= "{$key}={$value}&";
         }
-        $sign .= "secret_key=${secret}";
+        $sign .= "api_secret=${secret}";
         return strtoupper(md5($sign));
     }
 }
