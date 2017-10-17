@@ -43,3 +43,6 @@ Route::group([
     Route::get('home', 'ViewController@home');
     Route::get('system/log', 'ViewController@systemLog');
 });
+
+//游戏接口
+Route::get('/testgame', 'TestController@show');
