@@ -1,0 +1,23 @@
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar" id="sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar Menu -->
+        <ul class="sidebar-menu">
+            <li class="header">HEADER</li>
+            <!-- Optionally, you can add icons to the links -->
+            <li :class="{ active: uri.home.isActive }"><a href="/admin/home"><i class="fa fa-home"></i> <span>首页</span></a></li>
+            <li class="treeview" :class="{ active: uri.system.isActive }">
+                <a href="#"><i class="fa fa-gear"></i> <span>系统管理</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li :class="{ active: uri.system.log.isActive }"><a href="/admin/system/log"><i class="fa fa-circle-o"></i>系统日志</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+</aside>

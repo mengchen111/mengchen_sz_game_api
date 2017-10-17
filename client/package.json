@@ -1,0 +1,41 @@
+{
+  "name": "webpck",
+  "description": "webpack",
+  "version": "1.0.0",
+  "auther": "liudian",
+  "private": true,
+  "scripts": {
+    "dev": "webpack --progress --colors --profile --config ./webpack.dev.config.js",
+    "build": "webpack --progress --colors --bail --profile",
+    "server": "webpack-dev-server --watch --progress --colors --config ./webpack.dev.config.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.1",
+    "vue": "^2.4.2"
+  },
+  "devDependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.7.2",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-html": "^3.2.2",
+    "moment": "^2.18.1",
+    "style-loader": "^0.18.2",
+    "vue-bootstrap-datetimepicker": "^3.0.0",
+    "vue-echarts": "^2.4.1",
+    "vue-loader": "^13.0.4",
+    "vue-notification": "^1.3.4",
+    "vue-template-compiler": "^2.4.2",
+    "vuetable-2": "^1.6.5",
+    "webpack": "^3.5.4",
+    "webpack-dev-server": "^2.7.1"
+  },
+  "keywords": [
+    "webpack"
+  ]
+}
