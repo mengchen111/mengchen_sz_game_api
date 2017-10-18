@@ -46,7 +46,9 @@ class RecordController extends Controller
     protected function filterRequest($request)
     {
         $this->validate($request, [
-            'uid' => 'required|numeric',
+            'uid' => 'required|numeric|exists:account,id',
+        ], [
+            'exists' => '玩家不存在',
         ]);
         return $request->uid;
     }
