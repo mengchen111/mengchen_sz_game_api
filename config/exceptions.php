@@ -9,6 +9,7 @@
 return [
     //exception code
     'CustomException' => 1000,
+    'ApiException' => 2000,
 
     'ApiKeyNotMatch' => 1001,
     'SignNotMatch' => 1002,

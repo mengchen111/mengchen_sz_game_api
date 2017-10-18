@@ -51,9 +51,17 @@ class Handler extends ExceptionHandler
         //接口认证失败错误
         if ($exception instanceof ApiAuthException) {
             return response()->json([
-                'error' => $exception->getMessage(),
+                'errorMsg' => $exception->getMessage(),
                 'code' => $exception->getCode(),
                 'result' => false,
+            ], 403);
+        }
+        //捕获api调用时的异常
+        if ($exception instanceof ApiException) {
+            return response()->json([
+                'result' => false,
+                'code' => $exception->getCode(),
+                'errorMsg' => $exception->getMessage(),
             ], 200);
         }
         return parent::render($request, $exception);
