@@ -96,7 +96,10 @@ cd $codeDir
 
 | URI   | Method  | Description |     
 | ----  | :-----: | ----------: |
-| records | GET | 战绩查询 |
+| records | GET | 获取所有战绩信息 |
+| records | POST | 查询单个玩家战绩 |
+| players | GET | 获取所有玩家信息 |
+| players | POST | 查询玩家 |  
 
 ## 接口调用规范
 ### 参数签名计算方法
