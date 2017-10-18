@@ -11,16 +11,7 @@ use Exception;
 
 class PlayerController extends Controller
 {
-    protected $per_page = 15;
-    protected $order = ['id', 'desc'];
-
-    public function __construct(Request $request)
-    {
-        $this->per_page = $request->per_page ?: $this->per_page;
-        $this->order = $request->sort ? explode('|', $request->sort) : $this->order;
-    }
-
-    public function show(Request $request)
+    public function show(ApiRequest $request)
     {
         try {
             $players = Players::all();
@@ -34,7 +25,7 @@ class PlayerController extends Controller
 
     }
 
-    public function search(Request $request)
+    public function search(ApiRequest $request)
     {
         $searchUid = $this->filterRequest($request);
 
