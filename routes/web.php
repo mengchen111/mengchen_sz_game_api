@@ -45,6 +45,7 @@ Route::group([
 });
 
 //游戏接口
-Route::get('/records', 'RecordController@show');    //战绩查询
+Route::get('/records', 'RecordController@show');    //列出所有玩家的所有战绩
+Route::post('records', 'RecordController@search');  //查询玩家战绩
 Route::get('/players', 'PlayerController@show');    //列出所有玩家
 Route::post('/players', 'PlayerController@search'); //查询玩家

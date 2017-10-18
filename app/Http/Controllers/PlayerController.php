@@ -22,7 +22,6 @@ class PlayerController extends Controller
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
         }
-
     }
 
     public function search(ApiRequest $request)
