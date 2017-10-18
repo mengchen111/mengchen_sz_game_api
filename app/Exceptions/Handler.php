@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
                 'errorMsg' => $exception->getMessage(),
                 'code' => $exception->getCode(),
                 'result' => false,
-            ], 200);
+            ], 403);
         }
         //捕获api调用时的异常
         if ($exception instanceof ApiException) {
