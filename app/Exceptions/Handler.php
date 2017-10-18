@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -54,7 +55,7 @@ class Handler extends ExceptionHandler
                 'errorMsg' => $exception->getMessage(),
                 'code' => $exception->getCode(),
                 'result' => false,
-            ], 403);
+            ], 200);
         }
         //捕获api调用时的异常
         if ($exception instanceof ApiException) {
@@ -63,6 +64,13 @@ class Handler extends ExceptionHandler
                 'code' => $exception->getCode(),
                 'errorMsg' => $exception->getMessage(),
             ], 200);
+        }
+        if ($exception instanceof ValidationException) {    //覆盖源码，表单验证错误消息写入errorMsg属性里面
+            return response()->json([
+                'result' => false,
+                'code' => $exception->getCode(),
+                'errorMsg' => $exception->validator->errors()->getMessages(),
+            ], 422);
         }
         return parent::render($request, $exception);
     }
