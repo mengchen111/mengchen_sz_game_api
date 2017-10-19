@@ -25,6 +25,7 @@ class RecordController extends Controller
         }
     }
 
+    //根据玩家id获取玩家所有战绩
     public function search(ApiRequest $request)
     {
         $searchUid = $this->filterRequest($request);
@@ -43,6 +44,22 @@ class RecordController extends Controller
         }
     }
 
+    //根据战绩id查询单条战绩详情
+    public function searchRecordInfo(ApiRequest $request)
+    {
+        $searchRecId = $this->filterSearchRecordRequest($request);
+
+        try {
+            $rounds = RecordInfos::find($searchRecId);
+            return [
+                'result' => true,
+                'data' => $rounds,
+            ];
+        } catch (\Exception $exception) {
+            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+        }
+    }
+
     protected function filterRequest($request)
     {
         $this->validate($request, [
@@ -51,5 +68,15 @@ class RecordController extends Controller
             'exists' => '玩家不存在',
         ]);
         return $request->uid;
+    }
+
+    protected function filterSearchRecordRequest($request)
+    {
+        $this->validate($request, [
+            'rec_id' => 'required|numeric|exists:record_infos,id',
+        ], [
+            'exists' => '玩家不存在',
+        ]);
+        return $request->rec_id;
     }
 }
