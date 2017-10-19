@@ -118,7 +118,9 @@ api_key=hello-world&uid=10000
 
 然后，将待签名字符串尾部添加私钥参数生成最终待签名字符串。
 例如:  
-```api_key=hello-world&uid=10000&secret_key=secretKey```  
+```
+api_key=hello-world&uid=10000&secret_key=secretKey
+```  
 注意，"&secret_key=secretKey"为签名必传参数。  
 最后，利用32位MD5算法，对最终待签名字符串进行签名运算，然后将计算结果中的字母转为大写，从而得到签名结果字符串(该字符串赋值于参数sign)  
 
