@@ -100,7 +100,8 @@ cd $codeDir
 | /records | POST | 查询单个玩家战绩 |
 | /record-info | POST | 根据战绩id查询单条战绩详情 |
 | /players | GET | 获取所有玩家信息 |
-| /players | POST | 查询玩家 |  
+| /players | POST | 查询玩家 | 
+| /top-up | POST | 玩家充值 | 
 
 ## 接口调用规范
 ### 参数签名计算方法

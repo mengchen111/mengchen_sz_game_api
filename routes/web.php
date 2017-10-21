@@ -50,3 +50,4 @@ Route::post('records', 'RecordController@search'); //查询玩家战绩
 Route::post('record-info', 'RecordController@searchRecordInfo');    //根据战绩id查询单条战绩详情
 Route::get('players', 'PlayerController@show');    //列出所有玩家
 Route::post('players', 'PlayerController@search'); //查询玩家
+Route::post('top-up', 'PlayerController@topUp'); //玩家充值

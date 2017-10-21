@@ -6,10 +6,11 @@ use App\Exceptions\ApiException;
 use App\Exceptions\GameServerException;
 use App\Http\Requests\ApiRequest;
 use App\Models\Players;
-use App\Services\Game\GameServer;
+use App\Services\GameServer;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Request;
 use Exception;
+use Carbon\Carbon;
 
 class PlayerController extends Controller
 {
@@ -57,7 +58,13 @@ class PlayerController extends Controller
         $gameServer = new GameServer();
 
         try {
-            return $gameServer->request('POST', $topUpApi, $formData);
+            $gameServer->request('POST', $topUpApi, $formData);
+            return [
+                'result' => true,
+                'data' => [
+                    'message' => '充值成功',
+                ],
+            ];
         } catch (GameServerException $e) {
             throw new ApiException($e->getMessage(), $e->getCode());
         }
@@ -66,14 +73,16 @@ class PlayerController extends Controller
     protected function validateTopUpRequest($request)
     {
         $this->validate($request, [
-            'uid' => 'required|integer',    //玩家ID
-            'ctype' => 'required|integer',  //充值类型
-            'amount' => 'required|integer', //充值数量
-            'timestamp' => 'required|integer'   //时间戳
+            'uid' => 'required|integer',
+            'item_type' => 'required|integer',
+            'amount' => 'required|integer',
         ]);
 
-        return $request->intersect([
-            'uid', 'ctype', 'amount', 'timestamp',
-        ]);
+        return [
+            'uid' => $request->uid,                     //玩家ID
+            'ctype' => $request->item_type,             //充值类型
+            'amount' => $request->amount,               //充值数量
+            'timestamp' => Carbon::now()->timestamp,    //时间戳
+        ];
     }
 }
