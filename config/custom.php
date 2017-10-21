@@ -18,4 +18,11 @@ return [
 
     'api_key' => env('API_KEY'),
     'api_secret' => env('API_SECRET'),
+
+    //游戏端接口地址
+    'game_server_api_address' => env('GAME_SERVER_API_ADDRESS'),
+    'game_server_partner_id' => env('GAME_SERVER_PARTNER_ID'),
+
+    //游戏端接口uri
+    'game_server_api_topUp' => 'recharge.php',      //玩家充值
 ];

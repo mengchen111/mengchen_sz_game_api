@@ -10,6 +10,7 @@ return [
     //exception code
     'CustomException' => 1000,
     'ApiException' => 2000,
+    'GameServerException' => 2001,
 
     'ApiKeyNotMatch' => 1001,
     'SignNotMatch' => 1002,

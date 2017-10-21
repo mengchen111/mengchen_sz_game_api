@@ -138,5 +138,15 @@ protected function getSign(Array $param = null)
     $sign .= "secret_key={$this->secretKey}";
     return strtoupper(md5($sign));
 }
-```
+```  
+
+
+## 游戏端接口
+> **https://down.yxx.max78.com/casino/back/htmls/agentx/**
+
+| URI | Method | Description |
+| ----  | :-----: | ----------: |
+| users.php | GET | 获取玩家列表 |
+| user.php| POST | 获取指定玩家信息 |
+| recharge.php | POST | 给指定玩家充值 |
 
