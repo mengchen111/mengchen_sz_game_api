@@ -6,6 +6,8 @@ use App\Exceptions\ApiException;
 use App\Exceptions\GameServerException;
 use App\Http\Requests\ApiRequest;
 use App\Models\Players;
+use App\Models\Statistics;
+use App\Models\StatisticsHistory;
 use App\Services\GameServer;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Request;
@@ -21,6 +23,46 @@ class PlayerController extends Controller
             return [
                 'result' => true,
                 'data' => $players,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+        }
+    }
+
+    public function showOnlineAmount(ApiRequest $request)
+    {
+        //type 1 当前在线人数
+        //type 2 当前最高人数
+        //type 3 游戏中的人数
+        try {
+            $onlineAmount = Statistics::where('type', 1)->firstOrFail()->value;    //当日在线
+
+            return [
+                'result' => true,
+                'data' => $onlineAmount,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+        }
+    }
+
+    public function showOnlinePeak(ApiRequest $request)
+    {
+        $this->validate($request, [
+            'date' => 'required|required|date_format:Y-m-d'
+        ]);
+
+        try {
+            $date = Carbon::parse($request->date);
+            if ($date->isToday()) {
+                $onlinePeak = Statistics::where('type', 2)->firstOrFail()->value;
+            } else {
+                $onlinePeak = StatisticsHistory::whereDate('time', $date)->firstOrFail()->value;
+            }
+
+            return [
+                'result' => true,
+                'data' => $onlinePeak,
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));

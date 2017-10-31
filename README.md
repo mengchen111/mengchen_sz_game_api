@@ -102,6 +102,8 @@ cd $codeDir
 | /records | POST | 查询单个玩家战绩 |
 | /record-info | POST | 根据战绩id查询单条战绩详情 |
 | /players | GET | 获取所有玩家信息 |
+| /players/online/amount | GET | 获取实时在线玩家数量 |
+| /players/online/peak | GET | 获取指定日期的当日玩家最高在线数量 | 
 | /players | POST | 查询玩家 | 
 | /top-up | POST | 玩家充值 | 
 

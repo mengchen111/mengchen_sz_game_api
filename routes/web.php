@@ -49,5 +49,7 @@ Route::get('records', 'RecordController@show');    //列出所有玩家的所有
 Route::post('records', 'RecordController@search'); //查询玩家战绩
 Route::post('record-info', 'RecordController@searchRecordInfo');    //根据战绩id查询单条战绩详情
 Route::get('players', 'PlayerController@show');    //列出所有玩家
+Route::get('players/online/amount', 'PlayerController@showOnlineAmount');   //列出实时在线玩家数量
+Route::get('players/online/peak', 'PlayerController@showOnlinePeak');       //列出指定日期的当日玩家最高在线数量
 Route::post('players', 'PlayerController@search'); //查询玩家
 Route::post('top-up', 'PlayerController@topUp'); //玩家充值
