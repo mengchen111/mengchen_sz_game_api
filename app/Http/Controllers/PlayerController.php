@@ -46,7 +46,7 @@ class PlayerController extends Controller
         }
     }
 
-    public function showOnlinePeak(Request $request)
+    public function showOnlinePeak(ApiRequest $request)
     {
         $this->validate($request, [
             'date' => 'required|date_format:Y-m-d'
@@ -54,10 +54,12 @@ class PlayerController extends Controller
 
         try {
             if (Carbon::parse($request->date)->isToday()) {
-                $onlinePeak = Statistics::where('type', 2)->firstOrFail()->value;
+                $onlinePeak = Statistics::where('type', 2)->first();
             } else {
-                $onlinePeak = StatisticsHistory::whereDate('time', $request->date)->firstOrFail()->value;
+                $onlinePeak = StatisticsHistory::whereDate('time', $request->date)->first();
             }
+
+            $onlinePeak = empty($onlinePeak) ? 0 : $onlinePeak->value;
 
             return [
                 'result' => true,
