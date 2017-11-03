@@ -77,9 +77,7 @@ class GameServer
 
     protected function postData($uri, Array $params = [])
     {
-        $params = array_merge($params, [
-            'sign' => $this->buildSign($params)
-        ]);
+        $params['sign'] = $this->buildSign($params);
 
         try {
             $res = $this->guzzle->request('POST', $uri, [
