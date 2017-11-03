@@ -106,10 +106,10 @@ class GameServer
     protected function checkResult($result)
     {
         if (empty($result)) {
-            throw new GameServerException('调用后端接口成功，但是返回结果为空：' . json_encode($result));
+            throw new GameServerException('调用后端接口成功，但是返回结果为空：' . json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         if ($result['code'] < 0) {
-            throw new GameServerException('调用后端接口成功，但是游戏服返回的结果：' . $result['info']);
+            throw new GameServerException('调用后端接口成功，但是游戏服返回的结果错误：' . json_encode($result, JSON_UNESCAPED_UNICODE));
         }
         return true;
     }

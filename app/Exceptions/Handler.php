@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
                 'errorMsg' => $exception->getMessage(),
                 'code' => $exception->getCode(),
                 'result' => false,
-            ], 403);
+            ], 403, [], JSON_UNESCAPED_UNICODE);
         }
         //捕获api调用时的异常
         if ($exception instanceof ApiException) {
@@ -63,14 +63,14 @@ class Handler extends ExceptionHandler
                 'result' => false,
                 'code' => $exception->getCode(),
                 'errorMsg' => $exception->getMessage(),
-            ], 200);
+            ], 200, [], JSON_UNESCAPED_UNICODE);
         }
         if ($exception instanceof ValidationException) {    //覆盖源码，表单验证错误消息写入errorMsg属性里面
             return response()->json([
                 'result' => false,
                 'code' => $exception->getCode(),
                 'errorMsg' => $exception->validator->errors()->getMessages(),
-            ], 422);
+            ], 422, [], JSON_UNESCAPED_UNICODE);
         }
         return parent::render($request, $exception);
     }
