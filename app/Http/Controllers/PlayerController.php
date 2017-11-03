@@ -8,6 +8,7 @@ use App\Http\Requests\ApiRequest;
 use App\Models\Players;
 use App\Models\Statistics;
 use App\Models\StatisticsHistory;
+use App\Services\ApiLog;
 use App\Services\GameServer;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Request;
@@ -20,6 +21,8 @@ class PlayerController extends Controller
     {
         try {
             $players = Players::all();
+
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $players,
@@ -37,6 +40,7 @@ class PlayerController extends Controller
         try {
             $onlineAmount = Statistics::where('type', 1)->firstOrFail()->value;    //当日在线
 
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $onlineAmount,
@@ -61,6 +65,7 @@ class PlayerController extends Controller
 
             $onlinePeak = empty($onlinePeak) ? 0 : $onlinePeak->value;
 
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $onlinePeak,
@@ -76,6 +81,8 @@ class PlayerController extends Controller
 
         try {
             $players = Players::where('id', 'like', "%${searchUid}%")->get();
+            
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $players,
@@ -102,6 +109,7 @@ class PlayerController extends Controller
 
         try {
             $gameServer->request('POST', $topUpApi, $formData);
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => [

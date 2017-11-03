@@ -9,6 +9,7 @@ use App\Models\RecordRelative;
 use Illuminate\Http\Request;
 use Exception;
 use App\Exceptions\ApiException;
+use App\Services\ApiLog;
 
 class RecordController extends Controller
 {
@@ -16,6 +17,8 @@ class RecordController extends Controller
     {
         try {
             $records = Players::with(['records.infos'])->get();
+
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $records,
@@ -35,6 +38,8 @@ class RecordController extends Controller
                 ->where('id', "$searchUid")
                 ->first()
                 ->records;
+
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $records,
@@ -51,6 +56,8 @@ class RecordController extends Controller
 
         try {
             $rounds = RecordInfos::find($searchRecId);
+
+            ApiLog::add($request);
             return [
                 'result' => true,
                 'data' => $rounds,
