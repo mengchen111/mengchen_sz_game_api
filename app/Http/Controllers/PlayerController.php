@@ -81,7 +81,7 @@ class PlayerController extends Controller
 
         try {
             $players = Players::where('id', 'like', "%${searchUid}%")->get();
-            
+
             ApiLog::add($request);
             return [
                 'result' => true,

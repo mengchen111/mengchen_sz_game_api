@@ -57,6 +57,14 @@ class Handler extends ExceptionHandler
                 'result' => false,
             ], 403, [], JSON_UNESCAPED_UNICODE);
         }
+        //捕获请求游戏后端接口出现的异常
+        if ($exception instanceof GameServerException) {
+            return response()->json([
+                'result' => false,
+                'code' => $exception->getCode(),
+                'errorMsg' => $exception->getMessage(),
+            ], 200, [], JSON_UNESCAPED_UNICODE);
+        }
         //捕获api调用时的异常
         if ($exception instanceof ApiException) {
             return response()->json([

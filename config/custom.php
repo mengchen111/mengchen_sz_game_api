@@ -25,4 +25,5 @@ return [
 
     //游戏端接口uri
     'game_server_api_topUp' => 'recharge.php',      //玩家充值
+    'game_server_api_roomCreate' => 'room_create.php'   //创建游戏房间
 ];

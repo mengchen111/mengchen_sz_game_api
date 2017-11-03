@@ -53,3 +53,4 @@ Route::get('players/online/amount', 'PlayerController@showOnlineAmount');   //�
 Route::get('players/online/peak', 'PlayerController@showOnlinePeak');       //列出指定日期的当日玩家最高在线数量
 Route::post('players', 'PlayerController@search'); //查询玩家
 Route::post('top-up', 'PlayerController@topUp'); //玩家充值
+Route::post('room', 'RoomController@create');   //创建游戏房间

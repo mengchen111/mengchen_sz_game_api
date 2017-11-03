@@ -106,6 +106,7 @@ cd $codeDir
 | /players/online/peak | GET | 获取指定日期的当日玩家最高在线数量 | 
 | /players | POST | 查询玩家 | 
 | /top-up | POST | 玩家充值 | 
+| /room | POST | 创建游戏房间 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
@@ -154,4 +155,5 @@ protected function getSign(Array $param = null)
 | users.php | GET | 获取玩家列表 |
 | user.php| POST | 获取指定玩家信息 |
 | recharge.php | POST | 给指定玩家充值 |
+| room_create.php | POST | 游戏房间创建 |
 
