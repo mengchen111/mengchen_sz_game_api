@@ -6,6 +6,7 @@ use App\Http\Requests\ApiRequest;
 use Illuminate\Http\Request;
 use App\Services\GameServer;
 use App\Services\ApiLog;
+use Carbon\Carbon;
 
 class RoomController extends Controller
 {
@@ -32,6 +33,8 @@ class RoomController extends Controller
         $this->validate($request, [
             'creator' => 'integer',
         ]);
-        return $request->all();
+        $data =  $request->all();
+        $data['timestamp'] = Carbon::now()->timestamp;
+        return $data;
     }
 }
