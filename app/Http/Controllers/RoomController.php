@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class RoomController extends Controller
 {
-    public function create(Request $request)
+    public function create(ApiRequest $request)
     {
         $formData = $this->validateRoomCreateData($request);
         $roomCreateApi = config('custom.game_server_api_roomCreate');
@@ -23,7 +23,7 @@ class RoomController extends Controller
             'result' => true,
             'data' => [
                 'message' => '创建房间成功',
-                'res' => $res,
+                'room_id' => $res['info'],
             ],
         ];
     }
@@ -35,6 +35,15 @@ class RoomController extends Controller
         ]);
         $data =  $request->all();
         $data['timestamp'] = Carbon::now()->timestamp;
+
+        //网站传过来的api_key和sign参数去掉
+        if (isset($data['api_key'])) {
+            unset($data['api_key']);
+        }
+        if (isset($data['sign'])) {
+            unset($data['sign']);
+        }
+
         return $data;
     }
 }
