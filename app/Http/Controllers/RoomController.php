@@ -46,4 +46,14 @@ class RoomController extends Controller
 
         return $data;
     }
+
+    public function showOpenRoom(ApiRequest $request)
+    {
+        //TODO 查看正在玩的房间
+    }
+
+    public function showRoomHistory(ApiRequest $request)
+    {
+        //TODO 查看已经结束的房间
+    }
 }

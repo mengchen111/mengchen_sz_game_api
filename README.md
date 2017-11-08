@@ -107,6 +107,8 @@ cd $codeDir
 | /players | POST | 查询玩家 | 
 | /top-up | POST | 玩家充值 | 
 | /room | POST | 创建游戏房间 | 
+| /room/open | GET | 查看正在玩的房间 | 
+| /room/history | GET | 查看已经结束的房间 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
