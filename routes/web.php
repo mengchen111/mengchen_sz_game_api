@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+/*Route::get('/', 'HomeController@index');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -42,7 +42,7 @@ Route::group([
 ], function () {
     Route::get('home', 'ViewController@home');
     Route::get('system/log', 'ViewController@systemLog');
-});
+});*/
 
 //游戏接口
 Route::get('records', 'RecordController@show');    //列出所有玩家的所有战绩
