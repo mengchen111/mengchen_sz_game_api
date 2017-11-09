@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ApiRequest;
+use App\Models\ServerRooms;
+use App\Models\ServerRoomsHistory;
 use Illuminate\Http\Request;
 use App\Services\GameServer;
 use App\Services\ApiLog;
@@ -47,13 +49,23 @@ class RoomController extends Controller
         return $data;
     }
 
-    public function showOpenRoom(ApiRequest $request)
+    public function showOpenRoom(Request $request)
     {
-        //TODO 查看正在玩的房间
+        $data = ServerRooms::all();
+        ApiLog::add($request);
+        return [
+            'result' => true,
+            'data' => $data,
+        ];
     }
 
-    public function showRoomHistory(ApiRequest $request)
+    public function showRoomHistory(Request $request)
     {
-        //TODO 查看已经结束的房间
+        $data = ServerRoomsHistory::all();
+        ApiLog::add($request);
+        return [
+            'result' => true,
+            'data' => $data,
+        ];
     }
 }

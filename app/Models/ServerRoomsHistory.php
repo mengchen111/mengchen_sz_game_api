@@ -17,4 +17,9 @@ class ServerRoomsHistory extends Model
     protected $hidden = [
         //
     ];
+
+    public function getOptionsJstrAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }
