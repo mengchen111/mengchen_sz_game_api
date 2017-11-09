@@ -49,7 +49,7 @@ class RoomController extends Controller
         return $data;
     }
 
-    public function showOpenRoom(Request $request)
+    public function showOpenRoom(ApiRequest $request)
     {
         $data = ServerRooms::all();
         ApiLog::add($request);
@@ -59,7 +59,7 @@ class RoomController extends Controller
         ];
     }
 
-    public function showRoomHistory(Request $request)
+    public function showRoomHistory(ApiRequest $request)
     {
         $data = ServerRoomsHistory::all();
         ApiLog::add($request);
