@@ -13,4 +13,9 @@ class RecordInfos extends Model
     protected $fillable = [
         //只读
     ];
+
+    public function getRecJstrAttribute($value)
+    {
+        return mb_convert_encoding($value, 'UTF-8');
+    }
 }
