@@ -42,7 +42,7 @@ class RecordController extends Controller
             ApiLog::add($request);
             return [
                 'result' => true,
-                'data' => $records,
+                'data' => $records,     //战绩为空时，data为空数组
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
