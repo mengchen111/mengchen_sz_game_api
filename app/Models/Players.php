@@ -18,8 +18,16 @@ class Players extends Model
         'permissions',
     ];
 
-    public function records()
+//    public function records()
+//    {
+//        return $this->hasMany('App\Models\RecordRelative', 'uid', 'id');
+//    }
+
+    public function getRecords()
     {
-        return $this->hasMany('App\Models\RecordRelative', 'uid', 'id');
+        $records = RecordRelative::with('infos')->where('uid', $this->id)->get()->toArray();
+        $recordsNew = RecordRelativeNew::with('infos')->where('uid', $this->id)->get()->toArray();
+        return array_merge($records, $recordsNew);
+        //return $records;
     }
 }

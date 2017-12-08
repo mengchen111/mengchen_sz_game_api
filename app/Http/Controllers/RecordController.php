@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApiRequest;
 use App\Models\Players;
 use App\Models\RecordInfos;
+use App\Models\RecordInfosNew;
 use App\Models\RecordRelative;
+use App\Models\RecordRelativeNew;
 use Illuminate\Http\Request;
 use Exception;
 use App\Exceptions\ApiException;
@@ -13,10 +15,11 @@ use App\Services\ApiLog;
 
 class RecordController extends Controller
 {
+    //暂未使用
     public function show(ApiRequest $request)
     {
         try {
-            $records = Players::with(['records.infos'])->get();
+            //$records = Players::with(['records.infos'])->get();   //records关系已更改
 
             ApiLog::add($request);
             return [
@@ -34,10 +37,16 @@ class RecordController extends Controller
         $searchUid = $this->filterRequest($request);
 
         try {
-            $records = Players::with(['records.infos'])
-                ->where('id', "$searchUid")
-                ->first()
-                ->records;
+            $player = Players::where('id', "$searchUid")->first();
+
+            if (empty($player)) {
+                return [
+                    'result' => true,
+                    'data' => [],
+                ];
+            }
+
+            $records = $player->getRecords();
 
             ApiLog::add($request);
             return [
@@ -55,7 +64,11 @@ class RecordController extends Controller
         $searchRecId = $this->filterSearchRecordRequest($request);
 
         try {
-            $rounds = RecordInfos::find($searchRecId);
+            if ($searchRecId >= 100000) {
+                $rounds = RecordInfosNew::find($searchRecId);
+            } else {
+                $rounds = RecordInfos::find($searchRecId);
+            }
 
             ApiLog::add($request);
             return [
@@ -70,7 +83,7 @@ class RecordController extends Controller
     protected function filterRequest($request)
     {
         $this->validate($request, [
-            'uid' => 'required|numeric|exists:account,id',
+            'uid' => 'required|integer|exists:account,id',
         ], [
             'exists' => '玩家不存在',
         ]);
@@ -80,7 +93,7 @@ class RecordController extends Controller
     protected function filterSearchRecordRequest($request)
     {
         $this->validate($request, [
-            'rec_id' => 'required|numeric|exists:record_infos,id',
+            'rec_id' => 'required|integer',
         ], [
             'exists' => '玩家不存在',
         ]);
