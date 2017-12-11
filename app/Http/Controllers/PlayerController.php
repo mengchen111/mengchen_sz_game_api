@@ -28,7 +28,7 @@ class PlayerController extends Controller
                 'data' => $players,
             ];
         } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+            throw new ApiException($exception->getMessage());
         }
     }
 
@@ -46,7 +46,7 @@ class PlayerController extends Controller
                 'data' => $onlineAmount,
             ];
         } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+            throw new ApiException($exception->getMessage());
         }
     }
 
@@ -71,7 +71,26 @@ class PlayerController extends Controller
                 'data' => $onlinePeak,
             ];
         } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
+    //查询游戏中的玩家数量
+    public function showInGameCount(ApiRequest $request)
+    {
+        //type 1 当前在线人数
+        //type 2 当前最高人数
+        //type 3 游戏中的人数
+        try {
+            $inGameCount = Statistics::where('type', 3)->firstOrFail()->value;
+
+            ApiLog::add($request);
+            return [
+                'result' => true,
+                'data' => $inGameCount,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
         }
     }
 
@@ -88,7 +107,7 @@ class PlayerController extends Controller
                 'data' => $players,
             ];
         } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+            throw new ApiException($exception->getMessage());
         }
     }
 
@@ -103,11 +122,11 @@ class PlayerController extends Controller
     public function topUp(ApiRequest $request)
     {
         $formData = $this->validateTopUpRequest($request);
-        $topUpApi = config('custom.game_server_api_topUp');
-
-        $gameServer = new GameServer();
 
         try {
+            $topUpApi = config('custom.game_server_api_topUp');
+
+            $gameServer = new GameServer();
             $gameServer->request('POST', $topUpApi, $formData);
             ApiLog::add($request);
             return [
@@ -116,8 +135,8 @@ class PlayerController extends Controller
                     'message' => '充值成功',
                 ],
             ];
-        } catch (GameServerException $e) {
-            throw new ApiException($e->getMessage(), $e->getCode());
+        } catch (Exception $e) {
+            throw new ApiException($e->getMessage());
         }
     }
 
