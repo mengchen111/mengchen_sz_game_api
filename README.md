@@ -104,6 +104,8 @@ cd $codeDir
 | /players | GET | 获取所有玩家信息 |
 | /players/online/amount | GET | 获取实时在线玩家数量 |
 | /players/online/peak | GET | 获取指定日期的当日玩家最高在线数量 | 
+| /players/in-game/peak | GET | 获取指定日期的游戏中玩家最高数量 | 
+| /players/in-game | GET | 获取实时游戏中玩家数量 | 
 | /players | POST | 查询玩家 | 
 | /top-up | POST | 玩家充值 | 
 | /room | POST | 创建游戏房间 | 

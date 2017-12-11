@@ -60,7 +60,9 @@ class PlayerController extends Controller
             if (Carbon::parse($request->date)->isToday()) {
                 $onlinePeak = Statistics::where('type', 2)->first();
             } else {
-                $onlinePeak = StatisticsHistory::whereDate('time', $request->date)->first();
+                $onlinePeak = StatisticsHistory::where('type', 2)
+                    ->whereDate('time', $request->date)
+                    ->first();
             }
 
             $onlinePeak = empty($onlinePeak) ? 0 : $onlinePeak->value;
@@ -88,6 +90,33 @@ class PlayerController extends Controller
             return [
                 'result' => true,
                 'data' => $inGameCount,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
+    public function showInGamePeak(ApiRequest $request)
+    {
+        $this->validate($request, [
+            'date' => 'required|date_format:Y-m-d'
+        ]);
+
+        try {
+            if (Carbon::parse($request->date)->isToday()) {
+                $inGamePeak = Statistics::where('type', 4)->first();
+            } else {
+                $inGamePeak = StatisticsHistory::where('type', 4)
+                    ->whereDate('time', $request->date)
+                    ->first();
+            }
+
+            $inGamePeak = empty($inGamePeak) ? 0 : $inGamePeak->value;
+
+            ApiLog::add($request);
+            return [
+                'result' => true,
+                'data' => $inGamePeak,
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage());
