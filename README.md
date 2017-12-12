@@ -111,6 +111,8 @@ cd $codeDir
 | /room | POST | 创建游戏房间 | 
 | /room/open | GET | 查看正在玩的房间 | 
 | /room/history | GET | 查看已经结束的房间 | 
+| /card/consumed | GET | 查看指定日期的房卡消耗数据 | 
+| /card/consumed/total | GET | 查看截止指定日期的房卡总消耗 | 
 
 ## 接口调用规范
 ### 参数签名计算方法

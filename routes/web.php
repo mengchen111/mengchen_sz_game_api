@@ -58,3 +58,6 @@ Route::post('top-up', 'PlayerController@topUp'); //玩家充值
 Route::post('room', 'RoomController@create');   //创建游戏房间
 Route::get('room/open', 'RoomController@showOpenRoom');  //查看正在玩的房间
 Route::get('room/history', 'RoomController@showRoomHistory');  //查看已经结束的房间
+Route::get('card/consumed', 'CardConsumedController@getCardConsumedData');
+Route::get('card/consumed/total', 'CardConsumedController@getCardConsumedSumTotal');
+
