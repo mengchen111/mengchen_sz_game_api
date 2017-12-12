@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\ApiException;
+use App\Services\ApiLog;
 
 class CardConsumedController extends Controller
 {
@@ -30,6 +31,8 @@ class CardConsumedController extends Controller
             } else {
                 $cardConsumedAvg = ceil($cardConsumedSum / $cardConsumedPlayersCount);  //向上取整
             }
+
+            ApiLog::add($request);
 
             return [
                 'result' => true,
@@ -80,6 +83,8 @@ class CardConsumedController extends Controller
                 ->where('kind', '!=', 0)
                 ->sum('val');
 
+            ApiLog::add($request);
+            
             return [
                 'result' => true,
                 'data' => abs($sum),
