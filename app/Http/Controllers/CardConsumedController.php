@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApiRequest;
 use App\Models\LogCurrencyOperation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class CardConsumedController extends Controller
      * @param string $date
      * @return string '280|13|22 - 当日玩家耗卡总数|当日有过耗卡记录的玩家总数|平均耗卡数(向上取整的比值)
      */
-    public function getCardConsumedData(Request $request)
+    public function getCardConsumedData(ApiRequest $request)
     {
         $this->validateInputDate($request);
 
@@ -73,7 +74,7 @@ class CardConsumedController extends Controller
     /**
      * 获取截止给定日期玩家消耗卡的总数，如果不给定日期则查询截止当前玩家耗卡的总数
      **/
-    public function getCardConsumedSumTotal(Request $request)
+    public function getCardConsumedSumTotal(ApiRequest $request)
     {
         $this->validateInputDate($request);
 
@@ -84,7 +85,7 @@ class CardConsumedController extends Controller
                 ->sum('val');
 
             ApiLog::add($request);
-            
+
             return [
                 'result' => true,
                 'data' => abs($sum),
