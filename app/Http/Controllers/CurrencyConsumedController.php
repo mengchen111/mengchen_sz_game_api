@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class CurrencyConsumedController extends Controller
 {
     //获取道具消耗记录（此记录包括后台的充值和房卡的消耗）
-    public function getCurrencyLog(Request $request)
+    public function getCurrencyLog(ApiRequest $request)
     {
         $this->validate($request, [
             'date' => 'date_format:"Y-m-d"',
