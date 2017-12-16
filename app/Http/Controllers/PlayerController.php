@@ -125,10 +125,14 @@ class PlayerController extends Controller
 
     public function search(ApiRequest $request)
     {
-        $searchUid = $this->filterRequest($request);
+        //$this->validateSearchRequest($request);
 
         try {
-            $players = Players::where('id', 'like', "%${searchUid}%")->get();
+            $players = Players::when($request->has('uid'), function ($query) use ($request) {
+                return $query->where('id', 'like', "%{$request->uid}%");
+            })->when($request->has('nickname'), function ($query) use ($request) {
+                return $query->where('nickname', 'like', "%{$request->nickname}%", 'or');
+            })->get();
 
             ApiLog::add($request);
             return [
@@ -140,13 +144,13 @@ class PlayerController extends Controller
         }
     }
 
-    protected function filterRequest($request)
-    {
-        $this->validate($request, [
-            'uid' => 'required|numeric',
-        ]);
-        return $request->uid;
-    }
+//    protected function validateSearchRequest($request)
+//    {
+//        $this->validate($request, [
+//            'uid' => 'integer',
+//            'nickname' => 'string|max:255',
+//        ]);
+//    }
 
     public function topUp(ApiRequest $request)
     {
