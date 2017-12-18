@@ -51,11 +51,22 @@ class RoomController extends Controller
 
     public function showOpenRoom(ApiRequest $request)
     {
-        $data = ServerRooms::all();
+        $this->validate($request, [
+            'date' => 'date_format:"Y-m-d"',
+            //'game_kind' => 'integer', //房间类型(即游戏类型, 惠州麻将、惠东麻将等)
+        ]);
+
+        $roomOpened = ServerRooms::when($request->has('date'), function ($query) use ($request) {
+            return $query->whereDate('time', $request->input('date'));
+        })->when($request->has('game_kind'), function ($query) use ($request) {
+            return $query->where('rtype', $request->input('game_kind'));
+        })->get();
+
         ApiLog::add($request);
+
         return [
             'result' => true,
-            'data' => $data,
+            'data' => $roomOpened,
         ];
     }
 
@@ -63,7 +74,7 @@ class RoomController extends Controller
     {
         $this->validate($request, [
             'date' => 'date_format:"Y-m-d"',
-            'game_kind' => 'integer', //房间类型(即游戏类型, 惠州麻将、惠东麻将等)
+            //'game_kind' => 'integer', //房间类型(即游戏类型, 惠州麻将、惠东麻将等)
         ]);
 
         $roomHistory = ServerRoomsHistory::when($request->has('date'), function ($query) use ($request) {
