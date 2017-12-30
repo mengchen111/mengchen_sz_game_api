@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ApiRequest;
 use App\Models\LogCurrencyOperation;
 use Illuminate\Http\Request;
+use App\Services\ApiLog;
 
 class CurrencyConsumedController extends Controller
 {
@@ -17,12 +18,19 @@ class CurrencyConsumedController extends Controller
             'game_kind' => 'integer', //游戏类型
         ]);
 
-        return LogCurrencyOperation::when($request->has('date'), function ($query) use ($request) {
+        ApiLog::add($request);
+
+        $data = LogCurrencyOperation::when($request->has('date'), function ($query) use ($request) {
             return $query->whereDate('time', $request->input('date'));
         })->when($request->has('item_type'), function ($query) use ($request) {
             return $query->where('type', $request->input('item_type'));
         })->when($request->has('game_kind'), function ($query) use ($request) {
             return $query->where('kind', $request->input('game_kind'));
         })->latest('id')->get();
+
+        return [
+            'result' => true,
+            'data' => $data,
+        ];
     }
 }
