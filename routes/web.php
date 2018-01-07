@@ -61,3 +61,4 @@ Route::get('room/history', 'RoomController@showRoomHistory');  //查看已经结
 Route::get('card/consumed', 'CardConsumedController@getCardConsumedData');
 Route::get('card/consumed/total', 'CardConsumedController@getCardConsumedSumTotal');
 Route::get('currency/log', 'CurrencyConsumedController@getCurrencyLog');    //获取道具消费记录
+Route::get('activities/activities-list', 'ActivitiesController@showActivities');    //获取活动列表

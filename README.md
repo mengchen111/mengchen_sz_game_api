@@ -113,6 +113,8 @@ cd $codeDir
 | /room/history | GET | 查看已经结束的房间 | 
 | /card/consumed | GET | 查看指定日期的房卡消耗数据 | 
 | /card/consumed/total | GET | 查看截止指定日期的房卡总消耗 | 
+| /currency/log | GET | 获取道具消费记录 |
+| /activities/activities-list | GET | 获取活动列表 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
