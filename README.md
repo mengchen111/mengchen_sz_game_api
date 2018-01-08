@@ -115,6 +115,7 @@ cd $codeDir
 | /card/consumed/total | GET | 查看截止指定日期的房卡总消耗 | 
 | /currency/log | GET | 获取道具消费记录 |
 | /activities/activities-list | GET | 获取活动列表 | 
+| /activities/activities-reward | GET | 获取活动奖品列表 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
