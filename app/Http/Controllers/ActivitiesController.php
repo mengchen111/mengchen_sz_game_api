@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ApiException;
-use App\Http\Requests\AdminRequest;
 use App\Http\Requests\ApiRequest;
 use App\Models\Activity;
 use App\Models\ActivityReward;
@@ -30,7 +29,7 @@ class ActivitiesController extends Controller
 
     }
 
-    public function showActivitiesReward(AdminRequest $request)
+    public function showActivitiesReward(ApiRequest $request)
     {
         try {
             $activities = ActivityReward::all();
