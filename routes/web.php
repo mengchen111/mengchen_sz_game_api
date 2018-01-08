@@ -63,3 +63,4 @@ Route::get('card/consumed/total', 'CardConsumedController@getCardConsumedSumTota
 Route::get('currency/log', 'CurrencyConsumedController@getCurrencyLog');    //获取道具消费记录
 Route::get('activities/activities-list', 'ActivitiesController@showActivities');    //获取活动列表
 Route::get('activities/activities-reward', 'ActivitiesController@showActivitiesReward');    //获取活动奖品列表
+Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
