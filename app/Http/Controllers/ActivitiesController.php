@@ -45,7 +45,7 @@ class ActivitiesController extends Controller
         }
     }
 
-    public function showTask(Request $request)
+    public function showTask(ApiRequest $request)
     {
         try {
             $tasks = Tasks::with('typeModel')->get();
