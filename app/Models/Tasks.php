@@ -18,8 +18,24 @@ class Tasks extends Model
         //
     ];
 
+    public $appends = [
+        'reward_good', 'reward_count',
+    ];
+
     public function typeModel()
     {
         return $this->hasOne('App\Models\TaskType', 'id', 'type');
+    }
+
+    public function getRewardGoodAttribute()
+    {
+        $goodId = explode('_', $this->attributes['reward'])[0];
+        $good = GoodsType::findOrFail($goodId);
+        return $good->goods_name;
+    }
+
+    public function getRewardCountAttribute()
+    {
+        return explode('_', $this->attributes['reward'])[1];
     }
 }
