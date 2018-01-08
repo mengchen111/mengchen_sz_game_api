@@ -18,9 +18,13 @@ class Activity extends Model
         //
     ];
 
-    public function getRewardAttribute($value)
+    protected $appends = [
+        'reward_model'
+    ];
+
+    public function getRewardModelAttribute()
     {
-        $rewards = ActivityReward::whereIn('pid', explode(',', $value))->get();
+        $rewards = ActivityReward::whereIn('pid', explode(',', $this->attributes['reward']))->get();
         return $rewards;
     }
 }
