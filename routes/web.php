@@ -64,3 +64,4 @@ Route::get('currency/log', 'CurrencyConsumedController@getCurrencyLog');    //�
 Route::get('activities/activities-list', 'ActivitiesController@showActivities');    //获取活动列表
 Route::get('activities/activities-reward', 'ActivitiesController@showActivitiesReward');    //获取活动奖品列表
 Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
+Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType');    //获取任务类型(task_type表)

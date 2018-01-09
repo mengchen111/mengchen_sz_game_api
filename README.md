@@ -117,6 +117,7 @@ cd $codeDir
 | /activities/activities-list | GET | 获取活动列表 | 
 | /activities/activities-reward | GET | 获取活动奖品列表 | 
 | /activities/activities-task | GET | 获取任务列表 | 
+| /activities/activities-task-type | GET | 获取任务类型列表 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
