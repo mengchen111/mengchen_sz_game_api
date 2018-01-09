@@ -79,7 +79,7 @@ class ActivitiesController extends Controller
         }
     }
 
-    public function showGoodsType(Request $request)
+    public function showGoodsType(ApiRequest $request)
     {
         try {
             $goodsTypes = GoodsType::all();
