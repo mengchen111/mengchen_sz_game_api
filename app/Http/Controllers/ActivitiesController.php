@@ -6,6 +6,7 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\ApiRequest;
 use App\Models\Activity;
 use App\Models\ActivityReward;
+use App\Models\GoodsType;
 use App\Models\TaskType;
 use App\Services\ApiLog;
 use Illuminate\Http\Request;
@@ -65,13 +66,29 @@ class ActivitiesController extends Controller
     public function showTaskType(ApiRequest $request)
     {
         try {
-            $tasks = TaskType::all();
+            $taskTyps = TaskType::all();
 
             ApiLog::add($request);
 
             return [
                 'result' => true,
-                'data' => $tasks,
+                'data' => $taskTyps,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
+    public function showGoodsType(Request $request)
+    {
+        try {
+            $goodsTypes = GoodsType::all();
+
+            ApiLog::add($request);
+
+            return [
+                'result' => true,
+                'data' => $goodsTypes,
             ];
         } catch (Exception $exception) {
             throw new ApiException($exception->getMessage());
