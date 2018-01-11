@@ -24,7 +24,7 @@ class Activity extends Model
 
     public function getRewardModelAttribute()
     {
-        $rewards = ActivityReward::whereIn('pid', explode(',', $this->attributes['reward']))->get();
+        $rewards = ActivityReward::with('goodsTypeModel')->whereIn('pid', explode(',', $this->attributes['reward']))->get();
         return $rewards;
     }
 }

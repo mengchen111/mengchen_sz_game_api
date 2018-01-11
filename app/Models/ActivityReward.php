@@ -17,4 +17,9 @@ class ActivityReward extends Model
     protected $hidden = [
         //
     ];
+
+    public function goodsTypeModel()
+    {
+        return $this->hasOne('App\Models\GoodsType', 'goods_id', 'goods_type');
+    }
 }
