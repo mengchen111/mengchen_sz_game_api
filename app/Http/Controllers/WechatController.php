@@ -84,7 +84,7 @@ class WechatController extends Controller
     {
         $openId = $message->FromUserName;
         $record = UnionidOpenid::where('openid', $openId)->first();
-        if (!empty($record)) {      //如果没有此条记录就忽略之(比如此功能没上线之前就关注了的人数据库是没有条目的)
+        if (empty($record)) {      //如果没有此条记录就忽略之(比如此功能没上线之前就关注了的人数据库是没有条目的)
             return true;
         } else {
             $record->delete();
