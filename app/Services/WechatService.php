@@ -26,7 +26,9 @@ class WechatService
         ];
         $response = self::httpClient()->request('GET', $getUnionIdUri, [
             'query' => $params,
-        ]);
+        ])
+            ->getBody()
+            ->getContents();
         $response = json_decode($response, true);
         self::checkResponse($response);
         return $response;
