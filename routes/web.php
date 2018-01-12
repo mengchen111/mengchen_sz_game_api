@@ -68,4 +68,4 @@ Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType
 Route::get('activities/activities-goods-type', 'ActivitiesController@showGoodsType');    //获取任务奖励列表
 
 //微信回调
-Route::any('wechat/official-account/callback', 'WechatController@testToken');   //微信公众号回调地址
+Route::any('wechat/official-account/callback', 'WechatController@callback');   //微信公众号回调地址

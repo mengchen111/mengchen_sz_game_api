@@ -14,4 +14,5 @@ return [
 
     'ApiKeyNotMatch' => 1001,
     'SignNotMatch' => 1002,
+    'WechatServiceException' => 1003,
 ];
