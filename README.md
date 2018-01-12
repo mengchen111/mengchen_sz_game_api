@@ -120,6 +120,12 @@ cd $codeDir
 | /activities/activities-task-type | GET | 获取任务类型列表 | 
 | /activities/activities-goods-type | GET | 获取任务奖励类型列表 | 
 
+### 微信回调接口
+| URI   | Method  | Description |     
+| ----  | :-----: | ----------: |
+| /wechat/official-account/callback | ANY | 微信公众号事件回调 |
+
+
 ## 接口调用规范
 ### 参数签名计算方法
 用户提交的参数除sign外，都要参与签名。  
