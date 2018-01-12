@@ -34,7 +34,7 @@ class ActivitiesController extends Controller
     public function showActivitiesReward(ApiRequest $request)
     {
         try {
-            $rewards = ActivityReward::all();
+            $rewards = ActivityReward::with('goodsTypeModel')->get();
 
             ApiLog::add($request);
 
