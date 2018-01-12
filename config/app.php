@@ -183,6 +183,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+        Overtrue\LaravelWechat\ServiceProvider::class,
     ],
 
     /*
@@ -233,6 +234,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
     ],
 
 ];
