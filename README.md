@@ -119,12 +119,8 @@ cd $codeDir
 | /activities/activities-task | GET | 获取任务列表 | 
 | /activities/activities-task-type | GET | 获取任务类型列表 | 
 | /activities/activities-goods-type | GET | 获取任务奖励类型列表 | 
-
-### 微信回调接口
-| URI   | Method  | Description |     
-| ----  | :-----: | ----------: |
-| /wechat/official-account/callback | ANY | 微信公众号事件回调 |
-
+| /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
+| /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 
 ## 接口调用规范
 ### 参数签名计算方法

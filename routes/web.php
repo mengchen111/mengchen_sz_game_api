@@ -66,6 +66,5 @@ Route::get('activities/activities-reward', 'ActivitiesController@showActivitiesR
 Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
 Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType');    //获取任务类型(task_type表)
 Route::get('activities/activities-goods-type', 'ActivitiesController@showGoodsType');    //获取任务奖励列表
-
-//微信回调
-Route::any('wechat/official-account/callback', 'WechatController@callback');   //微信公众号回调地址
+Route::post('wechat/official-account/unionid-openid/create', 'WechatUnionidOpenidController@create');   //创建unionid和公众号openid记录
+Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpenidController@destroy');  //删除记录
