@@ -68,3 +68,5 @@ Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType
 Route::get('activities/activities-goods-type', 'ActivitiesController@showGoodsType');    //获取任务奖励列表
 Route::post('wechat/official-account/unionid-openid/create', 'WechatUnionidOpenidController@create');   //创建unionid和公众号openid记录
 Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpenidController@destroy');  //删除记录
+Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList'); //获取待发送红包列表
+Route::post('wechat/red-packet/update', 'WechatRedPacketController@updateSendStatus');  //更新发送红包状态

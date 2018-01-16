@@ -121,6 +121,8 @@ cd $codeDir
 | /activities/activities-goods-type | GET | 获取任务奖励类型列表 | 
 | /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
+| /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
+| /wechat/red-packet/update | POST | 更新待发送红包状态 | 
 
 ## 接口调用规范
 ### 参数签名计算方法
