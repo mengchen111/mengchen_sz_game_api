@@ -18,6 +18,10 @@ class Players extends Model
         'permissions',
     ];
 
+    protected $appends = [
+        'openid',
+    ];
+
 //    public function records()
 //    {
 //        return $this->hasMany('App\Models\RecordRelative', 'uid', 'id');
@@ -29,5 +33,11 @@ class Players extends Model
         $recordsNew = RecordRelativeNew::with('infos')->where('uid', $this->id)->get()->toArray();
         return array_merge($records, $recordsNew);
         //return $records;
+    }
+
+    public function getOpenidAttribute()
+    {
+        $unionidOpenid = UnionidOpenid::find($this->attributes['unionid']);
+        return empty($unionidOpenid) ? null : $unionidOpenid->openid;
     }
 }
