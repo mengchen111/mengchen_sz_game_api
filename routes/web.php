@@ -61,8 +61,11 @@ Route::get('room/history', 'RoomController@showRoomHistory');  //查看已经结
 Route::get('card/consumed', 'CardConsumedController@getCardConsumedData');
 Route::get('card/consumed/total', 'CardConsumedController@getCardConsumedSumTotal');
 Route::get('currency/log', 'CurrencyConsumedController@getCurrencyLog');    //获取道具消费记录
-Route::get('activities/activities-list', 'ActivitiesController@showActivities');    //获取活动列表
-Route::get('activities/activities-reward', 'ActivitiesController@showActivitiesReward');    //获取活动奖品列表
+Route::get('activities/list', 'ActivitiesController@showActivities');    //获取活动列表
+Route::post('activities/add', 'ActivitiesController@addActivities');    //添加活动
+Route::post('activities/modify', 'ActivitiesController@updateActivities');    //编辑活动
+Route::post('activities/delete', 'ActivitiesController@deleteActivities');    //删除活动
+Route::get('activities/reward', 'ActivityRewardController@showActivitiesReward');    //获取活动奖品列表
 Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
 Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType');    //获取任务类型(task_type表)
 Route::get('activities/activities-goods-type', 'ActivitiesController@showGoodsType');    //获取任务奖励列表

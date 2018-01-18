@@ -25,5 +25,9 @@ return [
 
     //游戏端接口uri
     'game_server_api_topUp' => 'recharge.php',      //玩家充值
-    'game_server_api_roomCreate' => 'room_create.php'   //创建游戏房间
+    'game_server_api_roomCreate' => 'room_create.php',   //创建游戏房间
+
+    //游戏端接口地址（新的调用形式）
+    'game_server_api_address_new' => env('GAME_SERVER_API_ADDRESS_NEW'),
+    'game_server_partner_id_new' => env('GAME_SERVER_PARTNER_ID'),
 ];

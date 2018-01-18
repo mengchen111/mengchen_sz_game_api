@@ -114,8 +114,11 @@ cd $codeDir
 | /card/consumed | GET | 查看指定日期的房卡消耗数据 | 
 | /card/consumed/total | GET | 查看截止指定日期的房卡总消耗 | 
 | /currency/log | GET | 获取道具消费记录 |
-| /activities/activities-list | GET | 获取活动列表 | 
-| /activities/activities-reward | GET | 获取活动奖品列表 | 
+| /activities/list | GET | 获取活动列表 | 
+| /activities/add | POST | 添加活动 | 
+| /activities/modify | POST | 编辑活动 | 
+| /activities/delete | POST | 删除活动 | 
+| /activities/reward | GET | 获取活动奖品列表 | 
 | /activities/activities-task | GET | 获取任务列表 | 
 | /activities/activities-task-type | GET | 获取任务类型列表 | 
 | /activities/activities-goods-type | GET | 获取任务奖励类型列表 | 
