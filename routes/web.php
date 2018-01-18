@@ -65,7 +65,10 @@ Route::get('activities/list', 'ActivitiesController@showActivities');    //获�
 Route::post('activities/add', 'ActivitiesController@addActivities');    //添加活动
 Route::post('activities/modify', 'ActivitiesController@updateActivities');    //编辑活动
 Route::post('activities/delete', 'ActivitiesController@deleteActivities');    //删除活动
-Route::get('activities/reward', 'ActivityRewardController@showActivitiesReward');    //获取活动奖品列表
+Route::get('activities/reward/list', 'ActivityRewardController@showActivitiesReward');    //获取活动奖品列表
+Route::post('activities/reward/add', 'ActivityRewardController@addActivityReward');    //添加活动奖品
+Route::post('activities/reward/modify', 'ActivityRewardController@updateActivityReward');    //编辑活动奖品
+Route::post('activities/reward/delete', 'ActivityRewardController@deleteActivityReward');    //删除活动奖品
 Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
 Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType');    //获取任务类型(task_type表)
 Route::get('activities/activities-goods-type', 'ActivitiesController@showGoodsType');    //获取任务奖励列表

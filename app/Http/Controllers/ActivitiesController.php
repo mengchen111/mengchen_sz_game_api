@@ -29,7 +29,7 @@ class ActivitiesController extends Controller
         }
     }
 
-    public function addActivities(Request $request)
+    public function addActivities(ApiRequest $request)
     {
         try {
             $aid = $this->getNewestAid();
@@ -53,13 +53,13 @@ class ActivitiesController extends Controller
     {
         $lastActivity = Activity::orderBy('aid', 'desc')->first();
         if (empty($lastActivity)) {
-            return 0;
+            return 1;
         } else {
             return $lastActivity->aid + 1;
         }
     }
 
-    public function updateActivities(Request $request)
+    public function updateActivities(ApiRequest $request)
     {
         try {
             $params = $request->only([
@@ -76,7 +76,7 @@ class ActivitiesController extends Controller
         }
     }
 
-    public function deleteActivities(Request $request)
+    public function deleteActivities(ApiRequest $request)
     {
         try {
             $params = $request->only([

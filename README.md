@@ -118,7 +118,10 @@ cd $codeDir
 | /activities/add | POST | 添加活动 | 
 | /activities/modify | POST | 编辑活动 | 
 | /activities/delete | POST | 删除活动 | 
-| /activities/reward | GET | 获取活动奖品列表 | 
+| /activities/reward/list | GET | 获取活动奖品列表 | 
+| /activities/reward/add | POST | 添加活动奖品 | 
+| /activities/reward/modify | POST | 编辑活动奖品 | 
+| /activities/reward/delete | POST | 删除活动奖品 | 
 | /activities/activities-task | GET | 获取任务列表 | 
 | /activities/activities-task-type | GET | 获取任务类型列表 | 
 | /activities/activities-goods-type | GET | 获取任务奖励类型列表 | 
