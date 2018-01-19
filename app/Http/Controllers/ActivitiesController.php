@@ -126,20 +126,4 @@ class ActivitiesController extends Controller
             throw new ApiException($exception->getMessage());
         }
     }
-
-    public function showGoodsType(ApiRequest $request)
-    {
-        try {
-            $goodsTypes = GoodsType::all();
-
-            ApiLog::add($request);
-
-            return [
-                'result' => true,
-                'data' => $goodsTypes,
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage());
-        }
-    }
 }
