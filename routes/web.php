@@ -73,8 +73,11 @@ Route::get('activities/goods-type/list', 'GoodsTypeController@showGoodsType');  
 Route::post('activities/goods-type/add', 'GoodsTypeController@addGoodsType');    //添加任务奖品道具
 Route::post('activities/goods-type/modify', 'GoodsTypeController@updateGoodsType');    //修改任务奖品道具
 Route::post('activities/goods-type/delete', 'GoodsTypeController@deleteGoodsType');    //删除任务奖品道具
-Route::get('activities/activities-task', 'ActivitiesController@showTask');    //获取任务列表
-Route::get('activities/activities-task-type', 'ActivitiesController@showTaskType');    //获取任务类型(task_type表)
+Route::get('activities/task/list', 'TasksController@showTask');    //获取任务列表
+Route::post('activities/task/add', 'TasksController@addTask');    //添加任务
+Route::post('activities/task/modify', 'TasksController@updateTask');    //编辑任务
+Route::post('activities/task/delete', 'TasksController@deleteTask');    //删除任务
+Route::get('activities/task-type/list', 'TaskTypeController@showTaskType');    //获取任务类型(task_type表)
 Route::post('wechat/official-account/unionid-openid/create', 'WechatUnionidOpenidController@create');   //创建unionid和公众号openid记录
 Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpenidController@destroy');  //删除记录
 Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList'); //获取待发送红包列表

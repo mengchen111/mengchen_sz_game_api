@@ -126,8 +126,11 @@ cd $codeDir
 | /activities/goods-type/add | POST | 添加任务奖品道具 | 
 | /activities/goods-type/modify | POST | 修改任务奖品道具 | 
 | /activities/goods-type/delete | POST | 删除任务奖品道具 | 
-| /activities/activities-task | GET | 获取任务列表 | 
-| /activities/activities-task-type | GET | 获取任务类型列表 | 
+| /activities/task/list | GET | 获取任务列表 | 
+| /activities/task/add | POST | 添加任务 | 
+| /activities/task/modify | POST | 编辑任务 | 
+| /activities/task/delete | POST | 删除任务 | 
+| /activities/task-type/list | GET | 获取任务类型列表 | 
 | /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 

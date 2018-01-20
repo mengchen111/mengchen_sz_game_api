@@ -92,38 +92,4 @@ class ActivitiesController extends Controller
             throw new ApiException($exception->getMessage());
         }
     }
-
-
-    //todo 以下的接口使用单独的控制器
-    public function showTask(ApiRequest $request)
-    {
-        try {
-            $tasks = Tasks::with('typeModel')->get();
-
-            ApiLog::add($request);
-
-            return [
-                'result' => true,
-                'data' => $tasks,
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage());
-        }
-    }
-
-    public function showTaskType(ApiRequest $request)
-    {
-        try {
-            $taskTyps = TaskType::all();
-
-            ApiLog::add($request);
-
-            return [
-                'result' => true,
-                'data' => $taskTyps,
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage());
-        }
-    }
 }
