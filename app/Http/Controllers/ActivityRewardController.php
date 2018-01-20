@@ -25,15 +25,16 @@ class ActivityRewardController extends Controller
         }
     }
 
-    public function addActivityReward(ApiRequest $request)
+    public function addActivityReward(Request $request)
     {
         try {
             $pid = $this->getNewestPid();
             $params = $request->only([
-                'name', 'img', 'show_text', 'total_inventory', 'probability', 'single_limit',
-                'expend', 'goods_type', 'goods_count',
+                'name', 'img', 'show_text', 'total_inventory', 'probability',
+                'single_limit', 'goods_type', 'goods_count',
             ]);
             $params['pid'] = $pid;
+            $params['expend'] = 0;
             $result = GameServerNew::request('activity_reward', 'modify', $params);
 
             return [
