@@ -131,6 +131,10 @@ cd $codeDir
 | /activities/task/modify | POST | 编辑任务 | 
 | /activities/task/delete | POST | 删除任务 | 
 | /activities/task-type/list | GET | 获取任务类型列表 | 
+| /activities/user-goods/list | GET | 获取user_goods列表 | 
+| /activities/user-goods/add | POST | 添加user_goods | 
+| /activities/user-goods/modify | POST | 编辑user_goods | 
+| /activities/user-goods/delete | POST | 删除user_goods |
 | /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
@@ -184,4 +188,24 @@ protected function getSign(Array $param = null)
 | user.php| POST | 获取指定玩家信息 |
 | recharge.php | POST | 给指定玩家充值 |
 | room_create.php | POST | 游戏房间创建 |
+
+## 游戏后端接口(新)
+> **http://112.124.112.64/casino/back/htmls/agentx/call.php**
+
+| P | F | Description |
+| ----  | :-----: | ----------: |
+| activity | modify | 增加、修改activity |
+| activity | remove | 删除activity |
+| activity_reward | modify | 增加、修改activity_reward |
+| activity_reward | remove | 删除activity_reward |
+| task | modify_task | 增加、修改tasks |
+| task | remove_task | 删除tasks |
+| task | modify_user | 增加、修改tasks_player |
+| task | remove_user | 删除tasks_player |
+| task | modify_type | 增加、修改task_type |
+| task | remove_type | 删除task_type |
+| item | modify_type | 增加、修改goods_type |
+| item | remove_type | 删除goods_type |
+| item | modify_user | 增加、修改user_goods |
+| item | remove_user | 删除user_goods |
 
