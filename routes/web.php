@@ -54,6 +54,8 @@ Route::get('players/online/peak', 'PlayerController@showOnlinePeak');       //�
 Route::get('players/in-game', 'PlayerController@showInGameCount');  //实时游戏中的玩家数量
 Route::get('players/in-game/peak', 'PlayerController@showInGamePeak');  //列出指定日期的当日最高在游戏中的玩家数量
 Route::post('players', 'PlayerController@search'); //查询玩家
+Route::post('players/find', 'PlayerController@find'); //通过uid精确查找玩家
+Route::post('players/batch-find', 'PlayerController@batchFind'); //通过uids批量查找玩家
 Route::post('top-up', 'PlayerController@topUp'); //玩家充值
 Route::post('room', 'RoomController@create');   //创建游戏房间
 Route::get('room/open', 'RoomController@showOpenRoom');  //查看正在玩的房间

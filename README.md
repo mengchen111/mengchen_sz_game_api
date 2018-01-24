@@ -107,6 +107,8 @@ cd $codeDir
 | /players/in-game/peak | GET | 获取指定日期的游戏中玩家最高数量 | 
 | /players/in-game | GET | 获取实时游戏中玩家数量 | 
 | /players | POST | 查询玩家 | 
+| /players/find | POST | 通过uid精确查找玩家 | 
+| /players/batch-find | POST | 通过uids批量查找玩家 | 
 | /top-up | POST | 玩家充值 | 
 | /room | POST | 创建游戏房间 | 
 | /room/open | GET | 查看正在玩的房间 | 

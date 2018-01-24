@@ -144,6 +144,41 @@ class PlayerController extends Controller
         }
     }
 
+    public function find(ApiRequest $request)
+    {
+        $this->validate($request, [
+            'uid' => 'required|integer'
+        ]);
+
+        try {
+            $player = Players::find($request->input('uid'));
+            return [
+                'result' => true,
+                'data' => $player,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
+    public function batchFind(ApiRequest $request)
+    {
+        $this->validate($request, [
+            'uids' => 'required|string'
+        ]);
+
+        $uids = explode(',', $request->input('uids'));
+        try {
+            $player = Players::whereIn('id', $uids)->get();
+            return [
+                'result' => true,
+                'data' => $player,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
 //    protected function validateSearchRequest($request)
 //    {
 //        $this->validate($request, [
