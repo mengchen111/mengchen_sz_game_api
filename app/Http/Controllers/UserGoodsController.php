@@ -31,6 +31,15 @@ class UserGoodsController extends Controller
             $params = $request->only([
                 'user_id', 'goods_id', 'goods_cnt',
             ]);
+
+            $existUserGoods = UserGoods::where('user_id', $params['user_id'])
+                ->where('goods_id', $params['goods_id'])
+                ->get();
+
+            if (!$existUserGoods->isEmpty()) {
+                throw new ApiException('已存在的玩家物品');
+            }
+
             $result = GameServerNew::request('item', 'modify_user', $params);
 
             return [
@@ -48,6 +57,15 @@ class UserGoodsController extends Controller
             $params = $request->only([
                 'user_id', 'goods_id', 'goods_cnt',
             ]);
+
+            $existUserGoods = UserGoods::where('user_id', $params['user_id'])
+                ->where('goods_id', $params['goods_id'])
+                ->get();
+
+            if ($existUserGoods->isEmpty()) {
+                throw new ApiException('不存在的玩家物品，请先添加之');
+            }
+
             $result = GameServerNew::request('item', 'modify_user', $params);
 
             return [
