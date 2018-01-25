@@ -28,11 +28,20 @@ class TasksPlayerController extends Controller
     public function addTasksPlayer(ApiRequest $request)
     {
         try {
-            $tasksPlayerId = $this->getNewestTasksPlayerId();
+            //$tasksPlayerId = $this->getNewestTasksPlayerId();
             $params = $request->only([
                 'task_id', 'uid', 'process', 'is_completed',
             ]);
-            $params['id'] = $tasksPlayerId;
+
+            $existTasksPlayer = TasksPlayer::where('uid', $params['uid'])
+                ->where('task_id', $params['task_id'])
+                ->get();
+
+            if (! $existTasksPlayer->isEmpty()) {
+                throw new ApiException('已存在的玩家任务');
+            }
+
+            //$params['id'] = $tasksPlayerId;
             $result = GameServerNew::request('task', 'modify_user', $params);
 
             return [
@@ -44,22 +53,31 @@ class TasksPlayerController extends Controller
         }
     }
 
-    protected function getNewestTasksPlayerId()
-    {
-        $lastTasksPlayer = TasksPlayer::orderBy('id', 'desc')->first();
-        if (empty($lastTasksPlayer)) {
-            return 1;
-        } else {
-            return $lastTasksPlayer->id + 1;
-        }
-    }
+//    protected function getNewestTasksPlayerId()
+//    {
+//        $lastTasksPlayer = TasksPlayer::orderBy('id', 'desc')->first();
+//        if (empty($lastTasksPlayer)) {
+//            return 1;
+//        } else {
+//            return $lastTasksPlayer->id + 1;
+//        }
+//    }
 
     public function updateTasksPlayer(ApiRequest $request)
     {
         try {
             $params = $request->only([
-                'id', 'task_id', 'uid', 'process', 'is_completed',
+                'task_id', 'uid', 'process', 'is_completed',
             ]);
+
+            $existTasksPlayer = TasksPlayer::where('uid', $params['uid'])
+                ->where('task_id', $params['task_id'])
+                ->get();
+
+            if ($existTasksPlayer->isEmpty()) {
+                throw new ApiException('不存在的玩家任务，请先添加之');
+            }
+
             $result = GameServerNew::request('task', 'modify_user', $params);
 
             return [
