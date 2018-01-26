@@ -95,7 +95,7 @@ cd $codeDir
 ```
 
 ## 接口列表
-
+### for web(网站后台)
 | URI   | Method  | Description |     
 | ----  | :-----: | ----------: |
 | /records | GET | 获取所有战绩信息 |
@@ -142,6 +142,12 @@ cd $codeDir
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
 | /wechat/red-packet/update | POST | 更新待发送红包状态 | 
 
+### fro game(游戏后端)
+| URI   | Method  | Description |     
+| ----  | :-----: | ----------: |
+| /game/community/member/application | POST | 玩家申请加入牌艺馆 |
+
+
 ## 接口调用规范
 ### 参数签名计算方法
 用户提交的参数除sign外，都要参与签名。  
@@ -178,8 +184,41 @@ protected function getSign(Array $param = null)
     $sign .= "secret_key={$this->secretKey}";
     return strtoupper(md5($sign));
 }
-```  
+``` 
 
+### 接口返回规范(for web) 
+正常返回时：  
+```
+{
+    "result": true,
+    "data": $data
+}
+```
+异常返回时：  
+```
+{
+    "result": false,
+    "code": 0,
+    "errorMsg": 'ERROR'
+}
+```
+
+### 接口返回规范(for 游戏后端) 
+正常返回时：  
+```
+{
+    "code": -1,
+    "message": "msg"
+}
+```
+异常返回时：  
+```
+{
+    "result": false,
+    "code": 2000,
+    "errorMsg": "已经发送过申请请求"
+}
+```
 
 ## 游戏端接口
 > **https://down.yxx.max78.com/casino/back/htmls/agentx/**

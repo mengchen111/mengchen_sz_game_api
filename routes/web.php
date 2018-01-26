@@ -92,3 +92,11 @@ Route::post('wechat/official-account/unionid-openid/create', 'WechatUnionidOpeni
 Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpenidController@destroy');  //删除记录
 Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList'); //获取待发送红包列表
 Route::post('wechat/red-packet/update', 'WechatRedPacketController@updateSendStatus');  //更新发送红包状态
+
+//给游戏后端调用的接口
+Route::group([
+    'prefix' => 'game',     //给游戏后端调用的接口
+    'namespace' => 'Web',   //操作web数据库
+], function () {
+    Route::post('community/member/application', 'CommunityMemberController@apply2JoinCommunity');
+});

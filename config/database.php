@@ -54,6 +54,21 @@ return [
             'engine' => null,
         ],
 
+        'mysql-web' => [
+            'driver' => 'mysql',
+            'host' => env('DB_WEB_HOST', '127.0.0.1'),
+            'port' => env('DB_WEB_PORT', '3306'),
+            'database' => env('DB_WEB_DATABASE', 'forge'),
+            'username' => env('DB_WEB_USERNAME', 'forge'),
+            'password' => env('DB_WEB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
