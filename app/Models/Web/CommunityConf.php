@@ -21,6 +21,6 @@ class CommunityConf extends Model
 
     public function community()
     {
-        return $this->hasOne('App\Models\CommunityList', 'id', 'community_id');
+        return $this->hasOne('App\Models\Web\CommunityList', 'id', 'community_id');
     }
 }

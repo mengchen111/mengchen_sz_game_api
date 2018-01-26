@@ -146,7 +146,9 @@ cd $codeDir
 | URI   | Method  | Description |     
 | ----  | :-----: | ----------: |
 | /game/community/member/application | POST | 玩家申请加入牌艺馆 |
-
+| /game/community/member/invitation/{player} | GET | 获取入群邀请列表 |
+| /game/community/member/approval-invitation/{application} | POST | 玩家同意入群 |
+| /game/community/member/decline-invitation/{application} | POST | 玩家拒绝入群 |
 
 ## 接口调用规范
 ### 参数签名计算方法
@@ -208,7 +210,7 @@ protected function getSign(Array $param = null)
 ```
 {
     "code": -1,
-    "message": "msg"
+    "data": "msg"
 }
 ```
 异常返回时：  

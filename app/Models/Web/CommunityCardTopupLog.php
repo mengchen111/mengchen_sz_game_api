@@ -21,11 +21,11 @@ class CommunityCardTopupLog extends Model
 
     public function community()
     {
-        return $this->hasOne('App\Models\CommunityList', 'id', 'community_id');
+        return $this->hasOne('App\Models\Web\CommunityList', 'id', 'community_id');
     }
 
     public function item()
     {
-        return $this->hasOne('App\Models\ItemType', 'id', 'item_type_id');
+        return $this->hasOne('App\Models\Web\ItemType', 'id', 'item_type_id');
     }
 }
