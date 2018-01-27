@@ -149,6 +149,7 @@ cd $codeDir
 | /game/community/member/invitation/{player} | GET | 获取入群邀请列表 |
 | /game/community/member/approval-invitation/{application} | POST | 玩家同意入群 |
 | /game/community/member/decline-invitation/{application} | POST | 玩家拒绝入群 |
+| /game/community/owned/{player} | GET | 此玩家有关联的所有社区id |
 
 ## 接口调用规范
 ### 参数签名计算方法

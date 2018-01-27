@@ -127,5 +127,4 @@ class CommunityList extends Model
         $existMembers = explode(',', $this->members);
         return in_array($playerId, $existMembers);
     }
-
 }

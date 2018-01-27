@@ -102,4 +102,5 @@ Route::group([
     Route::get('community/member/invitation/{player}', 'CommunityMemberController@getInvitationList')->where('player', '[0-9]+'); //获取入群邀请列表
     Route::post('community/member/approval-invitation/{application}', 'CommunityMemberController@approveInvitation')->where('application', '[0-9]+'); //同意入群请求
     Route::post('community/member/decline-invitation/{application}', 'CommunityMemberController@declineInvitation')->where('application', '[0-9]+'); //拒绝入群请求
+    Route::get('community/owned/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
 });

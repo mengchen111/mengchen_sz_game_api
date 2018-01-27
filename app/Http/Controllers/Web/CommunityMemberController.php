@@ -61,6 +61,10 @@ class CommunityMemberController extends Controller
         if ($community->ifHasMember($playerId)) {
             throw new ApiException('已处于此牌艺馆中，无需申请');
         }
+        if ((int)$community->owner_player_id === $playerId) {
+            throw new ApiException('您已经是此牌艺馆的馆主，无需申请');
+        }
+        return true;
     }
 
     //获取入群申请邀请列表
