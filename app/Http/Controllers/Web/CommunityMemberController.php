@@ -70,8 +70,7 @@ class CommunityMemberController extends Controller
     //获取入群申请邀请列表
     public function getInvitationList(Request $request, Players $player)
     {
-        $invitations = CommunityInvitationApplication::with(['community'])
-            ->where('player_id', $player->id)
+        $invitations = CommunityInvitationApplication::where('player_id', $player->id)
             ->where('type', 1)
             ->where('status', 0)
             ->get();

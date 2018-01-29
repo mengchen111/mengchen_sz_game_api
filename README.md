@@ -142,14 +142,15 @@ cd $codeDir
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
 | /wechat/red-packet/update | POST | 更新待发送红包状态 | 
 
-### fro game(游戏后端)
+### for game(游戏后端)
 | URI   | Method  | Description |     
 | ----  | :-----: | ----------: |
 | /game/community/member/application | POST | 玩家申请加入牌艺馆 |
 | /game/community/member/invitation/{player} | GET | 获取入群邀请列表 |
 | /game/community/member/approval-invitation/{application} | POST | 玩家同意入群 |
 | /game/community/member/decline-invitation/{application} | POST | 玩家拒绝入群 |
-| /game/community/owned/{player} | GET | 此玩家有关联的所有社区id |
+| /game/community/involved/{player} | GET | 此玩家有关联的所有社区id |
+| /game/community/card/consumption/{community} | POST | 社团耗卡 |
 
 ## 接口调用规范
 ### 参数签名计算方法
