@@ -68,17 +68,39 @@ class CommunityMemberController extends Controller
     }
 
     //获取入群申请邀请列表
-    public function getInvitationList(Request $request, Players $player)
+    public function getInvitationApplicationList(Request $request, Players $player)
     {
-        $invitations = CommunityInvitationApplication::where('player_id', $player->id)
-            ->where('type', 1)
-            ->where('status', 0)
-            ->get();
+        $data = [];
+        $data['invitation'] = $this->getInvitationList($player->id);
+        $data['application'] = $this->getApplicationRecord($player->id);
 
         return [
             'code' => -1,
-            'data' => $invitations,
+            'data' => $data,
         ];
+    }
+
+    protected function getInvitationList($playerId)
+    {
+        return CommunityInvitationApplication::where('player_id', $playerId)
+            ->where('type', 1)
+            ->where('status', 0)
+            ->get();
+    }
+
+    //获取玩家的申请纪录
+    protected function getApplicationRecord($playerId)
+    {
+        $statusMap = [
+            '申请中', '通过', '拒绝'
+        ];
+        $applications = CommunityInvitationApplication::where('player_id', $playerId)
+            ->where('type', 0)
+            ->get();
+        foreach ($applications as $application) {
+            $application->status = $statusMap[$application->status];
+        }
+        return $applications;
     }
 
     //同意加入群
