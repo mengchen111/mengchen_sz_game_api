@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Services\GameServer;
 use App\Services\ApiLog;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -126,7 +127,7 @@ class RoomController extends Controller
     public function markRecord(ApiRequest $request)
     {
         $this->validate($request, [
-            'ruid' => 'required|integer|exists:record_infos_new,ruid',
+            'ruid' => 'required|exists:record_infos_new,ruid',
             'if_read' => 'required|integer|in:0,1',
         ]);
 
