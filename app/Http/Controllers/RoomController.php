@@ -90,4 +90,33 @@ class RoomController extends Controller
             'data' => $roomHistory,
         ];
     }
+
+    //查询社区战绩
+    public function searchCommunityRoomRecord(Request $request)
+    {
+        $this->validate($request, [
+            'start_time' => 'required|date_format:"Y-m-d H:i:s"',
+            'end_time' => 'required|date_format:"Y-m-d H:i:s"',
+            'community_id' => 'required|integer',
+            'player_id' => 'integer'
+        ]);
+        $params = $request->only(['start_time', 'end_time', 'community_id', 'player_id']);
+
+        $result = ServerRoomsHistory::with(['recordInfo'])
+            ->whereBetween('time', [$params['start_time'], $params['end_time']])
+            ->where('community_id', $params['community_id'])
+            ->when($request->has('player_id'), function ($query) use ($params) {
+                return $query->where([
+                    ['uid_1', '=', $params['player_id']],
+                    ['uid_2', '=', $params['player_id'], 'or'],
+                    ['uid_3', '=', $params['player_id'], 'or'],
+                    ['uid_4', '=', $params['player_id'], 'or'],
+                ]);
+            })->get();
+        
+        return [
+            'result' => true,
+            'data' => $result,
+        ];
+    }
 }

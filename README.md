@@ -141,6 +141,7 @@ cd $codeDir
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
 | /wechat/red-packet/update | POST | 更新待发送红包状态 | 
+| /community/record/search | POST | 查询社区玩家战绩 | 
 
 ### for game(游戏后端)
 | URI   | Method  | Description |     

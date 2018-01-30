@@ -22,4 +22,9 @@ class ServerRoomsHistory extends Model
     {
         return json_decode($value, true);
     }
+
+    public function recordInfo()
+    {
+        return $this->hasOne('App\Models\RecordInfosNew', 'ruid', 'ruid');
+    }
 }
