@@ -82,7 +82,8 @@ class CommunityMemberController extends Controller
 
     protected function getInvitationList($playerId)
     {
-        return CommunityInvitationApplication::where('player_id', $playerId)
+        return CommunityInvitationApplication::with('community.ownerPlayer')
+            ->where('player_id', $playerId)
             ->where('type', 1)
             ->where('status', 0)
             ->get();
@@ -94,7 +95,8 @@ class CommunityMemberController extends Controller
         $statusMap = [
             '申请中', '通过', '拒绝'
         ];
-        $applications = CommunityInvitationApplication::where('player_id', $playerId)
+        $applications = CommunityInvitationApplication::with('community.ownerPlayer')
+            ->where('player_id', $playerId)
             ->where('type', 0)
             ->get();
         foreach ($applications as $application) {
