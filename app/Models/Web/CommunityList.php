@@ -25,9 +25,9 @@ class CommunityList extends Model
         'members_count',
     ];
 
-    public function ownerAgent()
+    public function ownerPlayer()
     {
-        return $this->hasOne('App\Models\User', 'id', 'owner_agent_id');
+        return $this->hasOne('App\Models\Players', 'id', 'owner_player_id');
     }
 
     public function getMembersCountAttribute()

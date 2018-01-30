@@ -152,6 +152,7 @@ cd $codeDir
 | /game/community/member/decline-invitation/{invitation} | POST | 玩家拒绝入群 |
 | /game/community/involved/{player} | GET | 此玩家有关联的所有社区id |
 | /game/community/card/consumption/{community} | POST | 社团耗卡 |
+| /game/community/info/{communityId} | GET | 查询社团信息 |
 
 ## 接口调用规范
 ### 参数签名计算方法

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Players extends Model
 {
     public $timestamps = false;
+    public $connection = 'mysql';
     protected $table = 'account';
     protected $primaryKey = 'id';
 

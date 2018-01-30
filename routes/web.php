@@ -105,4 +105,5 @@ Route::group([
     Route::post('community/member/decline-invitation/{invitation}', 'CommunityMemberController@declineInvitation')->where('invitation', '[0-9]+'); //拒绝入群请求
     Route::get('community/involved/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
     Route::post('community/card/consumption/{community}', 'CommunityCardController@consumeCard')->where('community', '[0-9]+');//社团耗卡
+    Route::get('community/info/{communityId}', 'CommunityController@getCommunityInfo')->where('communityId', '[0-9]+'); //获取社团信息
 });
