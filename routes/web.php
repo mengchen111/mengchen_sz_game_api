@@ -101,8 +101,8 @@ Route::group([
 ], function () {
     Route::post('community/member/application', 'CommunityMemberController@apply2JoinCommunity'); //申请加入群
     Route::get('community/member/invitation/{player}', 'CommunityMemberController@getInvitationApplicationList')->where('player', '[0-9]+'); //获取入群邀请(和申请纪录)列表
-    Route::post('community/member/approval-invitation/{application}', 'CommunityMemberController@approveInvitation')->where('application', '[0-9]+'); //同意入群请求
-    Route::post('community/member/decline-invitation/{application}', 'CommunityMemberController@declineInvitation')->where('application', '[0-9]+'); //拒绝入群请求
+    Route::post('community/member/approval-invitation/{invitation}', 'CommunityMemberController@approveInvitation')->where('invitation', '[0-9]+'); //同意入群请求
+    Route::post('community/member/decline-invitation/{invitation}', 'CommunityMemberController@declineInvitation')->where('invitation', '[0-9]+'); //拒绝入群请求
     Route::get('community/involved/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
     Route::post('community/card/consumption/{community}', 'CommunityCardController@consumeCard')->where('community', '[0-9]+');//社团耗卡
 });

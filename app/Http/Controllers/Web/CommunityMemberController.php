@@ -104,31 +104,31 @@ class CommunityMemberController extends Controller
     }
 
     //同意加入群
-    public function approveInvitation(Request $request, CommunityInvitationApplication $application)
+    public function approveInvitation(Request $request, CommunityInvitationApplication $invitation)
     {
-        if ((int)$application->status !== 0) {
+        if ((int)$invitation->status !== 0) {
             throw new ApiException('此条申请已被审批');
         }
 
-        $playerId = $application->player_id;
-        $communityId = $application->community_id;
+        $playerId = $invitation->player_id;
+        $communityId = $invitation->community_id;
         $this->checkPlayerCommunityLimit($playerId, $communityId);
 
         $community = CommunityList::findOrFail($communityId);
 
-        DB::transaction(function () use ($community, $application) {
-            $application->status = 1;   //更新申请状态为已通过
-            $application->save();
+        DB::transaction(function () use ($community, $invitation) {
+            $invitation->status = 1;   //更新申请状态为已通过
+            $invitation->save();
 
             //添加成员到community_list中相应的行中
             $newMembers = [];
-            array_push($newMembers, $application->player_id);
+            array_push($newMembers, $invitation->player_id);
             $community->addMembers($newMembers);
 
             //记录成员变动日志
             CommunityMemberLog::create([
-                'community_id' => $application->community_id,
-                'player_id' => $application->player_id,
+                'community_id' => $invitation->community_id,
+                'player_id' => $invitation->player_id,
                 'action' => '加入',
             ]);
 
@@ -153,14 +153,14 @@ class CommunityMemberController extends Controller
     }
 
     //拒绝加入群
-    public function declineInvitation(Request $request, CommunityInvitationApplication $application)
+    public function declineInvitation(Request $request, CommunityInvitationApplication $invitation)
     {
-        if ((int)$application->status !== 0) {
+        if ((int)$invitation->status !== 0) {
             throw new ApiException('此条申请已被审批');
         }
 
-        $application->status = 2;   //更新申请状态为已拒绝
-        $application->save();
+        $invitation->status = 2;   //更新申请状态为已拒绝
+        $invitation->save();
 
         return [
             'code' => -1,

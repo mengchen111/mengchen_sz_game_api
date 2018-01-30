@@ -148,8 +148,8 @@ cd $codeDir
 | ----  | :-----: | ----------: |
 | /game/community/member/application | POST | 玩家申请加入牌艺馆 |
 | /game/community/member/invitation/{player} | GET | 获取入群邀请(和申请纪录)列表 |
-| /game/community/member/approval-invitation/{application} | POST | 玩家同意入群 |
-| /game/community/member/decline-invitation/{application} | POST | 玩家拒绝入群 |
+| /game/community/member/approval-invitation/{invitation} | POST | 玩家同意入群 |
+| /game/community/member/decline-invitation/{invitation} | POST | 玩家拒绝入群 |
 | /game/community/involved/{player} | GET | 此玩家有关联的所有社区id |
 | /game/community/card/consumption/{community} | POST | 社团耗卡 |
 
