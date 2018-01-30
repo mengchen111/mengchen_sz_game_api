@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ApiRequest;
+use App\Models\RecordInfosNew;
 use App\Models\ServerRooms;
 use App\Models\ServerRoomsHistory;
 use Illuminate\Http\Request;
@@ -92,7 +93,7 @@ class RoomController extends Controller
     }
 
     //查询社区战绩
-    public function searchCommunityRoomRecord(Request $request)
+    public function searchCommunityRoomRecord(ApiRequest $request)
     {
         $this->validate($request, [
             'start_time' => 'required|date_format:"Y-m-d H:i:s"',
@@ -103,6 +104,7 @@ class RoomController extends Controller
         $params = $request->only(['start_time', 'end_time', 'community_id', 'player_id']);
 
         $result = ServerRoomsHistory::with(['recordInfo'])
+            ->where('currency', '>', 0)     //有过耗卡记录的房间
             ->whereBetween('time', [$params['start_time'], $params['end_time']])
             ->where('community_id', $params['community_id'])
             ->when($request->has('player_id'), function ($query) use ($params) {
@@ -117,6 +119,24 @@ class RoomController extends Controller
         return [
             'result' => true,
             'data' => $result,
+        ];
+    }
+
+    //标记战绩为已读/未读
+    public function markRecord(ApiRequest $request)
+    {
+        $this->validate($request, [
+            'ruid' => 'required|integer|exists:record_infos_new,ruid',
+            'if_read' => 'required|integer|in:0,1',
+        ]);
+
+        $record = RecordInfosNew::where('ruid', $request->input('ruid'))->first();
+        $record->if_read = $request->input('if_read');
+        $record->save();
+
+        return [
+            'result' => true,
+            'data' => '战绩标记成功',
         ];
     }
 }

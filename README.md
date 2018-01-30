@@ -142,6 +142,7 @@ cd $codeDir
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
 | /wechat/red-packet/update | POST | 更新待发送红包状态 | 
 | /community/record/search | POST | 查询社区玩家战绩 | 
+| /community/record/mark | POST | 标记战绩为已读/未读 | 
 
 ### for game(游戏后端)
 | URI   | Method  | Description |     

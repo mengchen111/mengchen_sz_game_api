@@ -93,6 +93,7 @@ Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpeni
 Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList'); //获取待发送红包列表
 Route::post('wechat/red-packet/update', 'WechatRedPacketController@updateSendStatus');  //更新发送红包状态
 Route::post('community/record/search', 'RoomController@searchCommunityRoomRecord'); //查询社区玩家战绩
+Route::post('community/record/mark', 'RoomController@markRecord');  //标记战绩为已读/未读
 
 //给游戏后端调用的接口
 Route::group([
