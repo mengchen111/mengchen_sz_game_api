@@ -143,6 +143,7 @@ cd $codeDir
 | /wechat/red-packet/update | POST | 更新待发送红包状态 | 
 | /community/record/search | POST | 查询社区玩家战绩 | 
 | /community/record/mark | POST | 标记战绩为已读/未读 | 
+| /community/room/open | POST | 获取社团开房信息(正在玩的房间) | 
 
 ### for game(游戏后端)
 | URI   | Method  | Description |     
