@@ -169,4 +169,40 @@ class CommunityMemberController extends Controller
             'data' => '操作成功',
         ];
     }
+
+    //退出社团
+    public function quitCommunity(Request $request)
+    {
+        $this->validate($request, [
+            'player_id' => 'required|integer|exists:mysql.account,id',
+            'community_id' => 'required|integer|exists:mysql-web.community_list,id',
+        ]);
+        $params = $request->only(['player_id', 'community_id']);
+
+        $community = CommunityList::find($params['community_id']);
+        if (! $community->ifHasMember($params['player_id'])) {
+            throw new ApiException('此玩家不存在与该牌艺馆，无法退出');
+        }
+        $this->doQuitCommunity($community, $params['player_id']);
+
+        return [
+            'code' => -1,
+            'data' => '退出成功',
+        ];
+    }
+
+    protected function doQuitCommunity($community, $playerId)
+    {
+        DB::transaction(function () use ($community, $playerId) {
+            //删除成员
+            $community->deleteMembers([$playerId]);
+
+            //记录成员变动日志
+            CommunityMemberLog::create([
+                'community_id' => $community->id,
+                'player_id' => $playerId,
+                'action' => '退出',
+            ]);
+        });
+    }
 }
