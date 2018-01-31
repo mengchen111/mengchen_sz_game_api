@@ -2,9 +2,8 @@
 
 namespace App\Models\Web;
 
-use App\Services\Game\PlayerService;
 use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Expr\Array_;
+use Carbon\Carbon;
 
 class CommunityList extends Model
 {
@@ -22,8 +21,14 @@ class CommunityList extends Model
     ];
 
     protected $appends = [
-        'members_count',
+        'members_count', 'create_date'
     ];
+
+    public function getCreateDateAttribute()
+    {
+        $date = Carbon::parse($this->attributes['time'])->toDateString();
+        return $date;
+    }
 
     public function ownerPlayer()
     {

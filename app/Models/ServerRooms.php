@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class ServerRooms extends Model
@@ -18,8 +19,18 @@ class ServerRooms extends Model
         //
     ];
 
+    protected $appends = [
+        'create_date',
+    ];
+
     public function getOptionsJstrAttribute($value)
     {
         return json_decode($value, true);
+    }
+
+    public function getCreateDateAttribute()
+    {
+        $date = Carbon::parse($this->attributes['time'])->toDateString();
+        return $date;
     }
 }

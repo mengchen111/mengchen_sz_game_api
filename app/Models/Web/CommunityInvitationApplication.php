@@ -3,6 +3,7 @@
 namespace App\Models\Web;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class CommunityInvitationApplication extends Model
 {
@@ -19,8 +20,18 @@ class CommunityInvitationApplication extends Model
         //
     ];
 
+    protected $appends = [
+        'create_date',
+    ];
+
     public function community()
     {
         return $this->hasOne('App\Models\Web\CommunityList', 'id', 'community_id');
+    }
+
+    public function getCreateDateAttribute()
+    {
+        $date = Carbon::parse($this->attributes['time'])->toDateString();
+        return $date;
     }
 }
