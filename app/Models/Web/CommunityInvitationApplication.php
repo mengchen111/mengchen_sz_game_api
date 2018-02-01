@@ -31,7 +31,7 @@ class CommunityInvitationApplication extends Model
 
     public function getCreateDateAttribute()
     {
-        $date = Carbon::parse($this->attributes['time'])->toDateString();
+        $date = Carbon::parse($this->attributes['created_at'])->toDateString();
         return $date;
     }
 }
