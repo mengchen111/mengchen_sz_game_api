@@ -156,7 +156,8 @@ cd $codeDir
 | /game/community/involved/{player} | GET | 此玩家有关联的所有社区id |
 | /game/community/card/consumption/{community} | POST | 社团耗卡 |
 | /game/community/info/{communityId} | GET | 查询社团信息 |
-| /game/community/room/open/{communityId} | GET | 获取社团开房信息(正在玩的房间) |
+| /game/community/room/open/{communityId} | POST | 获取社团开房信息(正在玩的房间) |
+| /game/community/member/quit | POST | 退出牌艺馆 |
 
 ## 接口调用规范
 ### 参数签名计算方法
