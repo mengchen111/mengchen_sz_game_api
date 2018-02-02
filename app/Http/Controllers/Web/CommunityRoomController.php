@@ -34,7 +34,7 @@ class CommunityRoomController extends Controller
             ->toArray();
 
         $result = $this->formatRoomData($communityOpenRooms);
-        $result = collect($result)->chunk(2);   //每个chunk放两个数据给前端
+        $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
 
         return $result;
     }
