@@ -36,7 +36,10 @@ class CommunityRoomController extends Controller
         $result = $this->formatRoomData($communityOpenRooms);
         $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
 
-        return $result;
+        return [
+            'code' => -1,
+            'data' => $result,
+        ];
     }
 
     protected function formatRoomData($rooms)
