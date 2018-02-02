@@ -74,7 +74,8 @@ class Players extends Model
     {
         $data['owned_communities'] = $this->getOwnedCommunities();
         $data['belongs_to_communities'] = $this->getBelongs2Communities();
-        $data['involved_communities'] = array_merge($data['owned_communities'], $data['belongs_to_communities']);
+        $data['involved_communities'] = array_unique(array_merge($data['owned_communities'],
+            $data['belongs_to_communities']));
         return $data;
     }
 }
