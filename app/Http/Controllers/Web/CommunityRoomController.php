@@ -47,7 +47,7 @@ class CommunityRoomController extends Controller
         foreach ($rooms as &$room) {
             //$roomOptions = $room['options_jstr'];  //房间玩法
             //unset($room['options_jstr']);     //直接输出玩法key给到游戏前端处理
-            $room['rtype'] = $this->maJiangTypes[$room['rtype']];
+            //$room['rtype'] = $this->maJiangTypes[$room['rtype']]; //返回给游戏端的rtype不要转
             $room['players'] = [];
             for ($i = 1; $i <= 4; $i++) {
                 $tmp = [];
