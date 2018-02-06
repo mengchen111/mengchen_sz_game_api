@@ -16,11 +16,11 @@ class WechatUnionidOpenidController extends Controller
             'openid' => 'required|string|max:64',
         ]);
 
-        //如果不为空说明已经关注了公众号，数据库有保存用户的数据
-        $record = UnionidOpenid::firstOrCreate([
-            'openid' => $request->input('openid')
-        ], [
+        //如果能找到unionid说明已经关注了公众号，数据库有保存用户的数据
+        $record = UnionidOpenid::updateOrCreate([
             'unionid' => $request->input('unionid'),
+        ], [
+            'openid' => $request->input('openid')
         ]);
 
         ApiLog::add($request);
