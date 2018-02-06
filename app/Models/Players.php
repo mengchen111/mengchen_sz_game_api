@@ -21,7 +21,7 @@ class Players extends Model
     ];
 
     protected $appends = [
-        'openid',
+        //'openid',
     ];
 
 //    public function records()

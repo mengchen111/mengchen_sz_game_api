@@ -24,6 +24,11 @@ class WechatRedPacketController extends Controller
             })
             ->get();
 
+        //给player添加openid
+        foreach ($sendList as &$item) {
+            $item->player->append('openid');
+        }
+
         return [
             'result' => true,
             'data' => $sendList,
