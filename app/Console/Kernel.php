@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\testCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Psy\Command\Command;
@@ -14,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        testCommand::class,
     ];
 
     /**
