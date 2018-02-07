@@ -104,7 +104,7 @@ class RoomController extends Controller
         ]);
         $params = $request->only(['start_time', 'end_time', 'community_id', 'player_id']);
 
-        $result = ServerRoomsHistory::with(['recordInfo', 'creator', 'player1', 'player2', 'player3', 'player4'])
+        $result = ServerRoomsHistory::with(['creator', 'player1', 'player2', 'player3', 'player4'])
             ->where('currency', '>', 0)     //有过耗卡记录的房间
             ->whereBetween('time', [$params['start_time'], $params['end_time']])
             ->where('community_id', $params['community_id'])
@@ -115,7 +115,11 @@ class RoomController extends Controller
                     ['uid_3', '=', $params['player_id'], 'or'],
                     ['uid_4', '=', $params['player_id'], 'or'],
                 ]);
-            })->get();
+            })
+            ->get()
+            ->each(function ($item) {
+                return $item->append('record_info');
+            });
         
         return [
             'result' => true,

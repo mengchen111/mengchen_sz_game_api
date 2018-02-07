@@ -23,9 +23,10 @@ class ServerRoomsHistory extends Model
         return json_decode($value, true);
     }
 
-    public function recordInfo()
+    public function getRecordInfoAttribute()
     {
-        return $this->hasOne('App\Models\RecordInfosNew', 'ruid', 'ruid');
+        //使用like查询为不是relationship是因为未知的原因where查询bigint有时候查询不到
+        return RecordInfosNew::where('ruid', 'like', $this->attributes['ruid'])->first();
     }
 
 //    public function getRuidAttribute($value)
