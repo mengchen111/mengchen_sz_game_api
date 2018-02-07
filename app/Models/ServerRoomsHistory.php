@@ -28,10 +28,10 @@ class ServerRoomsHistory extends Model
         return $this->hasOne('App\Models\RecordInfosNew', 'ruid', 'ruid');
     }
 
-    public function getRuidAttribute($value)
-    {
-        return (string) $value; //转成字符串，不然前端读取有问题
-    }
+//    public function getRuidAttribute($value)
+//    {
+//        return (string) $value; //转成字符串，不然前端读取有问题
+//    }
 
     public function creator()
     {
