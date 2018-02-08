@@ -20,7 +20,7 @@ class ServerRooms extends Model
     ];
 
     protected $appends = [
-        'create_date',
+        'create_date', 'kind',
     ];
 
     public function getOptionsJstrAttribute($value)
@@ -32,5 +32,10 @@ class ServerRooms extends Model
     {
         $date = Carbon::parse($this->attributes['time'])->toDateString();
         return $date;
+    }
+
+    public function getKindAttribute()
+    {
+        return 4;
     }
 }

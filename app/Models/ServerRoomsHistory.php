@@ -58,4 +58,9 @@ class ServerRoomsHistory extends Model
     {
         return $this->hasOne('App\Models\Players', 'id', 'uid_4');
     }
+
+    public function getKindAttribute()
+    {
+        return 4;
+    }
 }
