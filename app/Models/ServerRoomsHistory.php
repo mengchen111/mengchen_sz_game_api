@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class ServerRoomsHistory extends Model
 {
@@ -26,7 +27,11 @@ class ServerRoomsHistory extends Model
     public function getRecordInfoAttribute()
     {
         //使用like查询为不是relationship是因为未知的原因where查询bigint有时候查询不到
-        return RecordInfosNew::where('ruid', 'like', $this->attributes['ruid'])->first();
+        //return RecordInfosNew::where('ruid', 'like', $this->attributes['ruid'])->first();
+
+        //使用like查询速度超慢，20bit的整型超出了php支持的范围，使用raw查询
+        $recordInfo = DB::select('select * from record_infos_new where ruid = ' . (string) $this->attributes['ruid']);
+        return empty($recordInfo) ? [] : $recordInfo[0];
     }
 
 //    public function getRuidAttribute($value)
