@@ -31,13 +31,19 @@ class ServerRoomsHistory extends Model
 
         //使用like查询速度超慢，20bit的整型超出了php支持的范围，使用raw查询
         $recordInfo = DB::select('select * from record_infos_new where ruid = ' . (string) $this->attributes['ruid']);
-        return empty($recordInfo) ? [] : $recordInfo[0];
+        if (!empty($recordInfo)) {
+            $recordInfo[0]->ruid = (string) $recordInfo[0]->ruid;   //转为字符串
+            return $recordInfo[0];
+        } else {
+            return [];
+        }
+        //return empty($recordInfo) ? [] : $recordInfo[0];
     }
 
-//    public function getRuidAttribute($value)
-//    {
-//        return (string) $value; //转成字符串，不然前端读取有问题
-//    }
+    public function getRuidAttribute($value)
+    {
+        return (string) $value; //转成字符串，不然20bit位的数字会显示异常
+    }
 
     public function creator()
     {

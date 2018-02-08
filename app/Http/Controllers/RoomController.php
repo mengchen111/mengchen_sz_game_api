@@ -131,13 +131,14 @@ class RoomController extends Controller
     public function markRecord(ApiRequest $request)
     {
         $this->validate($request, [
-            'ruid' => 'required|exists:record_infos_new,ruid',
+            'record_info_id' => 'required|integer',
             'if_read' => 'required|integer|in:0,1',
         ]);
 
-        $record = RecordInfosNew::where('ruid', $request->input('ruid'))->first();
+        $record = RecordInfosNew::findOrFail($request->input('record_info_id'));
         $record->if_read = $request->input('if_read');
         $record->save();
+
 
         return [
             'result' => true,
