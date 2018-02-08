@@ -105,4 +105,21 @@ class TasksPlayerController extends Controller
             throw new ApiException($exception->getMessage());
         }
     }
+
+    public function resetTasksPlayer(Request $request)
+    {
+        try {
+            $params = $request->only([
+                'id',
+            ]);
+            $result = GameServerNew::request('task', 'reset_user', $params);
+
+            return [
+                'result' => true,
+                'data' => $result,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
 }

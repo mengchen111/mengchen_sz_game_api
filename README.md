@@ -137,6 +137,11 @@ cd $codeDir
 | /activities/user-goods/add | POST | 添加user_goods | 
 | /activities/user-goods/modify | POST | 编辑user_goods | 
 | /activities/user-goods/delete | POST | 删除user_goods |
+| /activities/tasks-player/list | GET | 获取tasks_player列表 | 
+| /activities/tasks-player/add | POST | 添加tasks_player | 
+| /activities/tasks-player/modify | POST | 编辑tasks_player | 
+| /activities/tasks-player/delete | POST | 删除tasks_player |
+| /activities/tasks-player/reset | POST | 重置tasks_player |
 | /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 

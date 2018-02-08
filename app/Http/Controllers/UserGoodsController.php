@@ -93,4 +93,22 @@ class UserGoodsController extends Controller
             throw new ApiException($exception->getMessage());
         }
     }
+
+    public function resetUserGoods(Request $request)
+    {
+        //todo
+        try {
+            $params = $request->only([
+                'goods_id',
+            ]);
+            $result = GameServerNew::request('item', 'remove_user', $params);
+
+            return [
+                'result' => true,
+                'data' => $result,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
 }

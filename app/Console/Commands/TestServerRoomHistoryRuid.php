@@ -40,14 +40,16 @@ class TestServerRoomHistoryRuid extends Command
     {
         $ruid =  $this->argument('ruid');
         $this->info('intpu ruid is: ' .  $ruid);
-        $record = ServerRoomsHistory::with('recordInfo')->where('ruid', 'like', $ruid)->first();
-        if (empty($record)) {
+        $roomHistory = ServerRoomsHistory::where('ruid', 'like', $ruid)->first();
+        if (empty($roomHistory)) {
             return $this->info('! server rooms history not fund');
+        } else {
+            $roomHistory->append('record_info');
         }
 
-        $this->info('server rooms history id: ' . $record->id);
-        if (!empty($record->recordInfo)) {
-            return $this->info('record id: '. $record->recordInfo->id);
+        $this->info('server rooms history id: ' . $roomHistory->id);
+        if (!empty($roomHistory->recordInfo)) {
+            return $this->info('record id: '. $roomHistory->recordInfo->id);
         } else {
             return $this->info('! record not fund');
         }
