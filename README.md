@@ -137,6 +137,7 @@ cd $codeDir
 | /activities/user-goods/add | POST | 添加user_goods | 
 | /activities/user-goods/modify | POST | 编辑user_goods | 
 | /activities/user-goods/delete | POST | 删除user_goods |
+| /activities/user-goods/reset | POST | 重置user_goods |
 | /activities/tasks-player/list | GET | 获取tasks_player列表 | 
 | /activities/tasks-player/add | POST | 添加tasks_player | 
 | /activities/tasks-player/modify | POST | 编辑tasks_player | 

@@ -94,14 +94,13 @@ class UserGoodsController extends Controller
         }
     }
 
-    public function resetUserGoods(Request $request)
+    public function resetUserGoods(ApiRequest $request)
     {
-        //todo
         try {
             $params = $request->only([
                 'goods_id',
             ]);
-            $result = GameServerNew::request('item', 'remove_user', $params);
+            $result = GameServerNew::request('item', 'reset_user', $params);
 
             return [
                 'result' => true,

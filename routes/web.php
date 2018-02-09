@@ -84,6 +84,7 @@ Route::get('activities/user-goods/list', 'UserGoodsController@showUserGoods');  
 Route::post('activities/user-goods/add', 'UserGoodsController@addUserGoods');
 Route::post('activities/user-goods/modify', 'UserGoodsController@updateUserGoods');
 Route::post('activities/user-goods/delete', 'UserGoodsController@deleteUserGoods');
+Route::post('activities/user-goods/reset', 'UserGoodsController@resetUserGoods');   //重置玩家物品
 Route::get('activities/tasks-player/list', 'TasksPlayerController@showTasksPlayer');    //获取tasks_player列表
 Route::post('activities/tasks-player/add', 'TasksPlayerController@addTasksPlayer');
 Route::post('activities/tasks-player/modify', 'TasksPlayerController@updateTasksPlayer');

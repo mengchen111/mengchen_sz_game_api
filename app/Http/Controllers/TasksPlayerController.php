@@ -106,7 +106,7 @@ class TasksPlayerController extends Controller
         }
     }
 
-    public function resetTasksPlayer(Request $request)
+    public function resetTasksPlayer(ApiRequest $request)
     {
         try {
             $params = $request->only([
