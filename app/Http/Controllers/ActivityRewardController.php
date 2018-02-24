@@ -11,7 +11,7 @@ use App\Exceptions\ApiException;
 
 class ActivityRewardController extends Controller
 {
-    public function showActivitiesReward(ApiRequest $request)
+    public function showActivityReward(ApiRequest $request)
     {
         try {
             $rewards = ActivityReward::with('goodsTypeModel')->get();
@@ -25,7 +25,7 @@ class ActivityRewardController extends Controller
         }
     }
 
-    public function addActivityReward(Request $request)
+    public function addActivityReward(ApiRequest $request)
     {
         try {
             $pid = $this->getNewestPid();
@@ -81,6 +81,20 @@ class ActivityRewardController extends Controller
                 'pid',
             ]);
             $result = GameServerNew::request('activity_reward', 'remove', $params);
+
+            return [
+                'result' => true,
+                'data' => $result,
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage());
+        }
+    }
+
+    public function getActivityRewardLog(ApiRequest $request)
+    {
+        try {
+            $result = ActivityReward::with('logActivityReward')->get();
 
             return [
                 'result' => true,

@@ -22,4 +22,9 @@ class ActivityReward extends Model
     {
         return $this->hasOne('App\Models\GoodsType', 'goods_id', 'goods_type');
     }
+
+    public function logActivityReward()
+    {
+        return $this->hasOne('App\Models\LogActivityReward', 'pid', 'pid');
+    }
 }

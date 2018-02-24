@@ -121,6 +121,7 @@ cd $codeDir
 | /activities/modify | POST | 编辑活动 | 
 | /activities/delete | POST | 删除活动 | 
 | /activities/reward/list | GET | 获取活动奖品列表 | 
+| /activities/reward/log | GET | 获取活动奖品抽取日志(抽取数量) | 
 | /activities/reward/add | POST | 添加活动奖品 | 
 | /activities/reward/modify | POST | 编辑活动奖品 | 
 | /activities/reward/delete | POST | 删除活动奖品 | 
