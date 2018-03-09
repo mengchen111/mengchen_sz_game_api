@@ -20,7 +20,7 @@ class CurrencyConsumedController extends Controller
             'end_time' => 'nullable|required_with_all:start_time|date_format:"Y-m-d H:i:s"',
             'community_id' => 'integer',
         ]);
-        
+
         $data = LogCurrencyOperation::when($request->has('date'), function ($query) use ($request) {
             return $query->whereDate('time', $request->input('date'));
         })->when($request->has('item_type'), function ($query) use ($request) {
