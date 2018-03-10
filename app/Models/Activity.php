@@ -19,12 +19,19 @@ class Activity extends Model
     ];
 
     protected $appends = [
-        'reward_model'
+        'reward_model',
+        'tasks_model',
     ];
 
     public function getRewardModelAttribute()
     {
         $rewards = ActivityReward::with('goodsTypeModel')->whereIn('pid', explode(',', $this->attributes['reward']))->get();
+        return $rewards;
+    }
+
+    public function getTasksModelAttribute()
+    {
+        $rewards = Tasks::whereIn('id', explode(',', $this->attributes['task']))->get();
         return $rewards;
     }
 }

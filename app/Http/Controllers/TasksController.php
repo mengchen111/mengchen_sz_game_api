@@ -31,7 +31,7 @@ class TasksController extends Controller
         try {
             $taskId = $this->getNewestTaskId();
             $params = $request->only([
-                'name', 'type', 'begin_time', 'end_time', 'mission_time', 'target', 'reward', 'daily'
+                'name', 'type', 'begin_time', 'end_time', 'mission_time', 'target', 'reward', 'daily', 'link',
             ]);
             $params['id'] = $taskId;
             $result = GameServerNew::request('task', 'modify_task', $params);
@@ -59,7 +59,7 @@ class TasksController extends Controller
     {
         try {
             $params = $request->only([
-                'id', 'name', 'type', 'begin_time', 'end_time', 'mission_time', 'target', 'reward', 'daily'
+                'id', 'name', 'type', 'begin_time', 'end_time', 'mission_time', 'target', 'reward', 'daily', 'link',
             ]);
             $result = GameServerNew::request('task', 'modify_task', $params);
 

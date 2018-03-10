@@ -34,7 +34,7 @@ class ActivitiesController extends Controller
         try {
             $aid = $this->getNewestAid();
             $params = $request->only([
-                'name', 'open_time', 'end_time', 'reward_refresh_time', 'reward', 'open'
+                'name', 'open_time', 'end_time', 'reward_refresh_time', 'reward', 'open', 'task',
             ]);
             $params['aid'] = $aid;
             $result = GameServerNew::request('activity', 'modify', $params);
@@ -63,7 +63,7 @@ class ActivitiesController extends Controller
     {
         try {
             $params = $request->only([
-                'aid', 'name', 'open_time', 'end_time', 'reward_refresh_time', 'reward', 'open'
+                'aid', 'name', 'open_time', 'end_time', 'reward_refresh_time', 'reward', 'open', 'task',
             ]);
             $result = GameServerNew::request('activity', 'modify', $params);
 
