@@ -16,20 +16,20 @@ use App\Services\ApiLog;
 class RecordController extends Controller
 {
     //暂未使用
-    public function show(ApiRequest $request)
-    {
-        try {
-            //$records = Players::with(['records.infos'])->get();   //records关系已更改
-
-            ApiLog::add($request);
-            return [
-                'result' => true,
-                'data' => $records,
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
-        }
-    }
+//    public function show(ApiRequest $request)
+//    {
+//        try {
+//            //$records = Players::with(['records.infos'])->get();   //records关系已更改
+//
+//            ApiLog::add($request);
+//            return [
+//                'result' => true,
+//                'data' => $records,
+//            ];
+//        } catch (Exception $exception) {
+//            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+//        }
+//    }
 
     //根据玩家id获取玩家所有战绩
     public function search(ApiRequest $request)
