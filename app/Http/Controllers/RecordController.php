@@ -64,11 +64,13 @@ class RecordController extends Controller
         $searchRecId = $this->filterSearchRecordRequest($request);
 
         try {
-            if ($searchRecId >= 100000) {
-                $rounds = RecordInfosNew::find($searchRecId);
-            } else {
-                $rounds = RecordInfos::find($searchRecId);
-            }
+            //不再兼容老的战绩查询，两张数据库表结构不一致
+//            if ($searchRecId >= 100000) {
+//                $rounds = RecordInfosNew::find($searchRecId);
+//            } else {
+//                $rounds = RecordInfos::find($searchRecId);
+//            }
+            $rounds = RecordInfosNew::find($searchRecId);
 
             ApiLog::add($request);
             return [
