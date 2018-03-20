@@ -91,6 +91,7 @@ Route::post('activities/tasks-player/add', 'TasksPlayerController@addTasksPlayer
 Route::post('activities/tasks-player/modify', 'TasksPlayerController@updateTasksPlayer');
 Route::post('activities/tasks-player/delete', 'TasksPlayerController@deleteTasksPlayer');
 Route::post('activities/tasks-player/reset', 'TasksPlayerController@resetTasksPlayer'); //重置玩家任务
+Route::get('activities/log-activity-reward', 'LogActivityRewardController@show');   //查看玩家中奖记录
 Route::post('wechat/official-account/unionid-openid/create', 'WechatUnionidOpenidController@create');   //创建unionid和公众号openid记录
 Route::post('wechat/official-account/unionid-openid/delete', 'WechatUnionidOpenidController@destroy');  //删除记录
 Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList'); //获取待发送红包列表

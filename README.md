@@ -144,6 +144,7 @@ cd $codeDir
 | /activities/tasks-player/modify | POST | 编辑tasks_player | 
 | /activities/tasks-player/delete | POST | 删除tasks_player |
 | /activities/tasks-player/reset | POST | 重置tasks_player |
+| /activities/log-activity-reward | GET | 查看玩家中奖记录 |
 | /wechat/official-account/unionid-openid/create | POST | 创建微信unionid和公众号openid记录 | 
 | /wechat/official-account/unionid-openid/delete | POST | 删除微信unionid和公众号openid记录 | 
 | /wechat/red-packet/send-list | GET | 获取待发送红包列表 | 
