@@ -10,10 +10,14 @@ use App\Exceptions\ApiException;
 
 class LogActivityRewardController extends Controller
 {
-    public function show(ApiRequest $request)
+    public function show(Request $request)
     {
         try {
-            $result = LogActivityReward::with(['activityReward', 'player'])->get();
+            $result = LogActivityReward::with(['activityReward', 'player'])
+                ->when($request->has('uid'), function ($query) use ($request) {
+                    return $query->where('uid', $request->input('uid'));
+                })
+                ->get();
 
             return [
                 'result' => true,
