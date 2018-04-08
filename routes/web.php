@@ -47,6 +47,7 @@ Route::group([
 //游戏数据库接口（for web）
 Route::get('records', 'RecordController@show');    //列出所有玩家的所有战绩（暂未使用）
 Route::post('records', 'RecordController@search'); //查询玩家战绩
+Route::post('records-room', 'RecordController@searchRoom'); //查询房间id
 Route::post('record-info', 'RecordController@searchRecordInfo');    //根据战绩id查询单条战绩详情
 Route::get('players', 'PlayerController@show');    //列出所有玩家
 Route::get('players/online/amount', 'PlayerController@showOnlineAmount');   //列出实时在线玩家数量

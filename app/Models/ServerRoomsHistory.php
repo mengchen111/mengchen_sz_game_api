@@ -74,4 +74,10 @@ class ServerRoomsHistory extends Model
     {
         return 4;
     }
+
+    public function getRecords()
+    {
+        $recordsNew = RecordRelativeNew::with('infos')->where('ruid', $this->ruid)->get()->toArray();
+        return $recordsNew;
+    }
 }

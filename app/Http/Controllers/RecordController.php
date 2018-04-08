@@ -8,6 +8,7 @@ use App\Models\RecordInfos;
 use App\Models\RecordInfosNew;
 use App\Models\RecordRelative;
 use App\Models\RecordRelativeNew;
+use App\Models\ServerRoomsHistory;
 use Illuminate\Http\Request;
 use Exception;
 use App\Exceptions\ApiException;
@@ -58,6 +59,22 @@ class RecordController extends Controller
         }
     }
 
+    public function searchRoom(ApiRequest $request)
+    {
+        $searchRoomId = $this->filterSearchRoomRequest($request);
+        try {
+            $rooms = ServerRoomsHistory::query()->where('rid',$searchRoomId)->first();
+            $records = $rooms->getRecords();
+            ApiLog::add($request);
+            return [
+                'result' => true,
+                'data' => $records,     //战绩为空时，data为空数组
+            ];
+        } catch (Exception $exception) {
+            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+        }
+    }
+
     //根据战绩id查询单条战绩详情
     public function searchRecordInfo(ApiRequest $request)
     {
@@ -98,5 +115,15 @@ class RecordController extends Controller
             'exists' => '玩家不存在',
         ]);
         return $request->rec_id;
+    }
+
+    protected function filterSearchRoomRequest($request)
+    {
+        $this->validate($request, [
+            'rid' => 'required|integer|exists:server_rooms_history_4,rid',
+        ], [
+            'exists' => '房间不存在',
+        ]);
+        return $request->rid;
     }
 }
