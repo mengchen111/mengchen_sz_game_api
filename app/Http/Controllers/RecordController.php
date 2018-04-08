@@ -17,20 +17,20 @@ use App\Services\ApiLog;
 class RecordController extends Controller
 {
     //暂未使用
-    public function show(ApiRequest $request)
-    {
-        try {
-            //$records = Players::with(['records.infos'])->get();   //records关系已更改
-
-            ApiLog::add($request);
-            return [
-                'result' => true,
-                'data' => $records,
-            ];
-        } catch (Exception $exception) {
-            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
-        }
-    }
+//    public function show(ApiRequest $request)
+//    {
+//        try {
+//            //$records = Players::with(['records.infos'])->get();   //records关系已更改
+//
+//            ApiLog::add($request);
+//            return [
+//                'result' => true,
+//                'data' => $records,
+//            ];
+//        } catch (Exception $exception) {
+//            throw new ApiException($exception->getMessage(), config('exceptions.ApiException'));
+//        }
+//    }
 
     //根据玩家id获取玩家所有战绩
     public function search(ApiRequest $request)
@@ -81,11 +81,13 @@ class RecordController extends Controller
         $searchRecId = $this->filterSearchRecordRequest($request);
 
         try {
-            if ($searchRecId >= 100000) {
-                $rounds = RecordInfosNew::find($searchRecId);
-            } else {
-                $rounds = RecordInfos::find($searchRecId);
-            }
+            //不再兼容老的战绩查询，两张数据库表结构不一致
+//            if ($searchRecId >= 100000) {
+//                $rounds = RecordInfosNew::find($searchRecId);
+//            } else {
+//                $rounds = RecordInfos::find($searchRecId);
+//            }
+            $rounds = RecordInfosNew::find($searchRecId);
 
             ApiLog::add($request);
             return [

@@ -31,10 +31,11 @@ class ActivityRewardController extends Controller
             $pid = $this->getNewestPid();
             $params = $request->only([
                 'name', 'img', 'show_text', 'total_inventory', 'probability',
-                'single_limit', 'goods_type', 'goods_count',
+                'single_limit', 'goods_type', 'goods_count', 'whitelist', 'begin_time', 'end_time',
             ]);
             $params['pid'] = $pid;
             $params['expend'] = 0;
+            $params['whitelist'] = $params['whitelist'] ?: '';
             $result = GameServerNew::request('activity_reward', 'modify', $params);
 
             return [
@@ -61,8 +62,9 @@ class ActivityRewardController extends Controller
         try {
             $params = $request->only([
                 'pid', 'name', 'img', 'show_text', 'total_inventory', 'probability', 'single_limit',
-                'expend', 'goods_type', 'goods_count',
+                'expend', 'goods_type', 'goods_count', 'whitelist', 'begin_time', 'end_time',
             ]);
+            $params['whitelist'] = $params['whitelist'] ?: '';
             $result = GameServerNew::request('activity_reward', 'modify', $params);
 
             return [

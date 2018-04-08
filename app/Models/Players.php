@@ -31,10 +31,11 @@ class Players extends Model
 
     public function getRecords()
     {
-        $records = RecordRelative::with('infos')->where('uid', $this->id)->get()->toArray();
+        //不再兼容老版的战绩表（新旧表结构不一致）
+        //$records = RecordRelative::with('infos')->where('uid', $this->id)->get()->toArray();
         $recordsNew = RecordRelativeNew::with('infos')->where('uid', $this->id)->get()->toArray();
-        return array_merge($records, $recordsNew);
-        //return $records;
+        //return array_merge($records, $recordsNew);
+        return $recordsNew;
     }
 
     public function getOpenidAttribute()

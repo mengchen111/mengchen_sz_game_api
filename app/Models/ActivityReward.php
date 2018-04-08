@@ -25,6 +25,6 @@ class ActivityReward extends Model
 
     public function logActivityReward()
     {
-        return $this->hasOne('App\Models\LogActivityReward', 'pid', 'pid');
+        return $this->hasMany('App\Models\LogActivityReward', 'pid', 'pid');
     }
 }
