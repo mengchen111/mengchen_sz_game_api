@@ -30,9 +30,8 @@ class TasksPlayerController extends Controller
         try {
             //$tasksPlayerId = $this->getNewestTasksPlayerId();
             $params = $request->only([
-                'task_id', 'uid', 'process', 'is_completed',
+                'task_id', 'uid', 'process', 'is_completed', 'count'
             ]);
-
             $existTasksPlayer = TasksPlayer::where('uid', $params['uid'])
                 ->where('task_id', $params['task_id'])
                 ->get();
@@ -67,7 +66,7 @@ class TasksPlayerController extends Controller
     {
         try {
             $params = $request->only([
-                'task_id', 'uid', 'process', 'is_completed',
+                'task_id', 'uid', 'process', 'is_completed', 'count'
             ]);
 
             $existTasksPlayer = TasksPlayer::where('uid', $params['uid'])
