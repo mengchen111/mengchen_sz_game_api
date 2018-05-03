@@ -51,7 +51,10 @@ class Handler extends ExceptionHandler
     {
         //自定义异常类，输出错误信息给前端
         if ($exception instanceof CustomException) {
-            return response()->json(['error' => $exception->getMessage()], 200);
+            return response()->json([
+                'code' => $exception->getCode(),
+                'error' => $exception->getMessage()
+            ], 200);
         }
         //接口认证失败错误
         if ($exception instanceof ApiAuthException) {

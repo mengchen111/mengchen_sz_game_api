@@ -134,7 +134,6 @@ class CommunityMemberController extends Controller
                 'action' => '加入',
             ]);
 
-            //todo 社区加入新的玩家需要通知游戏后端
         });
 
         return [
