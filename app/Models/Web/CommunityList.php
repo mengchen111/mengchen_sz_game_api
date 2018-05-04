@@ -210,16 +210,16 @@ class CommunityList extends Model
     //获取成员id的数组列表
     public function getMemberIdsAttribute()
     {
-        return explode(',', $this->attributes['members']);
+        if (empty($this->attributes['members'])) {
+            return [];
+        } else {
+            return explode(',', $this->attributes['members']);
+        }
     }
 
     public function addMembers(Array $newMembers)
     {
-        if (empty($this->members)) {
-            $existMembers = [];
-        } else {
-            $existMembers = explode(',', $this->members);
-        }
+        $existMembers = $this->member_ids;
         foreach ($newMembers as $newMember) {
             if (!in_array($newMembers, $existMembers)) {
                 array_push($existMembers, $newMember);
@@ -231,11 +231,7 @@ class CommunityList extends Model
 
     public function deleteMembers(Array $abandonedMembers)
     {
-        if (empty($this->members)) {
-            $existMembers = [];
-        } else {
-            $existMembers = explode(',', $this->members);
-        }
+        $existMembers = $this->member_ids;
         foreach ($abandonedMembers as $abandonedMember) {
             if (in_array($abandonedMember, $existMembers)) {
                 unset($existMembers[array_search($abandonedMember, $existMembers)]);
@@ -248,8 +244,7 @@ class CommunityList extends Model
     //检查成员是否存在此群中
     public function ifHasMember($playerId)
     {
-        $existMembers = explode(',', $this->members);
-        return in_array($playerId, $existMembers);
+        return in_array($playerId, $this->member_ids);
     }
 
     //检查社团名是否有重复

@@ -165,4 +165,16 @@ class Players extends Model
             $data['belongs_to_communities']));
         return $data;
     }
+
+    //玩家是否是此牌艺馆成员
+    public function isMemberOfCommunity(CommunityList $community)
+    {
+        return in_array($this->id, $community->member_ids);
+    }
+
+    //玩家是否是此牌艺馆长
+    public function ownedCommunity(CommunityList $community)
+    {
+        return (int) $this->id === (int) $community->owner_player_id;
+    }
 }

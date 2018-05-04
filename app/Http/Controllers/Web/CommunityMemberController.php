@@ -14,11 +14,75 @@ use App\Models\Web\CommunityMemberLog;
 
 class CommunityMemberController extends Controller
 {
+    /**
+     *
+     * @SWG\Post(
+     *     path="/game/community/member/application",
+     *     description="申请(邀请)加入牌艺馆",
+     *     operationId="community.member.application.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="player_id",
+     *         description="玩家id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="community_id",
+     *         description="牌艺馆id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="type",
+     *         description="类型(0-申请，1-邀请)，默认为0",
+     *         in="query",
+     *         required=false,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=422,
+     *         description="参数验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ValidationError"),
+     *             },
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="申请(邀请)成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function apply2JoinCommunity(Request $request)
     {
         $this->validate($request, [
             'player_id' => 'required|integer|exists:account,id',
             'community_id' => 'required|integer|exists:mysql-web.community_list,id',
+            'type' => 'nullable|integer|in:0,1',
         ]);
         $playerId = $request->input('player_id');
         $communityId = $request->input('community_id');
@@ -26,16 +90,18 @@ class CommunityMemberController extends Controller
         $this->checkIfInTheCommunity($playerId, $communityId);
         $this->checkIfDuplicatedApplication($playerId, $communityId);
 
+        //邀请或申请类型（0-申请，1-邀请）(默认为0)
+        $type = $request->has('type') ? $request->input('type') : 0;
         CommunityInvitationApplication::create([
             'player_id' => $playerId,
             'community_id' => $communityId,
             'status' => 0,
-            'type' => 0
+            'type' => $type,
         ]);
 
         return [
             'code' => -1,
-            'data' => '申请成功',
+            'data' => '申请(邀请)成功',
         ];
     }
 
@@ -49,7 +115,7 @@ class CommunityMemberController extends Controller
 
         //已经存在的邀请
         if (!empty($invitation)) {
-            throw new ApiException('已经发送过申请请求');
+            throw new ApiException('已经发送过申请(邀请)请求');
         }
 
         return true;
@@ -59,10 +125,10 @@ class CommunityMemberController extends Controller
     {
         $community = CommunityList::findOrFail($communityId);
         if ($community->ifHasMember($playerId)) {
-            throw new ApiException('已处于此牌艺馆中，无需申请');
+            throw new ApiException('已处于此牌艺馆中，无需申请(邀请)');
         }
-        if ((int)$community->owner_player_id === $playerId) {
-            throw new ApiException('您已经是此牌艺馆的馆主，无需申请');
+        if ((int)$community->owner_player_id === (int) $playerId) {
+            throw new ApiException('您已经是此牌艺馆的馆主，无需申请(邀请)');
         }
         return true;
     }
@@ -105,12 +171,19 @@ class CommunityMemberController extends Controller
         return $applications;
     }
 
-    //同意加入群
-    public function approveInvitation(Request $request, CommunityInvitationApplication $invitation)
+    protected function checkInvitation($invitation)
     {
         if ((int)$invitation->status !== 0) {
             throw new ApiException('此条申请已被审批');
+        } else {
+            return true;
         }
+    }
+
+    //同意加入群
+    public function approveInvitation(Request $request, CommunityInvitationApplication $invitation)
+    {
+        $this->checkInvitation($invitation);
 
         $playerId = $invitation->player_id;
         $communityId = $invitation->community_id;
@@ -156,9 +229,7 @@ class CommunityMemberController extends Controller
     //拒绝加入群
     public function declineInvitation(Request $request, CommunityInvitationApplication $invitation)
     {
-        if ((int)$invitation->status !== 0) {
-            throw new ApiException('此条申请已被审批');
-        }
+        $this->checkInvitation($invitation);
 
         $invitation->status = 2;   //更新申请状态为已拒绝
         $invitation->save();
