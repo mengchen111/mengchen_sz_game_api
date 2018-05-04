@@ -204,4 +204,48 @@ class CommunityMemberController extends Controller
             ]);
         });
     }
+
+    /**
+     *
+     * @SWG\Get(
+     *     path="/game/community/members/info/{community}",
+     *     description="获取社团玩家信息",
+     *     operationId="community.members.info.get",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="community",
+     *         description="社团id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="玩家信息",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="array",
+     *                 @SWG\Items(
+     *                     type="object",
+     *                     allOf={
+     *                         @SWG\Schema(ref="#/definitions/CommunityMemberInfo"),
+     *                     }
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
+    public function getCommunityMembersInfo(Request $request, CommunityList $community)
+    {
+        return $this->res($community->members_info);
+    }
 }
