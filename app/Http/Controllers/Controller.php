@@ -23,15 +23,22 @@ use App\Services\ApiLog;
  *     ),
  *
  *     @SWG\Definition(
- *         definition="Success",
+ *         definition="Code",
  *         type="object",
  *         @SWG\Property(
  *             property="code",
  *             description="返回码，成功为-1",
  *             type="integer",
  *             format="int32",
- *             default="-1",
+ *             example="-1",
  *         ),
+ *     ),
+ *     @SWG\Definition(
+ *         definition="Success",
+ *         type="object",
+ *         allOf={
+ *             @SWG\Schema(ref="#/definitions/Code"),
+ *         },
  *         @SWG\Property(
  *             property="data",
  *             description="操作消息 or 数据",

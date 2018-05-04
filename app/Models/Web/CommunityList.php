@@ -5,6 +5,84 @@ namespace App\Models\Web;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
+/**
+ *
+ * @SWG\Definition(
+ *   definition="WebCommunity",
+ *   type="object",
+ *       @SWG\Property(
+ *           property="id",
+ *           description="社团id",
+ *           type="integer",
+ *           format="int32",
+ *           example="10000",
+ *       ),
+ *       @SWG\Property(
+ *           property="owner_agent_id",
+ *           description="社团所有者代理商id",
+ *           type="integer",
+ *           format="int32",
+ *           example="520",
+ *       ),
+ *       @SWG\Property(
+ *           property="owner_player_id",
+ *           description="社团所有者玩家id",
+ *           type="integer",
+ *           format="int32",
+ *           example="10000",
+ *       ),
+ *       @SWG\Property(
+ *           property="name",
+ *           description="社团名称",
+ *           type="string",
+ *           example="社团aaa",
+ *       ),
+ *       @SWG\Property(
+ *           property="info",
+ *           description="社团简介",
+ *           type="string",
+ *           example="这是社团简介",
+ *       ),
+ *       @SWG\Property(
+ *           property="card_stock",
+ *           description="社团房卡库存",
+ *           type="integer",
+ *           format="int32",
+ *           example="77",
+ *       ),
+ *       @SWG\Property(
+ *           property="card_frozen",
+ *           description="社团房卡冻结数量",
+ *           type="integer",
+ *           format="int32",
+ *           example="1",
+ *       ),
+ *       @SWG\Property(
+ *           property="status",
+ *           description="社团状态(0-待审核,1-审核通过,2-审核不通过)",
+ *           type="integer",
+ *           format="int32",
+ *           example="1",
+ *       ),
+ *       @SWG\Property(
+ *           property="members_count",
+ *           description="成员数量",
+ *           type="integer",
+ *           format="int32",
+ *           example="6",
+ *       ),
+ *       @SWG\Property(
+ *           property="create_date",
+ *           description="创建日期",
+ *           type="string",
+ *           example="2018-03-30",
+ *       ),
+ *       allOf={
+ *           @SWG\Schema(ref="#/definitions/CreatedAtUpdatedAt"),
+ *       }
+ * )
+ *
+ */
 class CommunityList extends Model
 {
     public $connection = 'mysql-web';
@@ -139,5 +217,15 @@ class CommunityList extends Model
     {
         $existMembers = explode(',', $this->members);
         return in_array($playerId, $existMembers);
+    }
+
+    //检查社团名是否有重复
+    public function ifNameDuplicated($communityName)
+    {
+        $allNames = CommunityList::where('id', '!=', $this->id)
+            ->select('name')
+            ->get()
+            ->pluck('name');
+        return $allNames->search($communityName);
     }
 }

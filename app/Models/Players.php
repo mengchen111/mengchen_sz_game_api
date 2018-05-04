@@ -5,6 +5,92 @@ namespace App\Models;
 use App\Models\Web\CommunityList;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *
+ * @SWG\Definition(
+ *   definition="GamePlayer",
+ *   type="object",
+ *       @SWG\Property(
+ *           property="id",
+ *           type="integer",
+ *           format="int32",
+ *           example="10000",
+ *       ),
+ *       @SWG\Property(
+ *           property="unionid",
+ *           description="玩家微信unionid",
+ *           type="string",
+ *           example="ope1JuMNKR7NFGEHYxeyfYBb0nQE",
+ *       ),
+ *       @SWG\Property(
+ *           property="nickname",
+ *           description="玩家昵称",
+ *           type="string",
+ *           example="小明",
+ *       ),
+ *       @SWG\Property(
+ *           property="headimg",
+ *           description="头像",
+ *           type="integer",
+ *           format="int32",
+ *           example="0",
+ *       ),
+ *       @SWG\Property(
+ *           property="city",
+ *           description="城市",
+ *           type="string",
+ *           example="Shenzhen",
+ *       ),
+ *       @SWG\Property(
+ *           property="gender",
+ *           description="性别（1-男,2-女）",
+ *           type="integer",
+ *           format="int32",
+ *           example="1",
+ *       ),
+ *       @SWG\Property(
+ *           property="ycoins",
+ *           description="房卡",
+ *           type="integer",
+ *           format="int32",
+ *           example="29",
+ *       ),
+ *       @SWG\Property(
+ *           property="ypoints",
+ *           description="金币",
+ *           type="integer",
+ *           format="int32",
+ *           example="0",
+ *       ),
+ *       @SWG\Property(
+ *           property="state",
+ *           description="账号当前状态",
+ *           type="integer",
+ *           format="int32",
+ *           example="0",
+ *       ),
+ *         @SWG\Property(
+ *             property="create_time",
+ *             description="创建时间",
+ *             type="string",
+ *             example="2018-03-30 16:03:14",
+ *         ),
+ *         @SWG\Property(
+ *             property="last_time",
+ *             description="最近登陆时间",
+ *             type="string",
+ *             example="2018-03-30 17:14:42",
+ *         ),
+ *       @SWG\Property(
+ *           property="invitation_code",
+ *           description="邀请码",
+ *           type="integer",
+ *           format="int32",
+ *           example="10000",
+ *       ),
+ * )
+ *
+ */
 class Players extends Model
 {
     public $timestamps = false;

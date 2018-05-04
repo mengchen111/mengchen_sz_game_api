@@ -82,5 +82,6 @@ Route::group([
     Route::get('community/involved/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
     Route::post('community/card/consumption/{community}', 'CommunityCardController@consumeCard')->where('community', '[0-9]+');//社团耗卡
     Route::get('community/info/{communityId}', 'CommunityController@getCommunityInfo')->where('communityId', '[0-9]+'); //获取社团信息
+    Route::put('community/info/{community}', 'CommunityController@editCommunityInfo')->where('community', '[0-9]+'); //编辑社团信息
     Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
 });
