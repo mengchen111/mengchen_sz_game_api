@@ -19,13 +19,15 @@ use Exception;
  *         description="结果(false)",
  *         type="boolean",
  *         default="false",
+ *         example="false",
  *     ),
  *     @SWG\Property(
  *         property="code",
  *         description="返回码，大于等于0",
  *         type="integer",
  *         format="int32",
- *         default="2000",
+ *         default=2000,
+ *         example=2000,
  *     ),
  *     @SWG\Property(
  *         property="errorMsg",

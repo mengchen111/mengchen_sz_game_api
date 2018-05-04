@@ -19,7 +19,8 @@ use Exception;
  *         description="返回码，大于等于0",
  *         type="integer",
  *         format="int32",
- *         example="1000",
+ *         default=1000,
+ *         example=1000,
  *     ),
  *     @SWG\Property(
  *         property="error",

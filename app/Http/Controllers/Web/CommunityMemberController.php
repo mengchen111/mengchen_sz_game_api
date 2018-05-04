@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Exceptions\ApiException;
 use App\Models\Players;
+use App\Models\ServerRooms;
 use App\Models\Web\CommunityList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -318,5 +319,118 @@ class CommunityMemberController extends Controller
     public function getCommunityMembersInfo(Request $request, CommunityList $community)
     {
         return $this->res($community->members_info);
+    }
+
+    /**
+     *
+     * @SWG\Delete(
+     *     path="/game/community/member/kick-out",
+     *     description="从牌艺馆中踢出玩家",
+     *     operationId="community.members.kick-out",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="player_id",
+     *         description="玩家id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="community_id",
+     *         description="社团id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=422,
+     *         description="参数验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ValidationError"),
+     *             },
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="踢出玩家成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
+    public function kickMemberOut(Request $request)
+    {
+        $this->validate($request, [
+            'player_id' => 'required|integer|exists:account,id',
+            'community_id' => 'required|integer|exists:mysql-web.community_list,id',
+        ]);
+        $playerId = $request->player_id;
+
+        $this->checkIfPlayerInGame($playerId);
+
+        $community = CommunityList::findOrFail($request->community_id);
+        if (! $community->ifHasMember($playerId)) {
+            throw new ApiException('此玩家不存在于该牌艺馆，无法踢出');
+        }
+        $this->doKickOutMember($community, $playerId);
+
+        return $this->res('踢出成员成功');
+    }
+
+    protected function checkIfPlayerInGame($playerId)
+    {
+        //获取正在玩的房间数据
+        $openRooms = ServerRooms::all()->toArray();
+        $inGameUids = [];
+        foreach ($openRooms as $openRoom) {
+            $uids = collect($openRoom)
+                ->only(['creator_uid', 'uid_1', 'uid_2', 'uid_3', 'uid_4'])
+                ->flatten()
+                ->toArray();
+            $inGameUids = array_merge($inGameUids, $uids);
+        }
+        if (in_array($playerId, $inGameUids)) {
+            throw new ApiException('此玩家正在游戏中，禁止踢出操作');
+        } else {
+            return true;
+        }
+    }
+
+    protected function doKickOutMember($community, $playerId)
+    {
+        DB::transaction(function () use ($community, $playerId) {
+            //踢出成员
+            $abandonedMembers = [];
+            array_push($abandonedMembers, $playerId);
+            $community->deleteMembers($abandonedMembers);
+
+            //记录成员变动日志
+            CommunityMemberLog::create([
+                'community_id' => $community->id,
+                'player_id' => $playerId,
+                'action' => '踢出',
+            ]);
+
+            //todo 社区踢出玩家需要通知游戏后端
+        });
     }
 }

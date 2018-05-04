@@ -30,7 +30,8 @@ use App\Services\ApiLog;
  *             description="返回码，成功为-1",
  *             type="integer",
  *             format="int32",
- *             example="-1",
+ *             default=-1,
+ *             example=-1,
  *         ),
  *     ),
  *     @SWG\Definition(
@@ -55,13 +56,15 @@ use App\Services\ApiLog;
  *             description="结果(false)",
  *             type="boolean",
  *             default="false",
+ *             example="false",
  *         ),
  *         @SWG\Property(
  *             property="code",
  *             description="返回码(0)",
  *             type="integer",
  *             format="int32",
- *             default="0",
+ *             default=0,
+ *             example=0,
  *         ),
  *         @SWG\Property(
  *             property="errorMsg",
