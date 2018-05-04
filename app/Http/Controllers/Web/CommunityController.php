@@ -152,4 +152,67 @@ class CommunityController extends Controller
             return $this->res('更新牌艺馆信息成功');
         }
     }
+
+    /**
+     *
+     * @SWG\Get(
+     *     path="/game/community/applications/{community}",
+     *     description="获取牌艺馆入馆申请记录",
+     *     operationId="community.applications.get",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="community",
+     *         description="社团id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="申请记录",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="object",
+     *                 @SWG\Property(
+     *                     property="application_count",
+     *                     description="申请数量",
+     *                     type="integer",
+     *                     format="int32",
+     *                     example=2,
+     *                 ),
+     *                 @SWG\Property(
+     *                     property="applications",
+     *                     description="申请记录",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/WebCommunityInvitationApplication"),
+     *                         },
+     *                         @SWG\Property(
+     *                             property="player",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/WebCommunityMemberInfo"),
+     *                             },
+     *                         ),
+     *                     ),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
+    public function getApplications(Request $request, CommunityList $community)
+    {
+        return $this->res($community->application_data);
+    }
 }

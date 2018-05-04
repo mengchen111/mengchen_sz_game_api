@@ -75,7 +75,7 @@ Route::group([
     'namespace' => 'Web',   //操作web数据库
 ], function () {
     Route::post('community/member/application', 'CommunityMemberController@apply2JoinCommunity'); //申请(邀请)加入群
-    Route::get('community/member/invitation/{player}', 'CommunityMemberController@getInvitationApplicationList')->where('player', '[0-9]+'); //获取入群邀请(和申请纪录)列表
+    Route::get('community/member/invitation/{player}', 'CommunityMemberController@getInvitationApplicationList')->where('player', '[0-9]+'); //获取玩家入群邀请(和申请纪录)列表
     Route::post('community/member/approval-invitation/{invitation}', 'CommunityMemberController@approveInvitation')->where('invitation', '[0-9]+'); //同意入群请求
     Route::post('community/member/decline-invitation/{invitation}', 'CommunityMemberController@declineInvitation')->where('invitation', '[0-9]+'); //拒绝入群请求
     Route::post('community/member/quit', 'CommunityMemberController@quitCommunity');     //玩家退出牌艺馆
@@ -86,4 +86,5 @@ Route::group([
     Route::put('community/info/{community}', 'CommunityController@editCommunityInfo')->where('community', '[0-9]+'); //编辑社团信息
     Route::get('community/members/info/{community}', 'CommunityMemberController@getCommunityMembersInfo')->where('community', '[0-9]+'); //获取社团成员信息
     Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
+    Route::get('community/applications/{community}', 'CommunityController@getApplications')->where('community', '[0-9]+');  //获取牌艺馆的所有入馆申请记录
 });

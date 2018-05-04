@@ -252,7 +252,7 @@ class CommunityMemberController extends Controller
 
         $community = CommunityList::find($params['community_id']);
         if (! $community->ifHasMember($params['player_id'])) {
-            throw new ApiException('此玩家不存在与该牌艺馆，无法退出');
+            throw new ApiException('此玩家不存在于该牌艺馆，无法退出');
         }
         $this->doQuitCommunity($community, $params['player_id']);
 
@@ -308,7 +308,7 @@ class CommunityMemberController extends Controller
      *                 @SWG\Items(
      *                     type="object",
      *                     allOf={
-     *                         @SWG\Schema(ref="#/definitions/CommunityMemberInfo"),
+     *                         @SWG\Schema(ref="#/definitions/WebCommunityMemberInfo"),
      *                     }
      *                 ),
      *             ),

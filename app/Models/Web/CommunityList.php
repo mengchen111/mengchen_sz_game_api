@@ -16,21 +16,21 @@ use Carbon\Carbon;
  *           description="社团id",
  *           type="integer",
  *           format="int32",
- *           example="10000",
+ *           example=10000,
  *       ),
  *       @SWG\Property(
  *           property="owner_agent_id",
  *           description="社团所有者代理商id",
  *           type="integer",
  *           format="int32",
- *           example="520",
+ *           example=520,
  *       ),
  *       @SWG\Property(
  *           property="owner_player_id",
  *           description="社团所有者玩家id",
  *           type="integer",
  *           format="int32",
- *           example="10000",
+ *           example=10000,
  *       ),
  *       @SWG\Property(
  *           property="name",
@@ -49,28 +49,28 @@ use Carbon\Carbon;
  *           description="社团房卡库存",
  *           type="integer",
  *           format="int32",
- *           example="77",
+ *           example=77,
  *       ),
  *       @SWG\Property(
  *           property="card_frozen",
  *           description="社团房卡冻结数量",
  *           type="integer",
  *           format="int32",
- *           example="1",
+ *           example=1,
  *       ),
  *       @SWG\Property(
  *           property="status",
  *           description="社团状态(0-待审核,1-审核通过,2-审核不通过)",
  *           type="integer",
  *           format="int32",
- *           example="1",
+ *           example=1,
  *       ),
  *       @SWG\Property(
  *           property="members_count",
  *           description="成员数量",
  *           type="integer",
  *           format="int32",
- *           example="6",
+ *           example=6,
  *       ),
  *       @SWG\Property(
  *           property="create_date",
@@ -126,7 +126,7 @@ class CommunityList extends Model
      * 将成员信息解构，然后获取成员的基本信息(头像，昵称和id)
      *
      * @SWG\Definition(
-     *     definition="CommunityMemberInfo",
+     *     definition="WebCommunityMemberInfo",
      *     description="牌艺馆成员信息",
      *     type="object",
      *     @SWG\Property(
@@ -175,15 +175,16 @@ class CommunityList extends Model
     {
         $applicationData = [];
         $applications = CommunityInvitationApplication::where('community_id', $this->attributes['id'])
-            ->where('type', 0)  //类型为申请
+            ->where('type', 0)      //类型为申请
             ->where('status', 0)    //状态为pending
             ->get();
         $applicationData['application_count'] = $applications->count(); //申请数量
 
         $remainedPlayerInfo = ['id', 'nickname', 'headimg'];    //只显示这些玩家信息
         foreach ($applications as &$application) {
-            $player = PlayerService::findPlayer($application->player_id);
-            $player = collect($player)->only($remainedPlayerInfo)->toArray();
+            $player = Players::find($application->player_id)
+                ->setVisible($remainedPlayerInfo)
+                ->toArray();
             $application['player'] = $player;   //添加申请者的基本信息
         }
         $applicationData['applications'] = $applications;   //申请信息
