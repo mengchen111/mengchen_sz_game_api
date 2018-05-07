@@ -433,4 +433,55 @@ class CommunityMemberController extends Controller
             //todo 社区踢出玩家需要通知游戏后端
         });
     }
+
+    /**
+     *
+     * @SWG\Get(
+     *     path="/game/community/member/log/{community}",
+     *     description="获取牌艺馆成员动态日志",
+     *     operationId="community.member.log.get",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="community",
+     *         description="社团id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="成员动态日志",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="array",
+     *                 @SWG\Items(
+     *                     type="object",
+     *                     allOf={
+     *                         @SWG\Schema(ref="#/definitions/WebCommunityMemberLog"),
+     *                     },
+     *                     @SWG\Property(
+     *                         property="player",
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/WebCommunityMemberInfo"),
+     *                         },
+     *                     ),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
+    public function getMemberLog(Request $request, CommunityList $community)
+    {
+        return $this->res($community->member_log);
+    }
 }

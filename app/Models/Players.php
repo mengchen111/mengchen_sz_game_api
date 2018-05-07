@@ -69,18 +69,18 @@ use Illuminate\Database\Eloquent\Model;
  *           format="int32",
  *           example="0",
  *       ),
- *         @SWG\Property(
- *             property="create_time",
- *             description="创建时间",
- *             type="string",
- *             example="2018-03-30 16:03:14",
- *         ),
- *         @SWG\Property(
- *             property="last_time",
- *             description="最近登陆时间",
- *             type="string",
- *             example="2018-03-30 17:14:42",
- *         ),
+ *       @SWG\Property(
+ *           property="create_time",
+ *           description="创建时间",
+ *           type="string",
+ *           example="2018-03-30 16:03:14",
+ *       ),
+ *       @SWG\Property(
+ *           property="last_time",
+ *           description="最近登陆时间",
+ *           type="string",
+ *           example="2018-03-30 17:14:42",
+ *       ),
  *       @SWG\Property(
  *           property="invitation_code",
  *           description="邀请码",

@@ -11,76 +11,76 @@ use Carbon\Carbon;
  * @SWG\Definition(
  *   definition="WebCommunity",
  *   type="object",
- *       @SWG\Property(
- *           property="id",
- *           description="社团id",
- *           type="integer",
- *           format="int32",
- *           example=10000,
- *       ),
- *       @SWG\Property(
- *           property="owner_agent_id",
- *           description="社团所有者代理商id",
- *           type="integer",
- *           format="int32",
- *           example=520,
- *       ),
- *       @SWG\Property(
- *           property="owner_player_id",
- *           description="社团所有者玩家id",
- *           type="integer",
- *           format="int32",
- *           example=10000,
- *       ),
- *       @SWG\Property(
- *           property="name",
- *           description="社团名称",
- *           type="string",
- *           example="社团aaa",
- *       ),
- *       @SWG\Property(
- *           property="info",
- *           description="社团简介",
- *           type="string",
- *           example="这是社团简介",
- *       ),
- *       @SWG\Property(
- *           property="card_stock",
- *           description="社团房卡库存",
- *           type="integer",
- *           format="int32",
- *           example=77,
- *       ),
- *       @SWG\Property(
- *           property="card_frozen",
- *           description="社团房卡冻结数量",
- *           type="integer",
- *           format="int32",
- *           example=1,
- *       ),
- *       @SWG\Property(
- *           property="status",
- *           description="社团状态(0-待审核,1-审核通过,2-审核不通过)",
- *           type="integer",
- *           format="int32",
- *           example=1,
- *       ),
- *       @SWG\Property(
- *           property="members_count",
- *           description="成员数量",
- *           type="integer",
- *           format="int32",
- *           example=6,
- *       ),
- *       @SWG\Property(
- *           property="create_date",
- *           description="创建日期",
- *           type="string",
- *           example="2018-03-30",
- *       ),
- *       allOf={
- *           @SWG\Schema(ref="#/definitions/CreatedAtUpdatedAt"),
- *       }
+ *   @SWG\Property(
+ *       property="id",
+ *       description="社团id",
+ *       type="integer",
+ *       format="int32",
+ *       example=10000,
+ *   ),
+ *   @SWG\Property(
+ *       property="owner_agent_id",
+ *       description="社团所有者代理商id",
+ *       type="integer",
+ *       format="int32",
+ *       example=520,
+ *   ),
+ *   @SWG\Property(
+ *       property="owner_player_id",
+ *       description="社团所有者玩家id",
+ *       type="integer",
+ *       format="int32",
+ *       example=10000,
+ *   ),
+ *   @SWG\Property(
+ *       property="name",
+ *       description="社团名称",
+ *       type="string",
+ *       example="社团aaa",
+ *   ),
+ *   @SWG\Property(
+ *       property="info",
+ *       description="社团简介",
+ *       type="string",
+ *       example="这是社团简介",
+ *   ),
+ *   @SWG\Property(
+ *       property="card_stock",
+ *       description="社团房卡库存",
+ *       type="integer",
+ *       format="int32",
+ *       example=77,
+ *   ),
+ *   @SWG\Property(
+ *       property="card_frozen",
+ *       description="社团房卡冻结数量",
+ *       type="integer",
+ *       format="int32",
+ *       example=1,
+ *   ),
+ *   @SWG\Property(
+ *       property="status",
+ *       description="社团状态(0-待审核,1-审核通过,2-审核不通过)",
+ *       type="integer",
+ *       format="int32",
+ *       example=1,
+ *   ),
+ *   @SWG\Property(
+ *       property="members_count",
+ *       description="成员数量",
+ *       type="integer",
+ *       format="int32",
+ *       example=6,
+ *   ),
+ *   @SWG\Property(
+ *       property="create_date",
+ *       description="创建日期",
+ *       type="string",
+ *       example="2018-03-30",
+ *   ),
+ *   allOf={
+ *       @SWG\Schema(ref="#/definitions/CreatedAtUpdatedAt"),
+ *   }
  * )
  *
  */
@@ -197,12 +197,13 @@ class CommunityList extends Model
     {
         $memberLogs = CommunityMemberLog::where('community_id', $this->attributes['id'])
             ->orderBy('id', 'desc')
-            ->limit(10)     //只显示10条最新动态
+            ->limit(30)     //只显示30条最新动态
             ->get();
         $remainedPlayerInfo = ['id', 'nickname'];    //只显示这些玩家信息
         foreach ($memberLogs as $memberLog) {
-            $player = PlayerService::findPlayer($memberLog->player_id);
-            $player = collect($player)->only($remainedPlayerInfo)->toArray();
+            $player = Players::find($memberLog->player_id)
+                ->setVisible($remainedPlayerInfo)
+                ->toArray();
             $memberLog['player'] = $player;
         }
         return $memberLogs;

@@ -79,6 +79,7 @@ Route::group([
     Route::post('community/member/approval-invitation/{invitation}', 'CommunityMemberController@approveInvitation')->where('invitation', '[0-9]+'); //同意入群请求
     Route::post('community/member/decline-invitation/{invitation}', 'CommunityMemberController@declineInvitation')->where('invitation', '[0-9]+'); //拒绝入群请求
     Route::post('community/member/quit', 'CommunityMemberController@quitCommunity');     //玩家退出牌艺馆
+    Route::get('community/member/log/{community}', 'CommunityMemberController@getMemberLog')->where('community', '[0-9]+'); //获取成员动态
     Route::delete('community/member/kick-out', 'CommunityMemberController@kickMemberOut'); //从牌艺馆中踢出成员
     Route::get('community/involved/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
     Route::post('community/card/consumption/{community}', 'CommunityCardController@consumeCard')->where('community', '[0-9]+');//社团耗卡
