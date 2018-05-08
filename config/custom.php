@@ -14,7 +14,7 @@ return [
     'email_notification' => env('EMAIL_NOTIFICATION', false),
 
     //计划任务日志
-    'cron_task_log' => env('CRON_TASK_LOG', '/tmp/artisan.log'),
+    'cron_task_log' => storage_path('logs/' . env('CRON_TASK_LOG', 'artisan.log')),
 
     'api_key' => env('API_KEY'),
     'api_secret' => env('API_SECRET'),
