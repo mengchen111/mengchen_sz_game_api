@@ -33,7 +33,7 @@ class ServerRoomsHistory extends Model
         $recordInfo = DB::select('select * from record_infos_new where ruid = ' . (string) $this->attributes['ruid']);
         if (!empty($recordInfo)) {
             $recordInfo[0]->ruid = (string) $recordInfo[0]->ruid;   //转为字符串
-            return $recordInfo[0];
+            return get_object_vars($recordInfo[0]); //返回数组，而不是stdClass对象
         } else {
             return [];
         }
@@ -77,7 +77,11 @@ class ServerRoomsHistory extends Model
 
     public function getRecords()
     {
-        $recordsNew = RecordRelativeNew::with('infos')->where('ruid', $this->ruid)->get()->toArray();
+        //todo 加上kind约束
+        $recordsNew = RecordRelativeNew::with('infos')
+            ->where('ruid', $this->ruid)
+            ->get()
+            ->toArray();
         return $recordsNew;
     }
 }

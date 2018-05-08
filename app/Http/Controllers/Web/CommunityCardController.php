@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Web;
 use App\Exceptions\ApiException;
 use App\Models\Web\CommunityCardConsumptionLog;
 use App\Models\Web\CommunityList;
-use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -33,10 +32,7 @@ class CommunityCardController extends Controller
             $this->doConsumeCard($community, $params);
         }
 
-        return [
-            'code' => -1,
-            'data' => '操作成功',
-        ];
+        return $this->res('操作成功');
     }
 
     protected function doFrozenCard($community, $params)

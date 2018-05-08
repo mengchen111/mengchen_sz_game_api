@@ -119,6 +119,7 @@ class Players extends Model
     {
         //不再兼容老版的战绩表（新旧表结构不一致）
         //$records = RecordRelative::with('infos')->where('uid', $this->id)->get()->toArray();
+        //todo 加上kind约束
         $recordsNew = RecordRelativeNew::with('infos')->where('uid', $this->id)->get()->toArray();
         //return array_merge($records, $recordsNew);
         return $recordsNew;

@@ -88,4 +88,5 @@ Route::group([
     Route::get('community/members/info/{community}', 'CommunityMemberController@getCommunityMembersInfo')->where('community', '[0-9]+'); //获取社团成员信息
     Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
     Route::get('community/applications/{community}', 'CommunityController@getApplications')->where('community', '[0-9]+');  //获取牌艺馆的所有入馆申请记录
+    Route::get('community/game-record/{communityId}', 'CommunityGameRecordController@search')->where('communityId', '[0-9]+');  //战绩查询
 });

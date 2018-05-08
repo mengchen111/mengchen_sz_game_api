@@ -124,7 +124,7 @@ class RoomController extends Controller
                 $item->append('record_info');
                 //计算未读战绩总数
                 if (!empty($item['record_info'])) {
-                    if ((int)$item['record_info']->if_read === 0) {
+                    if ((int)$item['record_info']['if_read'] === 0) {
                         $totalUnreadRecordCnt += 1;
                     }
                 }
