@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Requests\ApiRequest;
-use App\Traits\ApiRequestBuilder;
+use App\Traits\ApiRequestResolver;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class CommunityGameRecordController extends Controller
 {
-    use ApiRequestBuilder;
+    use ApiRequestResolver;
 
     /**
      *
@@ -144,23 +145,13 @@ class CommunityGameRecordController extends Controller
         $params = $request->intersect(['start_time', 'end_time', 'player_id']);
         $params['community_id'] = $communityId;
 
-        $records = $this->getRecords($params);
+        $records = $this->callController('App\Http\Controllers\RoomController@searchCommunityRoomRecord'
+            , $params, $request->getMethod());
+        $records['records'] = $records['records']->toArray();   //格式化成数组，防止报错
 
         $result = $this->formatRecords($records);
 
         return $this->res($result);
-    }
-
-    protected function getRecords($params)
-    {
-        $controller = app()->make('App\Http\Controllers\RoomController');
-        $params = $this->buildParams($params);
-        $request = new ApiRequest();
-        $request->setMethod('POST');
-        $request->request->add($params);
-        $result = $controller->searchCommunityRoomRecord($request)['data'];
-        $result['records'] = $result['records']->toArray();
-        return $result;
     }
 
     protected function formatRecords($records)
@@ -207,15 +198,50 @@ class CommunityGameRecordController extends Controller
         return $result;
     }
 
+    /**
+     *
+     * @SWG\Put(
+     *     path="/game/community/game-record/mark/{recordInfoId}",
+     *     description="标记战绩为已读",
+     *     operationId="community.game-record.mark.put",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="recordInfoId",
+     *         description="record_info_id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=404,
+     *         description="未知的record_info_id",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="标记成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function markRecord(Request $request, $recordInfoId)
     {
-        $api = config('custom.game_api_community_record_mark');
+        Validator::make($request->route()->parameters(), [
+            'recordInfoId' => 'required|integer|exists:record_infos_new,id'
+        ]);
+
         $params['record_info_id'] = $recordInfoId;
         $params['if_read'] = 1;
-        GameApiService::request('POST', $api, $params);
+        $result = $this->callController('App\Http\Controllers\RoomController@markRecord'
+            ,$params, $request->getMethod());
 
-        return [
-            'message' => '查看成功',
-        ];
+        return $this->res($result);
     }
 }

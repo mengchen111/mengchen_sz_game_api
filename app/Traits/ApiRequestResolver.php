@@ -2,7 +2,9 @@
 
 namespace App\Traits;
 
-trait ApiRequestBuilder
+use App\Http\Requests\ApiRequest;
+
+trait ApiRequestResolver
 {
     protected function buildParams(Array $params)
     {
@@ -27,5 +29,19 @@ trait ApiRequestBuilder
         $sign = strtoupper(md5($sign));
 
         return $sign;
+    }
+
+    protected function callController($controllerFunc, $params, $method)
+    {
+        list($controllerName, $func) = explode('@', $controllerFunc);
+        $controller = app()->make($controllerName);
+        $params = $this->buildParams($params);
+
+        $request = new ApiRequest();
+        $request->setMethod($method);
+        $request->merge($params);
+
+        $result = $controller->$func($request);
+        return $result['data'];
     }
 }
