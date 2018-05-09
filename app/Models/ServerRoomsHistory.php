@@ -258,7 +258,6 @@ class ServerRoomsHistory extends Model
         return 4;
     }
 
-    //TODO 不能使用query builder，ruid为20位的整型，where语句会查找失败
     public function getRecords()
     {
         //todo 加上kind约束（预留）
