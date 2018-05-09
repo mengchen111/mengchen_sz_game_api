@@ -108,7 +108,7 @@ class RoomController extends Controller
         $totalUnreadRecordCnt = 0;
         $allRecords = ServerRoomsHistory::with(['creator', 'player1', 'player2', 'player3', 'player4'])
             ->where('currency', '>', 0)     //有过耗卡记录的房间
-            //->whereBetween('time', [$params['start_time'], $params['end_time']])
+            ->whereBetween('time', [$params['start_time'], $params['end_time']])
             ->where('community_id', $params['community_id'])
             ->when($request->has('player_id'), function ($query) use ($params) {
                 return $query->where([
@@ -130,12 +130,12 @@ class RoomController extends Controller
                 }
             });
 
-        $records = $allRecords->filter(function ($item) use ($params) {
-            return $params['start_time'] <= $item['time'] && $item['time'] <= $params['end_time'];
-        });
+//        $records = $allRecords->filter(function ($item) use ($params) {
+//            return $params['start_time'] <= $item['time'] && $item['time'] <= $params['end_time'];
+//        });
 
         $result['total_unread_record_cnt'] = $totalUnreadRecordCnt;
-        $result['records'] = $records;
+        $result['records'] = $allRecords;
 
         return [
             'result' => true,
