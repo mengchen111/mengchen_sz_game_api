@@ -22,7 +22,6 @@ class RoomController extends Controller
         $gameServer = new GameServer();
         $res = $gameServer->request('POST', $roomCreateApi, $formData);
 
-        ApiLog::add($request);
         return [
             'result' => true,
             'data' => [
