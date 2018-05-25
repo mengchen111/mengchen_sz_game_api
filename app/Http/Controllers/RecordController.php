@@ -131,9 +131,9 @@ class RecordController extends Controller
     protected function filterSearchRoomRequest($request)
     {
         $this->validate($request, [
-//            'rid' => 'required|integer|exists:server_rooms_history_4,rid',
+            'rid' => 'required|integer|exists:server_rooms_history_4,rid',
         ], [
-//            'exists' => '房间不存在',
+            'exists' => '房间不存在',
         ]);
         return $request->rid;
     }
