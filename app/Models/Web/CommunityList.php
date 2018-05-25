@@ -148,6 +148,12 @@ class CommunityList extends Model
      *         type="string",
      *         example="http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83ervXvnC9rIx0cRxVibY8pU3sh2pVI4lkF4dwtxnoxZyRqZPV3icicBx7Nq7zJxjiaQfejVr0EJF3ia1Ricg/132",
      *     ),
+     *     @SWG\Property(
+     *         property="join_time",
+     *         description="玩家加入牌艺馆时间",
+     *         type="string",
+     *         example="2018-02-05 16:30:17",
+     *     ),
      * ),
      */
     public function getMembersInfoAttribute()
