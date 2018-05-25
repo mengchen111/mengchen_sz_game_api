@@ -6,6 +6,8 @@ use App\Http\Requests\ApiRequest;
 use App\Models\RecordInfosNew;
 use App\Models\ServerRooms;
 use App\Models\ServerRoomsHistory;
+use App\Models\V1\Room;
+use App\Models\V1\RoomsHistory;
 use Illuminate\Http\Request;
 use App\Services\GameServer;
 use App\Services\ApiLog;
@@ -36,7 +38,7 @@ class RoomController extends Controller
         $this->validate($request, [
             'creator' => 'integer',
         ]);
-        $data =  $request->all();
+        $data = $request->all();
         $data['timestamp'] = Carbon::now()->timestamp;
 
         //网站传过来的api_key和sign参数去掉
@@ -50,7 +52,7 @@ class RoomController extends Controller
         return $data;
     }
 
-    public function showOpenRoom(ApiRequest $request)
+    public function showOpenRoom(ApiRequest $request, Room $room)
     {
         $this->validate($request, [
             'date' => 'date_format:"Y-m-d"',
@@ -63,6 +65,14 @@ class RoomController extends Controller
             return $query->where('rtype', $request->input('game_kind'));
         })->get();
 
+        // 新版
+//        $roomOpened = $room->when($request->has('date'), function ($query) use ($request) {
+//            return $query->whereDate('ctime', $request->input('date'));
+//        })->when($request->has('game_kind'), function ($query) use ($request) {
+//            return $query->where('kind', $request->input('game_kind'));
+//        })->withPlayers()->get()->toArray();
+//        $roomOpened = $room->formatRoomData($roomOpened);
+
         ApiLog::add($request);
 
         return [
@@ -71,18 +81,26 @@ class RoomController extends Controller
         ];
     }
 
-    public function showRoomHistory(ApiRequest $request)
+    public function showRoomHistory(ApiRequest $request, RoomsHistory $history)
     {
         $this->validate($request, [
             'date' => 'date_format:"Y-m-d"',
             //'game_kind' => 'integer', //房间类型(即游戏类型, 惠州麻将、惠东麻将等)
         ]);
-
         $roomHistory = ServerRoomsHistory::when($request->has('date'), function ($query) use ($request) {
             return $query->whereDate('time', $request->input('date'));
         })->when($request->has('game_kind'), function ($query) use ($request) {
             return $query->where('rtype', $request->input('game_kind'));
         })->get();
+
+        //新版
+//        $roomHistory = $history->when($request->has('date'), function ($query) use ($request) {
+//            return $query->whereDate('ctime', $request->input('date'));
+//        })->when($request->has('game_kind'), function ($query) use ($request) {
+//            return $query->where('kind', $request->input('game_kind'));
+//        })->withPlayers()->latest('etime')->paginate($this->page);
+//
+//        $roomHistory = $history->formatRoomData($roomHistory);
 
         ApiLog::add($request);
 
@@ -99,14 +117,14 @@ class RoomController extends Controller
             'start_time' => 'required|date_format:"Y-m-d H:i:s"',
             'end_time' => 'required|date_format:"Y-m-d H:i:s"',
             'community_id' => 'required|integer',
-            'player_id' => 'integer'
+            'player_id' => 'integer',
         ]);
         $params = $request->only(['start_time', 'end_time', 'community_id', 'player_id']);
 
         //战绩记录
         $totalUnreadRecordCnt = 0;
         $allRecords = ServerRoomsHistory::with(['creator', 'player1', 'player2', 'player3', 'player4'])
-            ->where('currency', '>', 0)     //有过耗卡记录的房间
+            ->where('currency', '>', 0)//有过耗卡记录的房间
             ->whereBetween('time', [$params['start_time'], $params['end_time']])
             ->where('community_id', $params['community_id'])
             ->when($request->has('player_id'), function ($query) use ($params) {

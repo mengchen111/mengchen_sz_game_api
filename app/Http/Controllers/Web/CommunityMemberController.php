@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web;
 use App\Exceptions\ApiException;
 use App\Models\Players;
 use App\Models\ServerRooms;
+use App\Models\V1\Room;
+use App\Models\V1\RoomsPlayer;
 use App\Models\Web\CommunityList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -386,6 +388,7 @@ class CommunityMemberController extends Controller
         $playerId = $request->player_id;
 
         $this->checkIfPlayerInGame($playerId);
+//        $this->checkIfPlayerInGameV1($playerId); // 新版
 
         $community = CommunityList::findOrFail($request->community_id);
         if (! $community->ifHasMember($playerId)) {
@@ -394,6 +397,16 @@ class CommunityMemberController extends Controller
         $this->doKickOutMember($community, $playerId);
 
         return $this->res('踢出成员成功');
+    }
+
+    // 判断玩家是否在房间中 -  新版
+    protected function checkIfPlayerInGameV1($playerId)
+    {
+        $result = RoomsPlayer::query()->where('uid',$playerId)->first();
+        if ($result){
+            throw new ApiException('此玩家正在游戏中，禁止踢出操作');
+        }
+        return true;
     }
 
     protected function checkIfPlayerInGame($playerId)
@@ -414,6 +427,7 @@ class CommunityMemberController extends Controller
             return true;
         }
     }
+
 
     protected function doKickOutMember($community, $playerId)
     {

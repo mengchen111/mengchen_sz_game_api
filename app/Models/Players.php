@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Web\CommunityList;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\V1\RecordRelative;
 /**
  *
  * @SWG\Definition(
@@ -121,6 +121,10 @@ class Players extends Model
         //todo 加上kind约束（预留）
         $recordsNew = RecordRelativeNew::with('infos')->where('uid', $this->id)->get()->toArray();
         //return array_merge($records, $recordsNew);
+
+        //新版
+//        $recordsNew = RecordRelative::with('infos')->where('uid',$this->id)->get()->toArray();
+
         return $recordsNew;
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Models\Players;
 use App\Models\ServerRooms;
+use App\Models\V1\Room;
 use App\Traits\MaJiangOptionsMap;
 use App\Traits\MajiangTypeMap;
 use Illuminate\Http\Request;
@@ -13,6 +14,37 @@ class CommunityRoomController extends Controller
 {
     use MajiangTypeMap;
     use MaJiangOptionsMap;
+
+    //获取牌艺馆正在玩的房间信息 - 新版
+    public function getCommunityOpenRoomV1(Request $request, $communityId, Room $room)
+    {
+        $this->validate($request, [
+            'is_full' => 'required|integer|in:0,1,2', //0-查看未满员，1-查看满员，2-查看所有
+        ]);
+        $isFull = (int)$request->input('is_full');
+
+//        \DB::connection()->enableQueryLog(); // 开启查询日志
+        $communityOpenRooms = $room->where('community', $communityId)
+            ->when($isFull !== 2, function ($query) use ($isFull) {
+                if ($isFull === 1) {
+                    //满员房间
+                    return $query->where('player', 4);
+                } else {
+                    //未满员的房间
+                    return $query->where('player', '<', 4);
+                }
+            })->withPlayers()->orderBy('id', 'desc')->get()->toArray();
+
+//        $queries = \DB::getQueryLog(); // 获取查询日志
+//        logger()->info($queries);
+        $result = $room->formatRoomData($communityOpenRooms);
+        $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
+
+        return [
+            'code' => -1,
+            'data' => $result,
+        ];
+    }
 
     //获取牌艺馆正在玩的房间信息
     public function getCommunityOpenRoom(Request $request, $communityId)
@@ -25,7 +57,7 @@ class CommunityRoomController extends Controller
             ->when($isFull !== 2, function ($query) use ($isFull) {
                 if ($isFull === 1) {    //满员房间
                     return $query->where('player_cnt', 4);
-                } else {    //0 为满员的房间
+                } else {    //0 为未满员的房间
                     return $query->where('player_cnt', '<', 4);
                 }
             })
@@ -78,7 +110,7 @@ class CommunityRoomController extends Controller
         array_walk($options, function ($v, $k) use (&$rules) {
             foreach ($this->maJiangOptionsMap as $category => $categoryOptions) {
                 if (array_key_exists($k, $categoryOptions)) {
-                    if ((! empty($v)) or $k == 16) {    //无鬼补花类型值可能为0
+                    if ((!empty($v)) or $k == 16) {    //无鬼补花类型值可能为0
                         if (is_array($categoryOptions[$k])) {
                             $rules[$category] .= "{$categoryOptions[$k]['name']}: {$categoryOptions[$k]['options'][$v]},";
                         } else {

@@ -169,6 +169,9 @@ cd $codeDir
 | /game/community/info/{communityId} | GET | 查询社团信息 |
 | /game/community/room/open/{communityId} | POST | 获取社团开房信息(正在玩的房间) |
 | /game/community/member/quit | POST | 退出牌艺馆 |
+| v1 版本修改的接口 |
+| /game/v1/community/room/open/{communityId} | POST | 获取社团开房信息(正在玩的房间) |
+
 
 ## 接口调用规范
 ### 参数签名计算方法

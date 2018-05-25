@@ -9,6 +9,8 @@ use App\Models\RecordInfosNew;
 use App\Models\RecordRelative;
 use App\Models\RecordRelativeNew;
 use App\Models\ServerRoomsHistory;
+use App\Models\V1\Record;
+use App\Models\V1\RoomsHistory;
 use Illuminate\Http\Request;
 use Exception;
 use App\Exceptions\ApiException;
@@ -64,6 +66,10 @@ class RecordController extends Controller
         $searchRoomId = $this->filterSearchRoomRequest($request);
         try {
             $rooms = ServerRoomsHistory::query()->where('rid',$searchRoomId)->first();
+
+            //新版
+//            $rooms = RoomsHistory::query()->where('rid',$searchRoomId)->first();
+
             $records = $rooms->getRecords();
             ApiLog::add($request);
             return [
@@ -88,6 +94,9 @@ class RecordController extends Controller
 //                $rounds = RecordInfos::find($searchRecId);
 //            }
             $rounds = RecordInfosNew::find($searchRecId);
+
+            //新版
+//            $rounds = Record::find($searchRecId);
 
             ApiLog::add($request);
             return [
@@ -122,9 +131,9 @@ class RecordController extends Controller
     protected function filterSearchRoomRequest($request)
     {
         $this->validate($request, [
-            'rid' => 'required|integer|exists:server_rooms_history_4,rid',
+//            'rid' => 'required|integer|exists:server_rooms_history_4,rid',
         ], [
-            'exists' => '房间不存在',
+//            'exists' => '房间不存在',
         ]);
         return $request->rid;
     }

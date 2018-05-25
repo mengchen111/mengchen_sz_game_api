@@ -109,6 +109,8 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    protected $page = 15;
+
     public function __construct(Request $request)
     {
         ApiLog::add($request);
