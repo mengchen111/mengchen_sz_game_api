@@ -128,26 +128,9 @@ class CommunityList extends Model
      * @SWG\Definition(
      *     definition="WebCommunityMemberInfo",
      *     description="牌艺馆成员信息",
-     *     type="object",
-     *     @SWG\Property(
-     *         property="id",
-     *         description="玩家id",
-     *         type="integer",
-     *         format="int32",
-     *         example="11000",
-     *     ),
-     *     @SWG\Property(
-     *         property="nickname",
-     *         description="玩家昵称",
-     *         type="string",
-     *         example="文德-泽?",
-     *     ),
-     *     @SWG\Property(
-     *         property="headimg",
-     *         description="玩家头像地址",
-     *         type="string",
-     *         example="http://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83ervXvnC9rIx0cRxVibY8pU3sh2pVI4lkF4dwtxnoxZyRqZPV3icicBx7Nq7zJxjiaQfejVr0EJF3ia1Ricg/132",
-     *     ),
+     *     allOf={
+     *         @SWG\Schema(ref="#/definitions/GamePlayerSimplified"),
+     *     },
      *     @SWG\Property(
      *         property="join_time",
      *         description="玩家加入牌艺馆时间",

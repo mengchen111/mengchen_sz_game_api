@@ -91,6 +91,7 @@ Route::group([
     Route::get('community/applications/{community}', 'CommunityController@getApplications')->where('community', '[0-9]+');  //获取牌艺馆的所有入馆申请记录
     Route::get('community/game-record/{communityId}', 'CommunityGameRecordController@search')->where('communityId', '[0-9]+');  //战绩查询
     Route::put('community/game-record/mark/{recordInfoId}', 'CommunityGameRecordController@markRecord')->where('recordInfoId', '[0-9]+');  //标记战绩为已读
+    Route::get('community/player/search/{player}', 'CommunityPlayerController@searchPlayer')->where('player', '[0-9]+');    //根据玩家id查询玩家信息
 
     // 新版
     Route::group([
