@@ -28,21 +28,21 @@ class CommunityMemberController extends Controller
      *     @SWG\Parameter(
      *         name="player_id",
      *         description="玩家id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),
      *     @SWG\Parameter(
      *         name="community_id",
      *         description="牌艺馆id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),
      *     @SWG\Parameter(
      *         name="type",
      *         description="类型(0-申请，1-邀请)，默认为0",
-     *         in="query",
+     *         in="formData",
      *         required=false,
      *         type="integer",
      *     ),
@@ -241,7 +241,7 @@ class CommunityMemberController extends Controller
     /**
      * 同意加入群
      * @SWG\Post(
-     *     path="community/member/approval-invitation/{invitation}",
+     *     path="/game/community/member/approval-invitation/{invitation}",
      *     description="同意加入群",
      *     operationId="community.member.approval.invitation.post",
      *     tags={"community"},
@@ -249,7 +249,7 @@ class CommunityMemberController extends Controller
      *     @SWG\Parameter(
      *         name="invitation",
      *         description="群id",
-     *         in="query",
+     *         in="path",
      *         required=true,
      *         type="integer",
      *     ),
@@ -325,7 +325,7 @@ class CommunityMemberController extends Controller
     /**
      * 拒绝加入群
      * @SWG\Post(
-     *     path="community/member/decline-invitation/{invitation}",
+     *     path="/game/community/member/decline-invitation/{invitation}",
      *     description="拒绝加入群",
      *     operationId="community.member.decline.invitation.post",
      *     tags={"community"},
@@ -333,7 +333,7 @@ class CommunityMemberController extends Controller
      *     @SWG\Parameter(
      *         name="invitation",
      *         description="群id",
-     *         in="query",
+     *         in="path",
      *         required=true,
      *         type="integer",
      *     ),
@@ -385,14 +385,14 @@ class CommunityMemberController extends Controller
      *     @SWG\Parameter(
      *         name="player_id",
      *         description="玩家id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),
      *     @SWG\Parameter(
      *         name="community_id",
      *         description="牌艺馆id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),

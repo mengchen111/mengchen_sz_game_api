@@ -161,6 +161,20 @@ class CommunityController extends Controller
      *         required=true,
      *         type="integer",
      *     ),
+     *     @SWG\Parameter(
+     *         name="community_name",
+     *         description="社团名字",
+     *         in="formData",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="community_info",
+     *         description="社团简介",
+     *         in="formData",
+     *         required=true,
+     *         type="string",
+     *     ),
      *
      *     @SWG\Response(
      *         response=422,
@@ -181,6 +195,10 @@ class CommunityController extends Controller
      *                 @SWG\Schema(ref="#/definitions/ApiError"),
      *             },
      *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="未找到牌艺馆",
      *     ),
      *
      *     @SWG\Response(
