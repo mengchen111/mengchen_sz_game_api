@@ -200,7 +200,7 @@ class CommunityGameRecordController extends Controller
 
     /**
      * 标记战绩为已读
-     * @SWG\Put(
+     * @SWG\Post(
      *     path="/game/community/game-record/mark/{recordInfoId}",
      *     description="标记战绩为已读",
      *     operationId="community.game-record.mark.put",
