@@ -56,6 +56,20 @@ use Carbon\Carbon;
  *       }
  * )
  *
+ *   * @SWG\Definition(
+ *     definition="InvitationApplicationList",
+ *     description="牌艺馆成员信息",
+ *     allOf={
+ *         @SWG\Schema(ref="#/definitions/WebCommunityInvitationApplication"),
+ *     },
+ *     @SWG\Property(
+ *        property="community",
+ *        type="object",
+ *           allOf={
+ *              @SWG\Schema(ref="#/definitions/WebCommunityWithOwnerPlayer"),
+ *           },
+ *     ),
+ * ),
  */
 class CommunityInvitationApplication extends Model
 {

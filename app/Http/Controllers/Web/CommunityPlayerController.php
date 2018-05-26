@@ -9,9 +9,9 @@ use App\Http\Controllers\Controller;
 class CommunityPlayerController extends Controller
 {
     /**
-     *
+     * 根据玩家id查询玩家信息
      * @SWG\Get(
-     *     path="/game/community/player/search/{player_id}",
+     *     path="/game/community/player/search/{player}",
      *     description="根据玩家id查询玩家信息",
      *     operationId="community.player.search.get",
      *     tags={"community"},

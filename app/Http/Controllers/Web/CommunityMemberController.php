@@ -18,7 +18,7 @@ use App\Models\Web\CommunityMemberLog;
 class CommunityMemberController extends Controller
 {
     /**
-     *
+     * 申请(邀请)加入牌艺馆
      * @SWG\Post(
      *     path="/game/community/member/application",
      *     description="申请(邀请)加入牌艺馆",
@@ -130,13 +130,68 @@ class CommunityMemberController extends Controller
         if ($community->ifHasMember($playerId)) {
             throw new ApiException('已处于此牌艺馆中，无需申请(邀请)');
         }
-        if ((int)$community->owner_player_id === (int) $playerId) {
+        if ((int)$community->owner_player_id === (int)$playerId) {
             throw new ApiException('您已经是此牌艺馆的馆主，无需申请(邀请)');
         }
+
         return true;
     }
 
-    //获取入群申请邀请列表
+    /**
+     * 获取入群申请邀请列表
+     * @SWG\Get(
+     *     path="/game/community/member/invitation/{player}",
+     *     description="获取入群申请邀请列表",
+     *     operationId="community.members.invitation.get",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="player",
+     *         description="用户id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="入群申请邀请列表",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="object",
+     *                 @SWG\Property(
+     *                     property="invitation",
+     *                     description="邀请列表",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/InvitationApplicationList"),
+     *                         },
+     *                     ),
+     *                 ),
+     *                  @SWG\Property(
+     *                     property="application",
+     *                     description="申请列表",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/InvitationApplicationList"),
+     *                         },
+     *                     ),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
     public function getInvitationApplicationList(Request $request, Players $player)
     {
         $data = [];
@@ -158,11 +213,10 @@ class CommunityMemberController extends Controller
             ->get();
     }
 
-    //获取玩家的申请纪录
     protected function getApplicationRecord($playerId)
     {
         $statusMap = [
-            '申请中', '通过', '拒绝'
+            '申请中', '通过', '拒绝',
         ];
         $applications = CommunityInvitationApplication::with('community.ownerPlayer')
             ->where('player_id', $playerId)
@@ -171,6 +225,7 @@ class CommunityMemberController extends Controller
         foreach ($applications as $application) {
             $application->status = $statusMap[$application->status];
         }
+
         return $applications;
     }
 
@@ -183,7 +238,45 @@ class CommunityMemberController extends Controller
         }
     }
 
-    //同意加入群
+    /**
+     * 同意加入群
+     * @SWG\Post(
+     *     path="community/member/approval-invitation/{invitation}",
+     *     description="同意加入群",
+     *     operationId="community.member.approval.invitation.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="invitation",
+     *         description="群id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="加入牌艺馆成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function approveInvitation(Request $request, CommunityInvitationApplication $invitation)
     {
         $this->checkInvitation($invitation);
@@ -229,7 +322,45 @@ class CommunityMemberController extends Controller
         }
     }
 
-    //拒绝加入群
+    /**
+     * 拒绝加入群
+     * @SWG\Post(
+     *     path="community/member/decline-invitation/{invitation}",
+     *     description="拒绝加入群",
+     *     operationId="community.member.decline.invitation.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="invitation",
+     *         description="群id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="操作成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function declineInvitation(Request $request, CommunityInvitationApplication $invitation)
     {
         $this->checkInvitation($invitation);
@@ -243,7 +374,62 @@ class CommunityMemberController extends Controller
         ];
     }
 
-    //退出社团
+    /**
+     * 退出社团
+     * @SWG\Post(
+     *     path="/game/community/member/quit",
+     *     description="退出社团",
+     *     operationId="community.member.quit.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="player_id",
+     *         description="玩家id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="community_id",
+     *         description="牌艺馆id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=422,
+     *         description="参数验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ValidationError"),
+     *             },
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="退出成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function quitCommunity(Request $request)
     {
         $this->validate($request, [
@@ -253,7 +439,7 @@ class CommunityMemberController extends Controller
         $params = $request->only(['player_id', 'community_id']);
 
         $community = CommunityList::find($params['community_id']);
-        if (! $community->ifHasMember($params['player_id'])) {
+        if (!$community->ifHasMember($params['player_id'])) {
             throw new ApiException('此玩家不存在于该牌艺馆，无法退出');
         }
         $this->doQuitCommunity($community, $params['player_id']);
@@ -280,7 +466,7 @@ class CommunityMemberController extends Controller
     }
 
     /**
-     *
+     * 获取社团玩家信息
      * @SWG\Get(
      *     path="/game/community/members/info/{community}",
      *     description="获取社团玩家信息",
@@ -324,7 +510,7 @@ class CommunityMemberController extends Controller
     }
 
     /**
-     *
+     * 从牌艺馆中踢出玩家
      * @SWG\Delete(
      *     path="/game/community/member/kick-out",
      *     description="从牌艺馆中踢出玩家",
@@ -391,7 +577,7 @@ class CommunityMemberController extends Controller
 //        $this->checkIfPlayerInGameV1($playerId); // 新版
 
         $community = CommunityList::findOrFail($request->community_id);
-        if (! $community->ifHasMember($playerId)) {
+        if (!$community->ifHasMember($playerId)) {
             throw new ApiException('此玩家不存在于该牌艺馆，无法踢出');
         }
         $this->doKickOutMember($community, $playerId);
@@ -402,10 +588,11 @@ class CommunityMemberController extends Controller
     // 判断玩家是否在房间中 -  新版
     protected function checkIfPlayerInGameV1($playerId)
     {
-        $result = RoomsPlayer::query()->where('uid',$playerId)->first();
-        if ($result){
+        $result = RoomsPlayer::query()->where('uid', $playerId)->first();
+        if ($result) {
             throw new ApiException('此玩家正在游戏中，禁止踢出操作');
         }
+
         return true;
     }
 
@@ -449,7 +636,7 @@ class CommunityMemberController extends Controller
     }
 
     /**
-     *
+     * 获取牌艺馆成员动态日志
      * @SWG\Get(
      *     path="/game/community/member/log/{community}",
      *     description="获取牌艺馆成员动态日志",

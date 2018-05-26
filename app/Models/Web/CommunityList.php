@@ -83,6 +83,22 @@ use Carbon\Carbon;
  *   }
  * )
  *
+ *
+ *  @SWG\Definition(
+ *     definition="WebCommunityWithOwnerPlayer",
+ *     description="牌艺馆信息关联创建用户",
+ *     allOf={
+ *         @SWG\Schema(ref="#/definitions/WebCommunity"),
+ *     },
+ *     @SWG\Property(
+ *        property="owner_player",
+ *        type="object",
+ *           allOf={
+ *              @SWG\Schema(ref="#/definitions/GamePlayer"),
+ *           },
+ *     ),
+ * ),
+ *
  */
 class CommunityList extends Model
 {

@@ -10,6 +10,67 @@ use App\Http\Controllers\Controller;
 
 class CommunityController extends Controller
 {
+    /**
+     * 获取此玩家有关联的社区id
+     * @SWG\Get(
+     *     path="/game/community/involved/{player}",
+     *     description="获取此玩家有关联的社区id",
+     *     operationId="community.involved.get",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="player",
+     *         description="用户id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="关联的社区",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="object",
+     *                 @SWG\Property(
+     *                     property="owned_communities",
+     *                     description="玩家所拥有的的社团",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="integer",
+     *                     ),
+     *                     example={123123,123123,2222},
+     *                 ),
+     *                  @SWG\Property(
+     *                     property="belongs_to_communities",
+     *                     description="玩家所属的社团",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="integer",
+     *                     ),
+     *                     example={123123,123123,2222},
+     *                 ),
+     *                  @SWG\Property(
+     *                     property="involved_communities",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/WebCommunityWithOwnerPlayer"),
+     *                         },
+     *                     ),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
     public function getPlayerInvolvedCommunities(Request $request, Players $player)
     {
         $playerOwnedCommunities = $player->getInvolvedCommunities();
@@ -27,7 +88,7 @@ class CommunityController extends Controller
     }
 
     /**
-     *
+     * 获取社团信息
      * @SWG\Get(
      *     path="/game/community/info/{communityId}",
      *     description="获取社团信息",
@@ -86,7 +147,7 @@ class CommunityController extends Controller
     }
 
     /**
-     *
+     * 编辑社团信息
      * @SWG\Put(
      *     path="/game/community/info/{communityId}",
      *     description="编辑社团信息",
@@ -154,7 +215,7 @@ class CommunityController extends Controller
     }
 
     /**
-     *
+     * 获取牌艺馆入馆申请记录
      * @SWG\Get(
      *     path="/game/community/applications/{community}",
      *     description="获取牌艺馆入馆申请记录",

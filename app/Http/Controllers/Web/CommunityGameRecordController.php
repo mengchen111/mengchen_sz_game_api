@@ -13,7 +13,7 @@ class CommunityGameRecordController extends Controller
     use ApiRequestResolver;
 
     /**
-     *
+     * 查询牌艺馆战绩
      * @SWG\Get(
      *     path="/game/community/game-record/{communityId}",
      *     description="查询牌艺馆战绩",
@@ -199,7 +199,7 @@ class CommunityGameRecordController extends Controller
     }
 
     /**
-     *
+     * 标记战绩为已读
      * @SWG\Put(
      *     path="/game/community/game-record/mark/{recordInfoId}",
      *     description="标记战绩为已读",

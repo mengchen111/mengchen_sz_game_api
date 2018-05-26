@@ -11,6 +11,83 @@ use Illuminate\Support\Facades\DB;
 
 class CommunityCardController extends Controller
 {
+    /**
+     * 社团耗卡
+     * @SWG\Post(
+     *     path="/game/community/card/consumption/{community}",
+     *     description="社团耗卡",
+     *     operationId="community.card.consumption.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="community",
+     *         description="牌艺馆id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="player_id",
+     *         description="玩家id",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="operation",
+     *         description="0-冻结,1-消耗冻结,2-退还冻结,3-直接耗卡",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="count",
+     *         description="数量",
+     *         in="query",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="remark",
+     *         description="说明",
+     *         in="query",
+     *         required=false,
+     *         type="string",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=422,
+     *         description="参数验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ValidationError"),
+     *             },
+     *         ),
+     *     ),
+     *     @SWG\Response(
+     *         response=400,
+     *         description="逻辑验证错误",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/ApiError"),
+     *             },
+     *         ),
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="操作成功",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Success"),
+     *             },
+     *         ),
+     *     ),
+     * )
+     */
     public function consumeCard(Request $request, CommunityList $community)
     {
         $this->validate($request, [
