@@ -87,7 +87,8 @@ Route::group([
     Route::get('community/info/{communityId}', 'CommunityController@getCommunityInfo')->where('communityId', '[0-9]+'); //获取社团信息
     Route::put('community/info/{community}', 'CommunityController@editCommunityInfo')->where('community', '[0-9]+'); //编辑社团信息
     Route::get('community/members/info/{community}', 'CommunityMemberController@getCommunityMembersInfo')->where('community', '[0-9]+'); //获取社团成员信息
-    Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
+   //Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
+    Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoomV1')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
     Route::get('community/applications/{community}', 'CommunityController@getApplications')->where('community', '[0-9]+');  //获取牌艺馆的所有入馆申请记录
     Route::get('community/game-record/{communityId}', 'CommunityGameRecordController@search')->where('communityId', '[0-9]+');  //战绩查询
     Route::put('community/game-record/mark/{recordInfoId}', 'CommunityGameRecordController@markRecord')->where('recordInfoId', '[0-9]+');  //标记战绩为已读
