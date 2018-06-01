@@ -511,7 +511,7 @@ class CommunityMemberController extends Controller
 
     /**
      * 从牌艺馆中踢出玩家
-     * @SWG\Delete(
+     * @SWG\Post(
      *     path="/game/community/member/kick-out",
      *     description="从牌艺馆中踢出玩家",
      *     operationId="community.members.kick-out",
@@ -520,14 +520,14 @@ class CommunityMemberController extends Controller
      *     @SWG\Parameter(
      *         name="player_id",
      *         description="玩家id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),
      *     @SWG\Parameter(
      *         name="community_id",
      *         description="社团id",
-     *         in="query",
+     *         in="formData",
      *         required=true,
      *         type="integer",
      *     ),

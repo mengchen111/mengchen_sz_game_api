@@ -148,7 +148,7 @@ class CommunityController extends Controller
 
     /**
      * 编辑社团信息
-     * @SWG\Put(
+     * @SWG\Post(
      *     path="/game/community/info/{communityId}",
      *     description="编辑社团信息",
      *     operationId="community.info.put",

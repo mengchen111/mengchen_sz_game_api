@@ -81,17 +81,17 @@ Route::group([
     Route::post('community/member/decline-invitation/{invitation}', 'CommunityMemberController@declineInvitation')->where('invitation', '[0-9]+'); //拒绝入群请求
     Route::post('community/member/quit', 'CommunityMemberController@quitCommunity');     //玩家退出牌艺馆
     Route::get('community/member/log/{community}', 'CommunityMemberController@getMemberLog')->where('community', '[0-9]+'); //获取成员动态
-    Route::delete('community/member/kick-out', 'CommunityMemberController@kickMemberOut'); //从牌艺馆中踢出成员
+    Route::post('community/member/kick-out', 'CommunityMemberController@kickMemberOut'); //从牌艺馆中踢出成员
     Route::get('community/involved/{player}', 'CommunityController@getPlayerInvolvedCommunities')->where('player', '[0-9]+'); //获取此玩家有关联的社区id
     Route::post('community/card/consumption/{community}', 'CommunityCardController@consumeCard')->where('community', '[0-9]+');//社团耗卡
     Route::get('community/info/{communityId}', 'CommunityController@getCommunityInfo')->where('communityId', '[0-9]+'); //获取社团信息
-    Route::put('community/info/{community}', 'CommunityController@editCommunityInfo')->where('community', '[0-9]+'); //编辑社团信息
+    Route::post('community/info/{community}', 'CommunityController@editCommunityInfo')->where('community', '[0-9]+'); //编辑社团信息
     Route::get('community/members/info/{community}', 'CommunityMemberController@getCommunityMembersInfo')->where('community', '[0-9]+'); //获取社团成员信息
    //Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoom')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
     Route::post('community/room/open/{communityId}', 'CommunityRoomController@getCommunityOpenRoomV1')->where('communityId', '[0-9]+'); //获取社团开房信息(正在玩的房间)
     Route::get('community/applications/{community}', 'CommunityController@getApplications')->where('community', '[0-9]+');  //获取牌艺馆的所有入馆申请记录
     Route::get('community/game-record/{communityId}', 'CommunityGameRecordController@search')->where('communityId', '[0-9]+');  //战绩查询
-    Route::put('community/game-record/mark/{recordInfoId}', 'CommunityGameRecordController@markRecord')->where('recordInfoId', '[0-9]+');  //标记战绩为已读
+    Route::post('community/game-record/mark/{recordInfoId}', 'CommunityGameRecordController@markRecord')->where('recordInfoId', '[0-9]+');  //标记战绩为已读
     Route::get('community/player/search/{player}', 'CommunityPlayerController@searchPlayer')->where('player', '[0-9]+');    //根据玩家id查询玩家信息
 
     // 新版
