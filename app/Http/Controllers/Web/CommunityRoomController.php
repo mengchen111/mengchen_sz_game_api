@@ -17,17 +17,23 @@ class CommunityRoomController extends Controller
 
     /**
      * 获取牌艺馆正在玩的房间信息 - 新版
-     * @SWG\Get(
+     * @SWG\Post(
      *     path="/game/community/room/open/{communityId}",
      *     description="获取牌艺馆正在玩的房间信息 - 新版",
      *     operationId="community.room.open.post",
      *     tags={"community"},
-     *
+     *    @SWG\Parameter(
+     *         name="communityId",
+     *         description="社团id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
      *     @SWG\Parameter(
      *         name="is_full",
      *         description="0-查看未满员，1-查看满员，2-查看所有",
-     *         in="path",
-     *         required=false,
+     *         in="formData",
+     *         required=true,
      *         type="integer",
      *     ),
      *
