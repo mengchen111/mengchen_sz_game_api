@@ -15,7 +15,48 @@ class CommunityRoomController extends Controller
     use MajiangTypeMap;
     use MaJiangOptionsMap;
 
-    //获取牌艺馆正在玩的房间信息 - 新版
+    /**
+     * 获取牌艺馆正在玩的房间信息 - 新版
+     * @SWG\Get(
+     *     path="/game/community/room/open/{communityId}",
+     *     description="获取牌艺馆正在玩的房间信息 - 新版",
+     *     operationId="community.room.open.post",
+     *     tags={"community"},
+     *
+     *     @SWG\Parameter(
+     *         name="is_full",
+     *         description="0-查看未满员，1-查看满员，2-查看所有",
+     *         in="path",
+     *         required=false,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="入群申请邀请列表",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="array",
+     *              @SWG\Items(
+     *                 type="array",
+     *                 @SWG\Items(
+     *                    type="object",
+     *                     allOf={
+     *                        @SWG\Schema(ref="#/definitions/RoomOpenList"),
+     *                     },
+     *                 ),
+     *               ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
     public function getCommunityOpenRoomV1(Request $request, $communityId, Room $room)
     {
         $this->validate($request, [
