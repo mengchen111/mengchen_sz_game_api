@@ -35,7 +35,7 @@ trait RoomPlayers
             if (is_array($room['room_players']) && !empty($room['room_players'])) {
                 $data = [];
                 foreach ($room['room_players'] as $player) {
-                    $data = [
+                    $data[] = [
                         'cid' => $player['cid'],
                         'uid' => $player['uid'],
                         'score' => $player['score'],
