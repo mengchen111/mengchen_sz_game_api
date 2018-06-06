@@ -85,7 +85,7 @@ class CommunityRoomController extends Controller
 //        $queries = \DB::getQueryLog(); // 获取查询日志
 //        logger()->info($queries);
         $result = $room->formatRoomData($communityOpenRooms);
-//        $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
+        $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
 
         return [
             'code' => -1,
