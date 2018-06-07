@@ -155,6 +155,10 @@ cd $codeDir
 | /community/record/search | POST | 查询社区玩家战绩 | 
 | /community/record/mark | POST | 标记战绩为已读/未读 | 
 | /community/room/open | POST | 获取社团开房信息(正在玩的房间) | 
+| marquees | GET | 跑马灯列表 |
+| marquees | POST | 添加跑马灯 |
+| marquees/{id} | POST | 修改跑马灯 |
+| marquees/destroy/{id} | POST | 删除跑马灯 |
 
 ### for game(游戏后端)
 | URI   | Method  | Description |     

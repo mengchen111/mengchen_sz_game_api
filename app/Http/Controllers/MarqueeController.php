@@ -20,7 +20,7 @@ class MarqueeController extends Controller
 
     public function index(ApiRequest $request)
     {
-        $marquees = $this->marquee->paginate($this->perPage);
+        $marquees = $this->marquee->latest('id')->paginate($this->perPage);
 
         return [
             'result' => 'true',
@@ -30,6 +30,8 @@ class MarqueeController extends Controller
 
     public function store(ApiRequest $request)
     {
+        $this->validator($request);
+
         $marquee = $this->marquee->create($request->all());
         $notify = false;
         if ($marquee) {
@@ -46,6 +48,8 @@ class MarqueeController extends Controller
 
     public function update(ApiRequest $request, $id)
     {
+        $this->validator($request);
+
         $notify = false;
 
         $marquee = $this->marquee->findOrFail($id);
@@ -78,5 +82,18 @@ class MarqueeController extends Controller
             'notify_game' => $notify ? 'true' : 'false',
             'data' => '删除' . ($result ? '成功' : '失败'),
         ];
+    }
+
+    public function validator($request)
+    {
+        $this->validate($request, [
+            'level' => 'required|integer',
+            'content' => 'required|string',
+            'stime' => 'required|date_format:"Y-m-d H:i:s"',
+            'etime' => 'required|date_format:"Y-m-d H:i:s"',
+            'diff_time' => 'required|integer',
+            'status' => 'required|integer',
+            'sync' => 'required|integer',
+        ]);
     }
 }
