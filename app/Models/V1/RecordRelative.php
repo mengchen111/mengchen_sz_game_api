@@ -10,6 +10,10 @@ class RecordRelative extends Model
     protected $table = 'record_relative';
     protected $primaryKey = 'id';
 
+    public function getRuidAttribute($value)
+    {
+        return (string)$value; //转成字符串，不然20bit位的数字会显示异常
+    }
     public function infos()
     {
         return $this->belongsTo(Record::class, 'rec_id', 'id');

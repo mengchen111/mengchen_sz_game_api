@@ -11,12 +11,233 @@ use Illuminate\Support\Facades\Validator;
 class CommunityGameRecordController extends Controller
 {
     use ApiRequestResolver;
-
     /**
-     * 查询牌艺馆战绩
+     * 新版 - 查询牌艺馆战绩
+     * @SWG\Get(
+     *     path="/game/v1/community/game-record/{communityId}",
+     *     description="新版 - 查询牌艺馆战绩",
+     *     operationId="v1.community.game-record.get",
+     *     tags={"v1"},
+     *
+     *     @SWG\Parameter(
+     *         name="communityId",
+     *         description="社团id",
+     *         in="path",
+     *         required=true,
+     *         type="integer",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="start_time",
+     *         description="开始时间",
+     *         in="query",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="end_time",
+     *         description="结束时间",
+     *         in="query",
+     *         required=true,
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         name="player_id",
+     *         description="玩家id",
+     *         in="query",
+     *         required=false,
+     *         type="integer",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response=200,
+     *         description="战绩数据",
+     *         @SWG\Property(
+     *             type="object",
+     *             allOf={
+     *                 @SWG\Schema(ref="#/definitions/Code"),
+     *             },
+     *             @SWG\Property(
+     *                 property="data",
+     *                 description="数据",
+     *                 type="object",
+     *                 @SWG\Property(
+     *                     property="unread_records",
+     *                     description="当前查询未读战绩数",
+     *                     type="integer",
+     *                     format="int32",
+     *                     example=2,
+     *                 ),
+     *                 @SWG\Property(
+     *                     property="total_unread_record_cnt",
+     *                     description="此牌艺馆所有未读战绩数",
+     *                     type="integer",
+     *                     format="int32",
+     *                     example=10,
+     *                 ),
+     *                 @SWG\Property(
+     *                     property="records",
+     *                     description="战绩详情",
+     *                     type="array",
+     *                     @SWG\Items(
+     *                         type="object",
+     *                         allOf={
+     *                             @SWG\Schema(ref="#/definitions/RoomsHistory"),
+     *                         },
+     *                         @SWG\Property(
+     *                             property="records_info",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GameRecordInfoV1"),
+     *                             },
+     *                         ),
+     *                         @SWG\Property(
+     *                             property="creator",
+     *                             description="房主信息",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GamePlayer"),
+     *                             },
+     *                         ),
+     *                         @SWG\Property(
+     *                             property="player1",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GamePlayer"),
+     *                             },
+     *                             @SWG\Property(
+     *                                  property="score",
+     *                                  description="分数",
+     *                                  type="integer",
+     *                                  example=5,
+     *                               ),
+     *                              @SWG\Property(
+     *                                  property="is_witter",
+     *                                  description="是否赢家",
+     *                                  type="boolean",
+     *                                  example=true,
+     *                               ),
+     *                         ),
+     *                         @SWG\Property(
+     *                             property="player2",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GamePlayer"),
+     *                             },
+     *                            @SWG\Property(
+     *                                  property="score",
+     *                                  description="分数",
+     *                                  type="integer",
+     *                                  example=5,
+     *                               ),
+     *                              @SWG\Property(
+     *                                  property="is_witter",
+     *                                  description="是否赢家",
+     *                                  type="boolean",
+     *                                  example=true,
+     *                               ),
+     *                         ),
+     *                         @SWG\Property(
+     *                             property="player3",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GamePlayer"),
+     *                             },
+     *                            @SWG\Property(
+     *                                  property="score",
+     *                                  description="分数",
+     *                                  type="integer",
+     *                                  example=5,
+     *                               ),
+     *                              @SWG\Property(
+     *                                  property="is_witter",
+     *                                  description="是否赢家",
+     *                                  type="boolean",
+     *                                  example=true,
+     *                               ),
+     *                         ),
+     *                         @SWG\Property(
+     *                             property="player4",
+     *                             type="object",
+     *                             allOf={
+     *                                 @SWG\Schema(ref="#/definitions/GamePlayer"),
+     *                             },
+     *                            @SWG\Property(
+     *                                  property="score",
+     *                                  description="分数",
+     *                                  type="integer",
+     *                                  example=5,
+     *                               ),
+     *                              @SWG\Property(
+     *                                  property="is_witter",
+     *                                  description="是否赢家",
+     *                                  type="boolean",
+     *                                  example=true,
+     *                               ),
+     *                         ),
+     *                     ),
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     * )
+     */
+    public function searchV1(Request $request, $communityId)
+    {
+        $this->validate($request, [
+            'start_time' => 'required|date_format:"Y-m-d H:i:s"',
+            'end_time' => 'required|date_format:"Y-m-d H:i:s"',
+            //'community_id' => 'required|integer',
+            'player_id' => 'integer'
+        ]);
+        $params = $request->intersect(['start_time', 'end_time', 'player_id']);
+        $params['community_id'] = $communityId;
+
+        $records = $this->callController('App\Http\Controllers\RoomController@searchCommunityRoomRecordV1'
+            , $params, $request->getMethod());
+
+        $result = $this->formatRecordsV1($records);
+
+        return $this->res($result);
+    }
+    protected function formatRecordsV1($records)
+    {
+        $count = 0;
+        foreach ($records['records'] as &$record) {
+            unset($record['options']); //不显示玩法详情
+            if (!empty($record['records_info'])) {
+                unset($record['records_info']['jstr']);  //不现实战绩详情
+                if ((int)$record['records_info']['if_read'] === 0) {
+                    $count += 1;
+                }
+            }
+            // winter 最大赢家
+            foreach ($records['records'] as &$item){
+                $score = 0;
+                // 初始化赋值为 false , 并找出最大的分值
+                for ($i = 1; $i <= $item['player']; $i++){
+                    $item['player'.$i]['is_witter'] = false;
+                    if ($item['player'.$i]['score'] > $score){
+                        $score = $item['player'.$i]['score'];
+                    }
+                }
+                //根据最大分值进行赋值 true
+                for ($i = 1; $i <= $item['player']; $i++){
+                    if ($item['player'.$i]['score'] == $score){
+                        $item['player'.$i]['is_witter'] = true;
+                    }
+                }
+            }
+        }
+        $result['unread_records'] = $count;
+        $result['records'] = $records['records'];
+        $result['total_unread_record_cnt'] = $records['total_unread_record_cnt'];
+        return $result;
+    }
+    /**
+     * 旧版 - 查询牌艺馆战绩
      * @SWG\Get(
      *     path="/game/community/game-record/{communityId}",
-     *     description="查询牌艺馆战绩",
+     *     description="旧版 - 查询牌艺馆战绩",
      *     operationId="community.game-record.get",
      *     tags={"community"},
      *

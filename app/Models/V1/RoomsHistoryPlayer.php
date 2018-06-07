@@ -11,6 +11,10 @@ class RoomsHistoryPlayer extends Model
     protected $table = 'rooms_history_player';
     protected $primaryKey = 'ruid';
 
+    public function getRuidAttribute($value)
+    {
+        return (string)$value; //转成字符串，不然20bit位的数字会显示异常
+    }
     public function player()
     {
         return $this->belongsTo(Players::class, 'uid');
