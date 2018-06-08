@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web;
 use App\Models\Players;
 use App\Models\ServerRooms;
 use App\Models\V1\Room;
+use App\Models\V1\RoomsPlayer;
 use App\Traits\MaJiangOptionsMap;
 use App\Traits\MajiangTypeMap;
 use Illuminate\Http\Request;
@@ -80,11 +81,13 @@ class CommunityRoomController extends Controller
                     //未满员的房间
                     return $query->where('player', '<', 4);
                 }
-            })->withPlayers()->orderBy('id', 'desc')->get()->toArray();
-
+            })->orderBy('id', 'desc')->get()->toArray();
+        //  MariaDB whereIn 字符串20位 查不到,单独去查
+        $result = $this->getCommunityPlayers($communityOpenRooms);
+        $result = $room->formatRoomData($result);
 //        $queries = \DB::getQueryLog(); // 获取查询日志
 //        logger()->info($queries);
-        $result = $room->formatRoomData($communityOpenRooms);
+
         $result = array_chunk($result, 2);   //每个chunk放两个数据给前端
 
         return [
@@ -92,7 +95,17 @@ class CommunityRoomController extends Controller
             'data' => $result,
         ];
     }
-
+    // 游戏数据库是 MariaDB ，20位的字符串使用 where in 查不出来，mysql 可以，所以这里只能单独去查
+    public function getCommunityPlayers($rooms)
+    {
+        foreach ($rooms as $k => $room) {
+            $player = RoomsPlayer::query()->with(['player' => function ($query) {
+                return $query->select('id', 'nickname', 'headimg');
+            }])->where('ruid',$room['ruid'])->get()->toArray();
+            $rooms[$k]['room_players'] = $player;
+        }
+        return $rooms;
+    }
     //获取牌艺馆正在玩的房间信息
     public function getCommunityOpenRoom(Request $request, $communityId)
     {
