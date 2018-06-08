@@ -59,19 +59,19 @@ class RoomController extends Controller
             //'game_kind' => 'integer', //房间类型(即游戏类型, 惠州麻将、惠东麻将等)
         ]);
 
-        $roomOpened = ServerRooms::when($request->has('date'), function ($query) use ($request) {
-            return $query->whereDate('time', $request->input('date'));
-        })->when($request->has('game_kind'), function ($query) use ($request) {
-            return $query->where('rtype', $request->input('game_kind'));
-        })->get();
+//        $roomOpened = ServerRooms::when($request->has('date'), function ($query) use ($request) {
+//            return $query->whereDate('time', $request->input('date'));
+//        })->when($request->has('game_kind'), function ($query) use ($request) {
+//            return $query->where('rtype', $request->input('game_kind'));
+//        })->get();
 
         // 新版
-//        $roomOpened = $room->when($request->has('date'), function ($query) use ($request) {
-//            return $query->whereDate('ctime', $request->input('date'));
-//        })->when($request->has('game_kind'), function ($query) use ($request) {
-//            return $query->where('kind', $request->input('game_kind'));
-//        })->withPlayers()->get()->toArray();
-//        $roomOpened = $room->formatRoomData($roomOpened);
+        $roomOpened = $room->when($request->has('date'), function ($query) use ($request) {
+            return $query->whereDate('ctime', $request->input('date'));
+        })->when($request->has('game_kind'), function ($query) use ($request) {
+            return $query->where('kind', $request->input('game_kind'));
+        })->withPlayers()->get()->toArray();
+        $roomOpened = $room->formatRoomData($roomOpened);
 
         ApiLog::add($request);
 
