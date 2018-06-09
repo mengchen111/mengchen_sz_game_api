@@ -6,6 +6,7 @@ use App\Http\Requests\ApiRequest;
 use App\Models\Marquee;
 use App\Services\GameServerNew;
 use Illuminate\Http\Request;
+use Exception;
 
 class MarqueeController extends Controller
 {
@@ -28,7 +29,7 @@ class MarqueeController extends Controller
         ];
     }
 
-    public function store(ApiRequest $request)
+    public function store(Request $request)
     {
         $this->validator($request);
 
@@ -36,13 +37,20 @@ class MarqueeController extends Controller
         $notify = false;
         if ($marquee) {
             //通知游戏
-            $notify = GameServerNew::request('marquee', 'returnid', ['id', $marquee->id]);
+            try {
+                $notify = GameServerNew::request('marquee', 'returnid', ['id', $marquee->id]);
+                $notify = $notify ? true : false;
+            } catch (Exception $e) {
+                $notify = $e->getMessage();
+            }
         }
 
         return [
             'result' => 'true',
-            'notify_game' => $notify ? 'true' : 'false',
-            'data' => $marquee,
+            'data' => [
+                'notify_game' => $notify,
+                'result' => $marquee,
+            ],
         ];
     }
 
@@ -56,13 +64,20 @@ class MarqueeController extends Controller
         $result = $marquee->update($request->all());
         if ($result) {
             //通知游戏
-            $notify = GameServerNew::request('marquee', 'returnid', ['id', $id]);
+            try {
+                $notify = GameServerNew::request('marquee', 'returnid', ['id', $id]);
+                $notify = $notify ? true : false;
+            } catch (Exception $e) {
+                $notify = $e->getMessage();
+            }
         }
 
         return [
             'result' => 'true',
-            'notify_game' => $notify ? 'true' : 'false',
-            'data' => $marquee,
+            'data' => [
+                'notify_game' => $notify,
+                'result' => $marquee,
+            ],
         ];
     }
 
@@ -74,13 +89,20 @@ class MarqueeController extends Controller
         $result = $marquee->delete();
         if ($result) {
             //通知游戏
-            $notify = GameServerNew::request('marquee', 'returnid', ['id', $id]);
+            try {
+                $notify = GameServerNew::request('marquee', 'returnid', ['id', $id]);
+                $notify = $notify ? true : false;
+            } catch (Exception $e) {
+                $notify = $e->getMessage();
+            }
         }
 
         return [
             'result' => 'true',
-            'notify_game' => $notify ? 'true' : 'false',
-            'data' => '删除' . ($result ? '成功' : '失败'),
+            'data' => [
+                'notify_game' => $notify,
+                'result' => '删除' . ($result ? '成功' : '失败'),
+            ],
         ];
     }
 
