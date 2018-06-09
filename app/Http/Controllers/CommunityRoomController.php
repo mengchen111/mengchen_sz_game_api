@@ -4,16 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\Players;
 use App\Models\ServerRooms;
+use App\Models\V1\RoomsHistory;
 use App\Traits\MaJiangOptionsMap;
 use App\Traits\MajiangTypeMap;
+use App\Traits\RoomPlayers;
 use Illuminate\Http\Request;
 
 class CommunityRoomController extends Controller
 {
-    use MajiangTypeMap;
-    use MaJiangOptionsMap;
+    use MajiangTypeMap,MaJiangOptionsMap;
+    //新 - 获取牌艺馆正在玩的房间信息
+    public function getCommunityOpenRoomV1(Request $request, RoomsHistory $roomsHistory)
+    {
+        $this->validate($request, [
+            'community_id' => 'required|integer',
+            'is_full' => 'required|integer|in:0,1,2', //0-查看未满员，1-查看满员，2-查看所有
+        ]);
+        $isFull = (int)$request->input('is_full');
+        $communityId = $request->input('community_id');
+        $communityOpenRooms = $roomsHistory->where('community',$communityId)
+            ->when($isFull !== 2, function ($query) use ($isFull) {
+                if ($isFull === 1) {    //满员房间
+                    return $query->where('player', 4);
+                } else {    //0 未满员的房间
+                    return $query->where('player', '<', 4);
+                }
+            })->latest('id')->withPlayers()->get()->toArray();
 
-    //获取牌艺馆正在玩的房间信息
+        $result = $roomsHistory->formatRoomData($communityOpenRooms);
+
+        return [
+            'result' => 'true',
+            'data' => $result,
+        ];
+    }
+
+    //旧 - 获取牌艺馆正在玩的房间信息
     public function getCommunityOpenRoom(Request $request)
     {
         $this->validate($request, [

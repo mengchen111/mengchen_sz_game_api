@@ -68,7 +68,7 @@ Route::get('wechat/red-packet/send-list', 'WechatRedPacketController@getSendList
 Route::post('wechat/red-packet/update', 'WechatRedPacketController@updateSendStatus');  //更新发送红包状态
 Route::post('community/record/search', 'RoomController@searchCommunityRoomRecord'); //旧版 - 查询社区玩家战绩
 Route::post('community/record/mark', 'RoomController@markRecord');  //标记战绩为已读/未读
-Route::get('community/room/open', 'CommunityRoomController@getCommunityOpenRoom'); //获取社团开房信息(正在玩的房间)
+Route::get('community/room/open', 'CommunityRoomController@getCommunityOpenRoomV1'); //获取社团开房信息(正在玩的房间)
 //新版
 Route::group([
     'prefix' => 'v1'
